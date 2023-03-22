@@ -11,7 +11,7 @@ const Card = () => {
   const [codAtend, setCodAtend] = useState([]);
 
   useEffect(() => {
-    axios.get('http://patrick-note:8080/atendimentos')
+    axios.get('http://localhost:8080/atendimentos')
       .then(response => {
         setDados(response.data);
       })

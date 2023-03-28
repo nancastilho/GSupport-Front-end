@@ -1,19 +1,16 @@
 import './index.css';
 import 'tailwindcss/tailwind.css';
-import Card from './componentes/card';
-import Navbar from './componentes/navbar';
+import { AuthProvider } from './contexts/auth';
+import RoutesApp from './routes';
 
 
 function App() {
 
   return (
       
-      <div className="flex">
-        <Navbar />
-        <div className="flex-grow p-4">
-        <Card />
-        </div>
-      </div>
+      <AuthProvider>
+      <RoutesApp/>
+      </AuthProvider>
 
   )
 }

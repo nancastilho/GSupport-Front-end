@@ -13,7 +13,7 @@ const Card = () => {
   useEffect(() => {
     axios.get('http://localhost:8080/atendimentos')
       .then(response => {
-        setDados(response.data);
+        setDados(response.data.Result);
       })
       .catch(error => {
         console.log(error);
@@ -30,7 +30,6 @@ const Card = () => {
     setIsModalOpen(false);
   };
 
-  console.log(dados)
   return (
 
     <div className="flex flex-wrap">
@@ -58,22 +57,22 @@ const Card = () => {
                     <input type={"text"} className="text-2xl font-bold mb-4 text-blue-900 " name={'Empresa'} value={item.Empresa} />
                     <input type={"text"} className="text-2xl font-bold mb-4 text-blue-900 " name={'Nome'} value={item.Nome} />
                     <label>Usuario</label>
-                    <br/>
+                    <br />
                     <input type={"text"} name={'NomeUsuario'} value={item.NomeUsuario} />
-                    <br/>
+                    <br />
                     <label>{item.DataHoraLancamento}</label>
-                    <br/>
+                    <br />
                     <input type={"checkbox"} /><label>Plantão</label>
                   </div>
 
                   <div>
-                  <br/><br/>
+                    <br /><br />
                     <label>Problema:</label>
-                    <br/>
+                    <br />
                     <textarea>{item.Problema}</textarea>
-                    <br/><br/><br/><br/>
+                    <br /><br /><br /><br />
                     <label>Solução:</label>
-                    <br/>
+                    <br />
                     <textarea>{item.Solucao}</textarea>
                   </div>
                 </div>

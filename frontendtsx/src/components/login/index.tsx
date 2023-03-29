@@ -4,16 +4,16 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+  const handleEmailChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setEmail(e.currentTarget.value);
   };
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+  const handlePasswordChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setPassword(e.currentTarget.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     console.log(`Email: ${email}, Senha: ${password}`);
   };
 

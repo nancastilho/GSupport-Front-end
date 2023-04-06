@@ -1,22 +1,50 @@
+import axios, {AxiosResponse} from 'axios';
 import React, { useState } from 'react';
+import  {NavigateFunction, useNavigate}  from 'react-router-dom';
+
+interface Credentials {
+  Usuario: string;
+  Senha: string;
+}
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
-  const handleEmailChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setEmail(e.currentTarget.value);
-  };
+  const navigate: NavigateFunction = useNavigate();
+  const [credentials, setCredentials] = useState<Credentials>({
+    Usuario: '',
+    Senha: '',
+  });
 
-  const handlePasswordChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setPassword(e.currentTarget.value);
-  };
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(`Email: ${email}, Senha: ${password}`);
-  };
+    axios.post<{ token: string }>('http://localhost:8080/login', credentials)
+      .then((response: AxiosResponse<{ token: string }>) => {
+        const token = response.data.token;
+        localStorage.setItem('token', token);
+        navigate('/home');
+      })
+      .catch((error) => {
+        console.error(error);
+        // exibe uma mensagem de erro para o usuário
+      });
+  }
 
+  
+  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+    setCredentials((prevCredentials) => ({
+      ...prevCredentials,
+      [name]: value,
+    }));
+  }
+  function handleInputEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+    setCredentials((prevCredentials) => ({
+      ...prevCredentials,
+      [name]: value,
+    }));
+  }
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -27,18 +55,17 @@ const Login = () => {
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
                 Endereço de e-mail
               </label>
               <div className="mt-1">
                 <input
-                  id="email"
-                  name="email"
+                  id="username"
+                  name="username"
                   type="text"
-                  autoComplete="email"
+                  autoComplete="username"
                   required
-                  value={email}
-                  onChange={handleEmailChange}
+                  onChange={handleInputEmailChange}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
@@ -55,8 +82,7 @@ const Login = () => {
                   type="password"
                   autoComplete="current-password"
                   required
-                  value={password}
-                  onChange={handlePasswordChange}
+                  onChange={handleInputChange}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>

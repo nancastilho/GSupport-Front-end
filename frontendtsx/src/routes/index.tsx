@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
-import Signin from "../pages/Login";
+import Login from "../components/login";
 
 
 const RoutesApp = () => {
@@ -10,8 +10,8 @@ const RoutesApp = () => {
       <Fragment>
         <Routes>
           <Route path="/home" element={<Home/>} />
-          <Route path="/" element={<Signin />} />
-          <Route path="*" element={<Signin />} />
+          <Route path="/" element={<Login />} />
+          <Route path="*" element={<Login />} />
         </Routes>
       </Fragment>
     </BrowserRouter>

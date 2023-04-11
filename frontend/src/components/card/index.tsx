@@ -43,7 +43,7 @@ const Card = () => {
 
   console.log(dados);
   return (
-    <div className="flex flex-wrap">
+    <div className="flex flex-wrap pl-64">
       {dados.map((item: Card, index) => (
         <label
           className="cursor-pointer bg-blue-50 rounded-lg shadow-md p-6 m-3 w-72 card flex flex-col justify-between"

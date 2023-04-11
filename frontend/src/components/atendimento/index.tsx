@@ -1,5 +1,9 @@
 import { useState } from "react";
+
+
+
 function Atendimento() {
+  
   const [cadastro, setCadastro] = useState(true);
   const [name, setName] = useState("");
   const [date, setDate] = useState("");

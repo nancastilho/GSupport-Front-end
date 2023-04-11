@@ -15,12 +15,15 @@ const Login = () => {
     Senha: '',
   });
 
+
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    axios.post<{ token: string }>('http://localhost:8080/login', credentials)
-      .then((response: AxiosResponse<{ token: string }>) => {
-        const token = response.data.token;
+    axios.post<{ senhaHash: string, userData: any }>('http://localhost:8080/login', credentials)
+      .then((response: AxiosResponse<{ senhaHash: string, userData: any}>) => {
+        const token = response.data.senhaHash;
+        const userAuth = response.data.userData.Usuario
+        localStorage.setItem('userAuth', userAuth);
         localStorage.setItem('token', token);
         navigate('/home');
       })
@@ -55,15 +58,15 @@ const Login = () => {
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="Usuario" className="block text-sm font-medium text-gray-700">
                 Endereço de e-mail
               </label>
               <div className="mt-1">
                 <input
-                  id="username"
-                  name="username"
+                  id="Usuario"
+                  name="Usuario"
                   type="text"
-                  autoComplete="username"
+                  autoComplete="Usuario"
                   required
                   onChange={handleInputEmailChange}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -72,15 +75,15 @@ const Login = () => {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="Senha" className="block text-sm font-medium text-gray-700">
                 Senha
               </label>
               <div className="mt-1">
                 <input
-                  id="password"
-                  name="password"
+                  id="Senha"
+                  name="Senha"
                   type="password"
-                  autoComplete="current-password"
+                  autoComplete="current-Senha"
                   required
                   onChange={handleInputChange}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"

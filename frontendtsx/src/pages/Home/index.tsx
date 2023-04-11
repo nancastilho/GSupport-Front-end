@@ -1,12 +1,17 @@
 import React from 'react'
 import Card from '../../components/card';
 import Navbar from '../../components/navbar';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 const Home = () => {
-
+  const navigate: NavigateFunction = useNavigate();
+  function handleLogout() {
+    localStorage.removeItem("token")
+    navigate("/")
+  }
   return (
     <div className="flex">
-        <Navbar />
+        <Navbar handleLogout={handleLogout} />
         <div className="flex-grow p-4">
         <Card />
         </div>

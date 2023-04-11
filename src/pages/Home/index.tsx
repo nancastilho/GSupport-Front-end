@@ -1,0 +1,23 @@
+import React from 'react'
+import Card from '../../components/card';
+import Navbar from '../../components/navbar';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
+
+const Home = () => {
+  const navigate: NavigateFunction = useNavigate();
+  function handleLogout() {
+    localStorage.removeItem("token")
+    localStorage.removeItem("userAuth")
+    navigate("/")
+  }
+  return (
+    <div className="flex">
+        <Navbar handleLogout={handleLogout} />
+        <div className="flex-grow p-4">
+        <Card />
+        </div>
+      </div>
+  )
+}
+
+export default Home

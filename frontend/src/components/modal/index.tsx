@@ -1,37 +1,78 @@
-import React, { useState } from "react";
-interface ModalProps{
+import React, { useState, useEffect } from "react";
+
+interface ModalProps {
   isOpen: boolean;
-  children?:
-    | React.ReactChild
-    | React.ReactChild[];
-  onClose: React.ReactEventHandler<{}>;
+  onClose: () => void;
+  children: React.ReactNode;
 }
 
-const Modal = ({ isOpen, children }: ModalProps) => {
-  const [open, setOpen] = useState(isOpen);
-  
-  const handleClose = () => {
-    setOpen(false);
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(isOpen);
+
+  const handleClose = (): void => {
+    setIsModalOpen(false);
+    onClose();
   };
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent): void => {
+      if (event.key === "Escape") {
+        handleClose();
+      }
+    };
 
-  return (
-    <>
-      {open && (
-        <div className="fixed inset-0 z-50 overflow-auto bg-gray-900 bg-opacity-50">
-          <div className="relative w-11/12 md:w-1/2 lg:w-1/3 xl:w-1/4 bg-white rounded-lg shadow-lg mx-auto mt-4 mb-8 p-6">
-            <button
-              className="absolute top-0 right-0 m-4 text-gray-700 hover:text-gray-600 cursor-pointer"
-              onClick={handleClose}
-            >
-              X
-            </button>
+    const handleClickOutside = (event: MouseEvent): void => {
+      const modalElement = document.querySelector(".modal");
+
+      if (modalElement && !modalElement.contains(event.target as Node)) {
+        handleClose();
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isModalOpen]);
+
+  return isModalOpen ? (
+    <div className="fixed z-10 inset-0 overflow-y-auto">
+      <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div
+          className="fixed inset-0 transition-opacity"
+          aria-hidden="true"
+          onClick={handleClose}
+        >
+          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+
+        <span
+          className="hidden sm:inline-block sm:align-middle sm:h-screen"
+          aria-hidden="true"
+        ></span>
+
+        <div className="modal inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+          <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             {children}
           </div>
+          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button
+              type="button"
+              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+              onClick={handleClose}
+            >
+              Fechar
+            </button>
+          </div>
         </div>
-      )}
-    </>
-  );
+      </div>
+    </div>
+  ) : null;
 };
 
 export default Modal;

@@ -16,21 +16,33 @@ const Login = () => {
   });
 
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    axios.post<{ senhaHash: string, userData: any }>('http://localhost:8080/login', credentials)
-      .then((response: AxiosResponse<{ senhaHash: string, userData: any}>) => {
-        const token = response.data.senhaHash;
-        const userAuth = response.data.userData.Usuario
+    // axios.post<{ senhaHash: string, userData: any }>('http://localhost:8080/login', credentials)
+    //   .then((response: AxiosResponse<{ senhaHash: string, userData: any}>) => {
+    //     const token = response.data.senhaHash;
+    //     const userAuth = response.data.userData.Usuario
+    //     localStorage.setItem('userAuth', userAuth);
+    //     localStorage.setItem('token', token);
+    //     navigate('/home');
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //     // exibe uma mensagem de erro para o usuário
+    //   });
+      try {
+        const result = await axios.post<{ senhaHash: string, userData: any }>('http://localhost:8080/login', credentials)
+        const token = result.data.senhaHash;
+        const userAuth = result.data.userData.Usuario
         localStorage.setItem('userAuth', userAuth);
         localStorage.setItem('token', token);
         navigate('/home');
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error(error);
-        // exibe uma mensagem de erro para o usuário
-      });
+      }
+
+
   }
 
   

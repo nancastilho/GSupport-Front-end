@@ -5,7 +5,10 @@ import Login from "../components/login";
 
 function hasToken(): boolean {
   const token = localStorage.getItem('token');
-  return token !== null;
+  if(token == null){
+    return false
+  }
+  return true
 }
 const RoutesApp = () => {
 

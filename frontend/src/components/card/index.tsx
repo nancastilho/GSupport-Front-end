@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Modal from "../modal";
+import Atendimento from "../atendimento";
 
 const Card = () => {
   interface Card {
@@ -66,94 +67,7 @@ const Card = () => {
       ))}
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-          {dados.map((item: Card, index) => {
-            return index === codAtend ? (
-              <div>
-                <div className="mb-4">
-              <label
-                htmlFor="name"
-                className="block mb-1 font-medium text-gray-700"
-              >
-                Nome
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                value={item.NomeFantasia}
-                className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="date"
-                className="block mb-1 font-medium text-gray-700"
-              >
-                Data
-              </label>
-              <input
-                id="date"
-                name="date"
-                type="date"
-                value={item.DataHoraLancamento}
-                className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="time"
-                className="block mb-1 font-medium text-gray-700"
-              >
-                Hora
-              </label>
-              <input
-                id="time"
-                name="time"
-                type="time"
-                value={item.NomeUsuario}
-                className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="symptoms"
-                className="block mb-1 font-medium text-gray-700"
-              >
-                Problema
-              </label>
-              <textarea
-                id="symptoms"
-                name="symptoms"
-                value={item.Problema}
-                className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
-                rows={4}
-                required
-              ></textarea>
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="symptoms"
-                className="block mb-1 font-medium text-gray-700"
-              >
-                Solução
-              </label>
-              <textarea
-                id="symptoms"
-                name="symptoms"
-                value={item.Solucao}
-                className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
-                rows={4}
-                required
-              ></textarea>
-            </div>
-              </div>
-            ) : (
-              ""
-            );
-          })}
+          <Atendimento/>
         </Modal>
       )}
     </div>

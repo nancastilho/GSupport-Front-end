@@ -21,6 +21,7 @@ const Login = () => {
         "http://localhost:8080/login",
         credentials
       );
+      
       const token = result.data.senhaHash;
       const userAuth = result.data.userData.Usuario;
       localStorage.setItem("userAuth", userAuth);

@@ -1,6 +1,6 @@
-import axios, {AxiosResponse} from 'axios';
-import React, { useState } from 'react';
-import  {NavigateFunction, useNavigate}  from 'react-router-dom';
+import axios, { AxiosResponse } from "axios";
+import React, { useState } from "react";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 interface Credentials {
   Usuario: string;
@@ -8,44 +8,29 @@ interface Credentials {
 }
 
 const Login = () => {
-
   const navigate: NavigateFunction = useNavigate();
   const [credentials, setCredentials] = useState<Credentials>({
-    Usuario: '',
-    Senha: '',
+    Usuario: "",
+    Senha: "",
   });
-
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    // axios.post<{ senhaHash: string, userData: any }>('http://localhost:8080/login', credentials)
-    //   .then((response: AxiosResponse<{ senhaHash: string, userData: any}>) => {
-    //     const token = response.data.senhaHash;
-    //     const userAuth = response.data.userData.Usuario
-    //     localStorage.setItem('userAuth', userAuth);
-    //     localStorage.setItem('token', token);
-    //     navigate('/home');
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //     // exibe uma mensagem de erro para o usuário
-    //   });
-      try {
-        const result = await axios.post<{ senhaHash: string, userData: any }>('http://localhost:8080/login', credentials)
-        const token = result.data.senhaHash;
-        const userAuth = result.data.userData.Usuario
-        localStorage.setItem('userAuth', userAuth);
-        localStorage.setItem('token', token);
-        navigate('/home');
-      } catch (error) {
-        console.error(error);
-      }
-
-
+    try {
+      const result = await axios.post<{ senhaHash: string; userData: any }>(
+        "http://localhost:8080/login",
+        credentials
+      );
+      const token = result.data.senhaHash;
+      const userAuth = result.data.userData.Usuario;
+      localStorage.setItem("userAuth", userAuth);
+      localStorage.setItem("token", token);
+      navigate("/home");
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
     setCredentials((prevCredentials) => ({
@@ -63,14 +48,19 @@ const Login = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="text-center text-3xl font-extrabold text-gray-900">Faça login na sua conta</h2>
+        <h2 className="text-center text-3xl font-extrabold text-gray-900">
+          Faça login na sua conta
+        </h2>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="Usuario" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="Usuario"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Nome
               </label>
               <div className="mt-1">
@@ -87,7 +77,10 @@ const Login = () => {
             </div>
 
             <div>
-              <label htmlFor="Senha" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="Senha"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Senha
               </label>
               <div className="mt-1">
@@ -104,7 +97,10 @@ const Login = () => {
             </div>
 
             <div>
-              <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              <button
+                type="submit"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
                 Entrar
               </button>
             </div>

@@ -9,7 +9,7 @@ const Card = () => {
   interface Card{
     Codigo: string;
     NomeUsuario: string;
-    Empresa: string;
+    NomeFantasia: string;
     Nome: string;
     DataHoraLancamento: string;
     Problema: string;
@@ -22,10 +22,12 @@ const Card = () => {
   const [dados, setDados] = useState([]);
   const [codAtend, setCodAtend] = useState<number>();
   
+  console.log(isModalOpen)
   useEffect(() => {
     axios.get('http://localhost:8080/atendimentos')
       .then(response => {
         setDados(response.data.Result);
+        console.log(dados)
       })
       .catch(error => {
         console.log(error);
@@ -43,14 +45,14 @@ const Card = () => {
   };
 
 
-
+  console.log(dados)
   return (
 
     <div className="flex flex-wrap">
 
       {dados.map((item: Card, index) => (
         <label className="cursor-pointer bg-blue-50 rounded-lg shadow-md p-6 m-3 w-72 card flex flex-col justify-between" onClick={() => handleModalOpen(index)} key={item.Codigo} >
-          <h2 className="text-2xl font-bold mb-4 text-blue-900 ">{item.Empresa}</h2>
+          <h2 className="text-2xl font-bold mb-4 text-blue-900 ">{item.NomeFantasia}</h2>
           <div>
             <p className="text-gray-700 mb-2 max-sm:hidden">{item.Codigo}</p>
             <p className="text-gray-700 mb-2 max-sm:hidden ">Usuário: {item.NomeUsuario}</p>
@@ -68,7 +70,7 @@ const Card = () => {
                   <div>
                     <p className="text-gray-700 mb-2 max-sm:hidden">{item.Codigo}</p>
                     <h2 className="text-2xl font-bold mb-4 text-blue-900 ">Cliente</h2>
-                    <input type={"text"} className="text-2xl font-bold mb-4 text-blue-900 " name={'Empresa'} value={item.Empresa} />
+                    <input type={"text"} className="text-2xl font-bold mb-4 text-blue-900 " name={'Empresa'} value={item.NomeFantasia} />
                     <input type={"text"} className="text-2xl font-bold mb-4 text-blue-900 " name={'Nome'} value={item.Nome} />
                     <label>Usuario</label>
                     <br />

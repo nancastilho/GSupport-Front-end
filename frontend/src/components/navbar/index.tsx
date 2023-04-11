@@ -14,7 +14,7 @@ const Navbar: React.FC<Props> = ({ handleLogout }) => {
         <a href={'a'} className="block text-gray-300 hover:text-white mb-4">Relatorios</a>
         <a href={'a'} className="block text-gray-300 hover:text-white mb-4">Testes</a>
       </div>
-      <div>
+      <div className='flex justify-around text-gray-300 hover:text-white mb-4'>
       <p>Olá, {user}!</p>
       <button onClick={handleLogout}><FiLogOut/></button>
       </div>

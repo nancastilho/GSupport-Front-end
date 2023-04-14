@@ -1,4 +1,5 @@
 import axios from "axios";
+import { stringify } from "querystring";
 import { useState } from "react";
 
 interface Props {
@@ -19,6 +20,10 @@ interface FormValues {
   Plantao: number;
 }
 
+interface Usuario {
+  codUsuario: string;
+}
+
 function Atendimento(props: Props) {
 
   const dataAtual = new Date();
@@ -26,10 +31,13 @@ function Atendimento(props: Props) {
   const dataFormatada = dataAtual.toLocaleDateString("pt-BR", opcoes);
   const horaFormatada = dataAtual.toLocaleTimeString('pt-BR', opcoes);
  
-  const codUsuario = localStorage.getItem('codUserAuth');
+  var codUsuario: string | null;
+
+  codUsuario = localStorage.getItem('codUserAuth');
+  codUsuario = codUsuario ? codUsuario : '';
  
   const [formValues, setFormValues] = useState<FormValues>({
-    CodUsuario: 1,
+    CodUsuario: parseInt(codUsuario),
     CodEmpresa: 1,
     NomeCliente: "",
     Problema: "",

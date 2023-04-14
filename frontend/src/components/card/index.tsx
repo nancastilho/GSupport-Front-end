@@ -67,7 +67,7 @@ const Card = () => {
       ))}
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-          <Atendimento/>
+          <Atendimento onCadastro={false}/>
         </Modal>
       )}
     </div>

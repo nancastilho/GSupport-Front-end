@@ -24,7 +24,10 @@ const Login = () => {
       
       const token = result.data.senhaHash;
       const userAuth = result.data.userData.Usuario;
+      const codUserAuth = result.data.userData.Codigo;
+
       localStorage.setItem("userAuth", userAuth);
+      localStorage.setItem("codUserAuth", codUserAuth);
       localStorage.setItem("token", token);
       navigate("/home");
     } catch (error) {

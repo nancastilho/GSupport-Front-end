@@ -20,6 +20,7 @@ const Home = () => {
   };
   function handleLogout() {
     localStorage.removeItem("token");
+    localStorage.removeItem("userAuth");
     navigate("/");
   }
 
@@ -35,7 +36,7 @@ const Home = () => {
       </div>
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-          <Atendimento/>
+          <Atendimento onCadastro={true}/>
         </Modal>
       )}
     </div>

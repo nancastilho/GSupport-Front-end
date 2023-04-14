@@ -49,6 +49,7 @@ function Atendimento(props: Props) {
     Assunto: "",
     Plantao: 0,
   });
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

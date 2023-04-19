@@ -19,22 +19,22 @@ interface FormValues {
   Plantao: number;
 }
 
-interface Usuario {
-  codUsuario: string;
-}
-
 function Atendimento(props: Props) {
-
+  const formData = new FormData();
   const dataAtual = new Date();
-  const opcoes = { timeZone: "America/Sao_Paulo", hour12:false };
-  const dataFormatada = dataAtual.toLocaleDateString("pt-BR", opcoes);
-  const horaFormatada = dataAtual.toLocaleTimeString('pt-BR', opcoes);
- 
-  var codUsuario: string | null;
+  const opcoes = { timeZone: "America/Sao_Paulo", hour12: false };
+  const dataFormatada = dataAtual.toLocaleDateString("fr-CA");
+  const horaFormatada = dataAtual.toLocaleTimeString("pt-BR", opcoes);
 
-  codUsuario = localStorage.getItem('codUserAuth');
-  codUsuario = codUsuario ? codUsuario : '';
- 
+  // https://stackoverflow.com/questions/2388115/get-locale-short-date-format-using-javascript
+
+  var codUsuario: string | null;
+  codUsuario = localStorage.getItem("codUserAuth");
+  codUsuario = codUsuario ? codUsuario : "";
+
+  const [image, setImage] = useState<FileList | null>(null);
+
+  console.log(image);
   const [formValues, setFormValues] = useState<FormValues>({
     CodUsuario: parseInt(codUsuario),
     CodEmpresa: 1,
@@ -43,20 +43,28 @@ function Atendimento(props: Props) {
     Solucao: "",
     CodSistema: 1,
     CodMeioComunicacao: 1,
-    DataCriação: `${dataFormatada}''${horaFormatada} `,
+    DataCriação: `${dataFormatada}''${horaFormatada}`,
     DataInicio: `${dataFormatada}''${horaFormatada} `,
     DataFim: `${dataFormatada}''${horaFormatada} `,
     Assunto: "",
     Plantao: 0,
   });
 
+
+  if (image !== null) {
+    formData.append('image', image[0]);
+  }
+  
+  formData.append("data", JSON.stringify(formValues));
+
+  console.log(formData)
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       const response = await axios.post(
-        "https://minhaapi.com/atendimentos",
-        formValues
+        "http://localhost:8080/atendimentos",
+        formData
       );
       console.log(response.data);
       // aqui você pode implementar alguma lógica para lidar com a resposta da API
@@ -109,6 +117,7 @@ function Atendimento(props: Props) {
             name="dateI"
             type="date"
             onChange={handleInputChange}
+            value={dataFormatada}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />
@@ -124,6 +133,7 @@ function Atendimento(props: Props) {
             id="dateF"
             name="dateF"
             type="date"
+            value={dataFormatada}
             onChange={handleInputChange}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
@@ -168,14 +178,14 @@ function Atendimento(props: Props) {
       </div>
       <div className="mb-4">
         <label
-          htmlFor="problema"
+          htmlFor="Problema"
           className="block mb-1 font-medium text-gray-700"
         >
           Problema
         </label>
         <textarea
-          id="problema"
-          name="problema"
+          id="Problema"
+          name="Problema"
           value={formValues.Problema}
           onChange={handleInputChange}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
@@ -186,14 +196,14 @@ function Atendimento(props: Props) {
 
       <div className="mb-4">
         <label
-          htmlFor="solucao"
+          htmlFor="Solucao"
           className="block mb-1 font-medium text-gray-700"
         >
           Solução
         </label>
         <textarea
-          id="solucao"
-          name="solucao"
+          id="Solucao"
+          name="Solucao"
           value={formValues.Solucao}
           onChange={handleInputChange}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
@@ -201,13 +211,40 @@ function Atendimento(props: Props) {
           required
         ></textarea>
       </div>
+      <div className="mb-6 w-full">
+        <label
+          htmlFor="cover-photo"
+          className="block text-sm font-medium leading-6 text-gray-900"
+        >
+          Imagem
+        </label>
+        <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+          <div className="text-center">
+            <div className="mt-4 flex text-sm leading-6 text-gray-600">
+              <label
+                htmlFor="file-upload"
+                className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+              >
+                <span>Upload a file</span>
+                <input
+                  id="file-upload"
+                  name="file-upload"
+                  type="file"
+                  className="sr-only"
+                  onChange={(e) => setImage(e.target.files)}
+                />
+              </label>
+              <p className="pl-1">or drag and drop</p>
+            </div>
+            <p className="text-xs leading-5 text-gray-600">
+              PNG, JPG, GIF up to 10MB
+            </p>
+          </div>
+        </div>
+        {image ? image[0].name : "Sem imagem..."}
+      </div>
       <div>
-        <input
-          type="checkbox"
-          name="plantao"
-          id="plantao"
-          className="mr-2"
-        />
+        <input type="checkbox" name="plantao" id="plantao" className="mr-2" />
         <label htmlFor="agreed" className="font-medium text-gray-700">
           Plantão
         </label>

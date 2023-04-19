@@ -20,47 +20,52 @@ interface FormValues {
 }
 
 function Atendimento(props: Props) {
-  const formData = new FormData();
   const dataAtual = new Date();
   const opcoes = { timeZone: "America/Sao_Paulo", hour12: false };
   const dataFormatada = dataAtual.toLocaleDateString("fr-CA");
+  const dataFormatadaBR = dataAtual.toLocaleDateString("pt-BR", opcoes);
   const horaFormatada = dataAtual.toLocaleTimeString("pt-BR", opcoes);
 
-  // https://stackoverflow.com/questions/2388115/get-locale-short-date-format-using-javascript
+  console.log(dataFormatadaBR)
 
+  // https://stackoverflow.com/questions/2388115/get-locale-short-date-format-using-javascript
+  
   var codUsuario: string | null;
   codUsuario = localStorage.getItem("codUserAuth");
   codUsuario = codUsuario ? codUsuario : "";
 
   const [image, setImage] = useState<FileList | null>(null);
 
-  console.log(image);
   const [formValues, setFormValues] = useState<FormValues>({
     CodUsuario: parseInt(codUsuario),
     CodEmpresa: 1,
     NomeCliente: "",
     Problema: "",
     Solucao: "",
+    Assunto: "sem assunto",
     CodSistema: 1,
     CodMeioComunicacao: 1,
-    DataCriação: `${dataFormatada}''${horaFormatada}`,
-    DataInicio: `${dataFormatada}''${horaFormatada} `,
-    DataFim: `${dataFormatada}''${horaFormatada} `,
-    Assunto: "",
+    DataCriação: `${dataFormatadaBR} ${horaFormatada}`,
+    DataInicio: `${dataFormatadaBR} ${horaFormatada} `,
+    DataFim: `${dataFormatadaBR} ${horaFormatada} `,
     Plantao: 0,
   });
 
+  console.log(formValues)
 
-  if (image !== null) {
-    formData.append('image', image[0]);
-  }
-  
-  formData.append("data", JSON.stringify(formValues));
-
-  console.log(formData)
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const formData = new FormData();
+    
+    if (image !== null) {
+      formData.append('image', image[0]);
+    }
+    
+    formData.append("data", JSON.stringify(formValues));
+  
+    console.log(formData)
+    
     try {
       const response = await axios.post(
         "http://localhost:8080/atendimentos",

@@ -1,10 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-interface Props {
-  onCadastro: boolean;
-}
-interface FormValues {
+export interface FormValues {
   CodUsuario: number;
   CodEmpresa: number;
   NomeCliente: string;
@@ -19,17 +16,17 @@ interface FormValues {
   Plantao: number;
 }
 
-function Atendimento(props: Props) {
+function ViewAtendimento(props: FormValues) {
   const dataAtual = new Date();
   const opcoes = { timeZone: "America/Sao_Paulo", hour12: false };
   const dataFormatada = dataAtual.toLocaleDateString("fr-CA");
   const dataFormatadaBR = dataAtual.toLocaleDateString("pt-BR", opcoes);
   const horaFormatada = dataAtual.toLocaleTimeString("pt-BR", opcoes);
 
-  console.log(dataFormatadaBR)
+  // console.log(dataFormatadaBR);
 
   // https://stackoverflow.com/questions/2388115/get-locale-short-date-format-using-javascript
-  
+
   var codUsuario: string | null;
   codUsuario = localStorage.getItem("codUserAuth");
   codUsuario = codUsuario ? codUsuario : "";
@@ -45,39 +42,14 @@ function Atendimento(props: Props) {
     Assunto: "sem assunto",
     CodSistema: 1,
     CodMeioComunicacao: 1,
-    DataCriacao: `${dataFormatada} ${horaFormatada} `, 
+    DataCriacao: `${dataFormatada} ${horaFormatada} `,
     DataInicio: `${dataFormatada} ${horaFormatada}  `,
     DataFim: `${dataFormatada} ${horaFormatada} `,
     Plantao: 0,
   });
 
-  console.log(formValues)
+  // console.log(formValues);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    
-    if (image !== null) {
-      formData.append('image', image[0]);
-    }
-    
-    formData.append("data", JSON.stringify(formValues));
-  
-    console.log(formData)
-    
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/atendimentos",
-        formData
-      );
-      console.log(response.data);
-      // aqui você pode implementar alguma lógica para lidar com a resposta da API
-    } catch (error) {
-      console.log(error);
-      // aqui você pode implementar alguma lógica para lidar com o erro da API
-    }
-  };
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -91,7 +63,7 @@ function Atendimento(props: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
+    <div className="max-w-xl mx-auto">
       <div className="mb-4">
         <label
           htmlFor="NomeCliente"
@@ -103,7 +75,7 @@ function Atendimento(props: Props) {
           id="NomeCliente"
           name="NomeCliente"
           type="text"
-          value={formValues.NomeCliente}
+          value={props.NomeCliente}
           onChange={handleInputChange}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
           required
@@ -122,7 +94,7 @@ function Atendimento(props: Props) {
             name="dateI"
             type="date"
             onChange={handleInputChange}
-            value={dataFormatada}
+            value={props.DataInicio}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />
@@ -138,7 +110,7 @@ function Atendimento(props: Props) {
             id="dateF"
             name="dateF"
             type="date"
-            value={dataFormatada}
+            value={props.DataFim}
             onChange={handleInputChange}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
@@ -157,7 +129,7 @@ function Atendimento(props: Props) {
             id="timeI"
             name="timeI"
             type="time"
-            value={horaFormatada}
+            value={'000000'}
             onChange={handleInputChange}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
@@ -174,7 +146,7 @@ function Atendimento(props: Props) {
             id="timeF"
             name="timeF"
             type="time"
-            value={horaFormatada}
+            value={'000000'}
             onChange={handleInputChange}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
@@ -191,7 +163,7 @@ function Atendimento(props: Props) {
         <textarea
           id="Problema"
           name="Problema"
-          value={formValues.Problema}
+          value={props.Problema}
           onChange={handleInputChange}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
           rows={4}
@@ -209,44 +181,12 @@ function Atendimento(props: Props) {
         <textarea
           id="Solucao"
           name="Solucao"
-          value={formValues.Solucao}
+          value={props.Solucao}
           onChange={handleInputChange}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
           rows={4}
           required
         ></textarea>
-      </div>
-      <div className="mb-6 w-full">
-        <label
-          htmlFor="cover-photo"
-          className="block text-sm font-medium leading-6 text-gray-900"
-        >
-          Imagem
-        </label>
-        <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-          <div className="text-center">
-            <div className="mt-4 flex text-sm leading-6 text-gray-600">
-              <label
-                htmlFor="file-upload"
-                className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-              >
-                <span>Upload a file</span>
-                <input
-                  id="file-upload"
-                  name="file-upload"
-                  type="file"
-                  className="sr-only"
-                  onChange={(e) => setImage(e.target.files)}
-                />
-              </label>
-              <p className="pl-1">or drag and drop</p>
-            </div>
-            <p className="text-xs leading-5 text-gray-600">
-              PNG, JPG, GIF up to 10MB
-            </p>
-          </div>
-        </div>
-        {image ? image[0].name : "Sem imagem..."}
       </div>
       <div>
         <input type="checkbox" name="plantao" id="plantao" className="mr-2" />
@@ -254,20 +194,8 @@ function Atendimento(props: Props) {
           Plantão
         </label>
       </div>
-      <div className="mt-6 text-right">
-        {props.onCadastro === true ? (
-          <button
-            type="submit"
-            className="px-4 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-600"
-          >
-            Cadastrar atendimento
-          </button>
-        ) : (
-          ""
-        )}
-      </div>
-    </form>
+    </div>
   );
 }
 
-export default Atendimento;
+export default ViewAtendimento;

@@ -4,13 +4,12 @@ import Navbar from "../../components/navbar";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import Modal from "../../components/modal";
-import Atendimento from "../../components/atendimento";
+import Atendimento from "../../components/atendimento/CreateAtendimento";
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const navigate: NavigateFunction = useNavigate();
 
-  console.log(isModalOpen);
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };

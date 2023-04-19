@@ -2,7 +2,8 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Modal from "../modal";
-import Atendimento from "../atendimento";
+import Atendimento from "../atendimento/CreateAtendimento";
+import ViewAtendimento, { FormValues } from "../atendimento/ViewAtendimento";
 
 const Card = () => {
   interface Card {
@@ -19,7 +20,6 @@ const Card = () => {
   const [dados, setDados] = useState([]);
   const [codAtend, setCodAtend] = useState<number>();
 
-  console.log(isModalOpen);
   useEffect(() => {
     axios
       .get("http://localhost:8080/atendimentos")
@@ -41,7 +41,6 @@ const Card = () => {
     setIsModalOpen(false);
   };
 
-  console.log(dados);
   return (
     <div className="flex flex-wrap pl-64">
       {dados.map((item: Card, index) => (
@@ -67,7 +66,16 @@ const Card = () => {
       ))}
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-          <Atendimento onCadastro={false}/>
+          {dados.map((item: FormValues, index) => {
+            var teste = item.DataCriacao.split("T")
+            console.log("esta é a data", teste[0])
+            console.log(dados)
+            return index === codAtend ? (
+              <ViewAtendimento Assunto="" CodEmpresa={item.CodEmpresa} CodMeioComunicacao={item.CodMeioComunicacao} CodSistema={item.CodSistema} CodUsuario={item.CodUsuario} DataCriacao={teste[0]} DataFim={teste[0]} DataInicio={teste[0]} NomeCliente={item.NomeCliente} Plantao={1} Problema={item.Problema} Solucao={item.Solucao} key={codAtend}/>
+            ) : (
+              ""
+            );
+          })}
         </Modal>
       )}
     </div>

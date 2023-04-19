@@ -12,7 +12,7 @@ interface FormValues {
   Solucao: string;
   CodSistema: number;
   CodMeioComunicacao: number;
-  DataCriação: string;
+  DataCriacao: string;
   DataInicio: string;
   DataFim: string;
   Assunto: string;
@@ -45,9 +45,9 @@ function Atendimento(props: Props) {
     Assunto: "sem assunto",
     CodSistema: 1,
     CodMeioComunicacao: 1,
-    DataCriação: `${dataFormatadaBR} ${horaFormatada}`,
-    DataInicio: `${dataFormatadaBR} ${horaFormatada} `,
-    DataFim: `${dataFormatadaBR} ${horaFormatada} `,
+    DataCriacao: `${dataFormatada} ${horaFormatada} `, 
+    DataInicio: `${dataFormatada} ${horaFormatada}  `,
+    DataFim: `${dataFormatada} ${horaFormatada} `,
     Plantao: 0,
   });
 

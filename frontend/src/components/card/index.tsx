@@ -7,9 +7,9 @@ import ViewAtendimento, { FormValues } from "../atendimento/ViewAtendimento";
 const Card = () => {
   interface Card {
     Codigo: string;
-    NomeUsuario: string;
+    CodUsuario: string;
     NomeFantasia: string;
-    Nome: string;
+    NomeCliente: string;
     DataHoraLancamento: string;
     Problema: string;
     Solucao: string;
@@ -55,10 +55,10 @@ const Card = () => {
           <div>
             <p className="text-gray-700 mb-2 max-sm:hidden">{item.Codigo}</p>
             <p className="text-gray-700 mb-2 max-sm:hidden ">
-              Usuário: {item.NomeUsuario}
+              Usuário: {item.CodUsuario}
             </p>
             <p className="text-gray-700 mb-2 max-sm:hidden ">
-              Nome: {item.Nome}
+              Nome: {item.NomeCliente}
             </p>
             {/* <p className="text-gray-700 mb-2 max-sm:hidden ">Ticket: {item.Ticket}</p> */}
           </div>

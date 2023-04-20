@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import FlashMessage, { FlashMessageType } from "../flashMessage";
 
 interface Props {
   onCadastro: boolean;
@@ -27,7 +28,6 @@ function CreateAtendimento(props: Props) {
   const horaFormatada = dataAtual.toLocaleTimeString("pt-BR", opcoes);
   var codUsuario: string | null;
 
-
   // https://stackoverflow.com/questions/2388115/get-locale-short-date-format-using-javascript
 
   codUsuario = localStorage.getItem("codUserAuth");
@@ -50,9 +50,19 @@ function CreateAtendimento(props: Props) {
     Plantao: 0,
   });
 
+  const [flashMessage, setFlashMessage] = useState<FlashMessageType | null>(
+    null
+  );
+  const handleClose = () => {
+    setFlashMessage(null);
+  };
 
+  const handleButtonClick = () => {
+    setFlashMessage({ message: 'Mensagem de sucesso!', type: 'success' });
+  };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+  
 
     const formData = new FormData();
 
@@ -62,13 +72,13 @@ function CreateAtendimento(props: Props) {
 
     formData.append("data", JSON.stringify(formValues));
 
-
     try {
       const response = await axios.post(
         "http://localhost:8080/atendimentos",
         formData
       );
       console.log(response.data);
+      return <FlashMessage message={flashMessage} onClose={handleClose} />;
       // aqui você pode implementar alguma lógica para lidar com a resposta da API
     } catch (error) {
       console.log(error);
@@ -245,7 +255,7 @@ function CreateAtendimento(props: Props) {
           </div>
         </div>
         <p>Imagens selecionas</p>
-            { image ? image.length : ''}
+        {image ? image.length : ""}
       </div>
       <div>
         <input type="checkbox" name="plantao" id="plantao" className="mr-2" />
@@ -255,6 +265,7 @@ function CreateAtendimento(props: Props) {
       </div>
       <div className="mt-6 text-right">
         <button
+        onClick ={handleButtonClick}
           type="submit"
           className="px-4 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-600"
         >

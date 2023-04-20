@@ -1,34 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-interface FlashMessageProps {
+export type FlashMessageType = {
   message: string;
-  duration?: number;
-  onClose: () => void;
-}
+  type: 'success' | 'error';
+};
 
-const FlashMessage: React.FC<FlashMessageProps> = ({ message, duration = 3000, onClose }) => {
-  const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-      onClose();
-    }, duration);
-
-    return () => clearTimeout(timer);
-  }, [duration, onClose]);
+const FlashMessage: React.FC<{ message: FlashMessageType | null, onClose: () => void }> = ({ message, onClose }) => {
+  const [isVisible, setIsVisible] = useState<boolean>(true);
 
   const handleCloseClick = () => {
     setIsVisible(false);
     onClose();
   };
 
+  if (!message || !isVisible) {
+    return null;
+  }
+
   return (
-    <div className={`flash-message ${isVisible ? 'visible' : ''}`}>
-      <div className="message-text">{message}</div>
-      <button className="close-button" onClick={handleCloseClick}>
-        X
-      </button>
+    <div className={`flash-message ${message.type}`}>
+      <span>{message.message}</span>
+      <button onClick={handleCloseClick}>Fechar</button>
     </div>
   );
 };

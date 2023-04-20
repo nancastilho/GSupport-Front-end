@@ -24,6 +24,7 @@ const Card = () => {
       .get("http://localhost:8080/atendimentos")
       .then((response) => {
         setDados(response.data.Result);
+        console.log(response.data.Result);
         console.log(dados);
       })
       .catch((error) => {

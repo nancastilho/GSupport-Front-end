@@ -2,7 +2,6 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Modal from "../modal";
-import Atendimento from "../atendimento/CreateAtendimento";
 import ViewAtendimento, { FormValues } from "../atendimento/ViewAtendimento";
 
 const Card = () => {

@@ -232,6 +232,7 @@ function CreateAtendimento(props: Props) {
                   id="file-upload"
                   name="file-upload"
                   type="file"
+                  multiple
                   className="sr-only"
                   onChange={(e) => setImage(e.target.files)}
                 />

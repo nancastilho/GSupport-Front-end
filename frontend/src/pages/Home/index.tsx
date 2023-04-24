@@ -4,7 +4,7 @@ import Navbar from "../../components/navbar";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import Modal from "../../components/modal";
-import Atendimento from "../../components/atendimento/CreateAtendimento";
+import CreateAtendimento from "../../components/atendimento/CreateAtendimento";
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -35,7 +35,7 @@ const Home = () => {
       </div>
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-          <Atendimento onCadastro={true}/>
+          <CreateAtendimento onCadastro={true}/>
         </Modal>
       )}
     </div>

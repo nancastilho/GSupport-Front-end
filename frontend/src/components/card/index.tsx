@@ -67,11 +67,28 @@ const Card = () => {
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
           {dados.map((item: FormValues, index) => {
-            var teste = item.DataCriacao.split("T")
-            console.log("esta é a data", teste[0])
-            console.log(dados)
+            var teste = item.DataCriacao.split("T");
+            console.log("esta é a data", teste[0]);
+            console.log(dados);
+            console.log(item.Imagens);
             return index === codAtend ? (
-              <ViewAtendimento Assunto="" CodEmpresa={item.CodEmpresa} CodMeioComunicacao={item.CodMeioComunicacao} CodSistema={item.CodSistema} CodUsuario={item.CodUsuario} DataCriacao={teste[0]} DataFim={teste[0]} DataInicio={teste[0]} NomeCliente={item.NomeCliente} Plantao={1} Problema={item.Problema} Solucao={item.Solucao} key={codAtend}/>
+              <ViewAtendimento
+                Assunto=""
+                CodEmpresa={item.CodEmpresa}
+                CodMeioComunicacao={item.CodMeioComunicacao}
+                CodSistema={item.CodSistema}
+                CodUsuario={item.CodUsuario}
+                DataCriacao={teste[0]}
+                DataFim={teste[0]}
+                DataInicio={teste[0]}
+                NomeCliente={item.NomeCliente}
+                Plantao={1}
+                Problema={item.Problema}
+                Solucao={item.Solucao}
+                Imagens={item.Imagens}
+                NomeFantasia={item.NomeFantasia}
+                key={codAtend}
+              />
             ) : (
               ""
             );

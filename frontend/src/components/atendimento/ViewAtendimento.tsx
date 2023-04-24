@@ -4,6 +4,7 @@ import { useState } from "react";
 export interface FormValues {
   CodUsuario: number;
   CodEmpresa: number;
+  NomeFantasia: string;
   NomeCliente: string;
   Problema: string;
   Solucao: string;
@@ -13,6 +14,7 @@ export interface FormValues {
   DataInicio: string;
   DataFim: string;
   Assunto: string;
+  Imagens: string;
   Plantao: number;
 }
 
@@ -31,39 +33,29 @@ function ViewAtendimento(props: FormValues) {
   codUsuario = localStorage.getItem("codUserAuth");
   codUsuario = codUsuario ? codUsuario : "";
 
-  const [image, setImage] = useState<FileList | null>(null);
-
-  const [formValues, setFormValues] = useState<FormValues>({
-    CodUsuario: parseInt(codUsuario),
-    CodEmpresa: 1,
-    NomeCliente: "",
-    Problema: "",
-    Solucao: "",
-    Assunto: "sem assunto",
-    CodSistema: 1,
-    CodMeioComunicacao: 1,
-    DataCriacao: `${dataFormatada} ${horaFormatada} `,
-    DataInicio: `${dataFormatada} ${horaFormatada}  `,
-    DataFim: `${dataFormatada} ${horaFormatada} `,
-    Plantao: 0,
-  });
-
   // console.log(formValues);
 
 
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.target;
 
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  };
 
   return (
     <div className="max-w-xl mx-auto">
+      <div className="mb-4">
+        <label
+          htmlFor="NomeCliente"
+          className="block mb-1 font-medium text-gray-700"
+        >
+          Empresa
+        </label>
+        <input
+          id="NomeCliente"
+          name="NomeCliente"
+          type="text"
+          value={`${props.NomeFantasia} - ${props.CodEmpresa}`} 
+          className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+          required
+        />
+      </div>
       <div className="mb-4">
         <label
           htmlFor="NomeCliente"
@@ -76,7 +68,6 @@ function ViewAtendimento(props: FormValues) {
           name="NomeCliente"
           type="text"
           value={props.NomeCliente}
-          onChange={handleInputChange}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
           required
         />
@@ -93,7 +84,6 @@ function ViewAtendimento(props: FormValues) {
             id="dateI"
             name="dateI"
             type="date"
-            onChange={handleInputChange}
             value={props.DataInicio}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
@@ -111,7 +101,6 @@ function ViewAtendimento(props: FormValues) {
             name="dateF"
             type="date"
             value={props.DataFim}
-            onChange={handleInputChange}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />
@@ -130,7 +119,6 @@ function ViewAtendimento(props: FormValues) {
             name="timeI"
             type="time"
             value={'000000'}
-            onChange={handleInputChange}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />
@@ -147,7 +135,6 @@ function ViewAtendimento(props: FormValues) {
             name="timeF"
             type="time"
             value={'000000'}
-            onChange={handleInputChange}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />
@@ -164,7 +151,6 @@ function ViewAtendimento(props: FormValues) {
           id="Problema"
           name="Problema"
           value={props.Problema}
-          onChange={handleInputChange}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
           rows={4}
           required
@@ -182,11 +168,13 @@ function ViewAtendimento(props: FormValues) {
           id="Solucao"
           name="Solucao"
           value={props.Solucao}
-          onChange={handleInputChange}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
           rows={4}
           required
         ></textarea>
+      </div>
+      <div>
+      
       </div>
       <div>
         <input type="checkbox" name="plantao" id="plantao" className="mr-2" />

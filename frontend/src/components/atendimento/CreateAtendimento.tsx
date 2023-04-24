@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FlashMessage, { FlashMessageType } from "../flashMessage";
 
 interface Props {
@@ -20,6 +20,11 @@ interface FormValues {
   Plantao: number;
 }
 
+interface Empresa {
+  Codigo: string;
+  RazaoSocial: string;
+}
+
 function CreateAtendimento(props: Props) {
   const dataAtual = new Date();
   const opcoes = { timeZone: "America/Sao_Paulo", hour12: false };
@@ -34,10 +39,11 @@ function CreateAtendimento(props: Props) {
   codUsuario = codUsuario ? codUsuario : "";
 
   const [image, setImage] = useState<FileList | null>(null);
+  const [empresa, setEmpresa] = useState([]);
 
   const [formValues, setFormValues] = useState<FormValues>({
     CodUsuario: parseInt(codUsuario),
-    CodEmpresa: 1,
+    CodEmpresa: 0,
     NomeCliente: "",
     Problema: "",
     Solucao: "",
@@ -49,6 +55,24 @@ function CreateAtendimento(props: Props) {
     DataFim: `${dataFormatada} ${horaFormatada} `,
     Plantao: 0,
   });
+
+  const resetForm = () => {
+    codUsuario = codUsuario ? codUsuario : "";
+    setFormValues({
+      CodUsuario: parseInt(codUsuario),
+      CodEmpresa: 0,
+      NomeCliente: "",
+      Problema: "",
+      Solucao: "",
+      Assunto: "sem assunto",
+      CodSistema: 1,
+      CodMeioComunicacao: 1,
+      DataCriacao: `${dataFormatada} ${horaFormatada} `,
+      DataInicio: `${dataFormatada} ${horaFormatada}  `,
+      DataFim: `${dataFormatada} ${horaFormatada} `,
+      Plantao: 0,
+    });
+  };
 
   const [flashMessage, setFlashMessage] = useState<FlashMessageType | null>(
     null
@@ -71,11 +95,8 @@ function CreateAtendimento(props: Props) {
         formData
       );
       console.log(response.data);
-
-      setFlashMessage({
-        message: "Formulário enviado com sucesso!",
-        type: "success",
-      });
+      setFlashMessage({ message: 'Formulário enviado com sucesso!', type: 'success' });
+      resetForm();
       // aqui você pode implementar alguma lógica para lidar com a resposta da API
     } catch (error) {
       console.log(error);
@@ -90,11 +111,35 @@ function CreateAtendimento(props: Props) {
     setFlashMessage({ message: "Mensagem de sucesso!", type: "success" });
   };
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/empresas")
+      .then((response) => {
+        setEmpresa(response.data);
+        console.log(response.data);
+        console.log(empresa);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  // const handleInputChange = (
+  //   event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  // ) => {
+  //   const { name, value } = event.target;
+
+  //   setFormValues((prevValues) => ({
+  //     ...prevValues,
+  //     [name]: value,
+  //   }));
+  // };
   const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = event.target;
-
     setFormValues((prevValues) => ({
       ...prevValues,
       [name]: value,
@@ -104,6 +149,28 @@ function CreateAtendimento(props: Props) {
   return (
     <div>
       <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
+        <div className="mb-4">
+          <label
+            htmlFor="CodEmpresa"
+            className="block mb-1 font-medium text-gray-700"
+          >
+            Empresa
+          </label>
+          <select
+            id="CodEmpresa"
+            name="CodEmpresa"
+            className="w-full h-10 px-3 rounded-lg border-2 border-gray-200 mb-2 focus:outline-none focus:border-blue-500"
+            value={formValues.CodEmpresa}
+            onChange={handleInputChange}
+          >
+            {empresa.map((item: Empresa) => (
+              <option value={item.Codigo}>
+                {item.RazaoSocial} - {item.Codigo}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div className="mb-4">
           <label
             htmlFor="NomeCliente"
@@ -279,7 +346,7 @@ function CreateAtendimento(props: Props) {
         </div>
       </form>
       <div className="fixed top-0 right-0 p-4 text-white z-50">
-        <FlashMessage message={flashMessage} onClose={handleClose} />
+      <FlashMessage message={flashMessage} onClose={handleClose} />
       </div>
     </div>
   );

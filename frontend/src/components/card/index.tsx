@@ -67,8 +67,10 @@ const Card = () => {
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
           {dados.map((item: FormValues, index) => {
-            var teste = item.DataCriacao.split("T");
-            console.log("esta é a data", teste[0]);
+            var Data = item.DataCriacao.split("T");
+            var Hora = Data[1].split(".");
+            console.log("esta é a data", Data[0]);
+            console.log("esta é a HORA", Hora[0]);
             console.log(dados);
             console.log(item.Imagens);
             return index === codAtend ? (
@@ -78,9 +80,11 @@ const Card = () => {
                 CodMeioComunicacao={item.CodMeioComunicacao}
                 CodSistema={item.CodSistema}
                 CodUsuario={item.CodUsuario}
-                DataCriacao={teste[0]}
-                DataFim={teste[0]}
-                DataInicio={teste[0]}
+                DataCriacao={Data[0]}
+                DataFim={Data[0]}
+                DataInicio={Data[0]}
+                HoraFim={Hora[0]}
+                HoraInicio={Hora[0]}
                 NomeCliente={item.NomeCliente}
                 Plantao={1}
                 Problema={item.Problema}

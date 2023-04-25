@@ -22,7 +22,7 @@ interface FormValues {
 
 interface Empresa {
   Codigo: string;
-  RazaoSocial: string;
+  NomeFantasia: string;
 }
 
 function CreateAtendimento(props: Props) {
@@ -113,7 +113,7 @@ function CreateAtendimento(props: Props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/empresas")
+      .get("http://localhost:8080/empresas?OrderBy=NomeFantasia")
       .then((response) => {
         setEmpresa(response.data);
         console.log(response.data);
@@ -165,7 +165,7 @@ function CreateAtendimento(props: Props) {
           >
             {empresa.map((item: Empresa) => (
               <option value={item.Codigo}>
-                {item.RazaoSocial} - {item.Codigo}
+                {item.NomeFantasia} - {item.Codigo}
               </option>
             ))}
           </select>

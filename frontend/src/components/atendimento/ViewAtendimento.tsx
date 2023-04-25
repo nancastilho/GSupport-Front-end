@@ -13,30 +13,16 @@ export interface FormValues {
   DataCriacao: string;
   DataInicio: string;
   DataFim: string;
+  HoraInicio: string;
+  HoraFim: string;
   Assunto: string;
   Imagens: string;
   Plantao: number;
 }
 
 function ViewAtendimento(props: FormValues) {
-  const dataAtual = new Date();
-  const opcoes = { timeZone: "America/Sao_Paulo", hour12: false };
-  const dataFormatada = dataAtual.toLocaleDateString("fr-CA");
-  const dataFormatadaBR = dataAtual.toLocaleDateString("pt-BR", opcoes);
-  const horaFormatada = dataAtual.toLocaleTimeString("pt-BR", opcoes);
-
-  // console.log(dataFormatadaBR);
-
-  // https://stackoverflow.com/questions/2388115/get-locale-short-date-format-using-javascript
-
-  var codUsuario: string | null;
-  codUsuario = localStorage.getItem("codUserAuth");
-  codUsuario = codUsuario ? codUsuario : "";
-
-  // console.log(formValues);
-
-
-
+  console.log("a imagem é esse log", props.Imagens);
+  console.log("essa é a hora via props" + props.DataCriacao);
 
   return (
     <div className="max-w-xl mx-auto">
@@ -48,10 +34,11 @@ function ViewAtendimento(props: FormValues) {
           Empresa
         </label>
         <input
+          disabled
           id="NomeCliente"
           name="NomeCliente"
           type="text"
-          value={`${props.NomeFantasia} - ${props.CodEmpresa}`} 
+          value={`${props.NomeFantasia} - ${props.CodEmpresa}`}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
           required
         />
@@ -64,6 +51,7 @@ function ViewAtendimento(props: FormValues) {
           Nome
         </label>
         <input
+          disabled
           id="NomeCliente"
           name="NomeCliente"
           type="text"
@@ -81,6 +69,7 @@ function ViewAtendimento(props: FormValues) {
             Data inicio
           </label>
           <input
+            disabled
             id="dateI"
             name="dateI"
             type="date"
@@ -97,6 +86,7 @@ function ViewAtendimento(props: FormValues) {
             Data fim
           </label>
           <input
+            disabled
             id="dateF"
             name="dateF"
             type="date"
@@ -115,10 +105,11 @@ function ViewAtendimento(props: FormValues) {
             Hora inicio
           </label>
           <input
+            disabled
             id="timeI"
             name="timeI"
             type="time"
-            value={'000000'}
+            value={props.HoraInicio}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />
@@ -131,10 +122,11 @@ function ViewAtendimento(props: FormValues) {
             Hora fim
           </label>
           <input
+            disabled
             id="timeF"
             name="timeF"
             type="time"
-            value={'000000'}
+            value={props.HoraFim}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />
@@ -173,11 +165,20 @@ function ViewAtendimento(props: FormValues) {
           required
         ></textarea>
       </div>
+
       <div>
-      
+        <a href={props.Imagens} target="_blank" rel="noreferrer noopener">
+          <img src={props.Imagens[0]} alt="teste" className="w-10" />
+        </a>
       </div>
-      <div>
-        <input type="checkbox" name="plantao" id="plantao" className="mr-2" />
+      <div className="pt-3">
+        <input
+          disabled
+          type="checkbox"
+          name="plantao"
+          id="plantao"
+          className="mr-2"
+        />
         <label htmlFor="agreed" className="font-medium text-gray-700">
           Plantão
         </label>

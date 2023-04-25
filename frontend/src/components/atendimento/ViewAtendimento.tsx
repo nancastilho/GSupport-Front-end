@@ -34,7 +34,7 @@ function ViewAtendimento(props: FormValues) {
           Empresa
         </label>
         <input
-          disabled
+          readOnly
           id="NomeCliente"
           name="NomeCliente"
           type="text"
@@ -51,7 +51,7 @@ function ViewAtendimento(props: FormValues) {
           Nome
         </label>
         <input
-          disabled
+          readOnly
           id="NomeCliente"
           name="NomeCliente"
           type="text"
@@ -69,7 +69,7 @@ function ViewAtendimento(props: FormValues) {
             Data inicio
           </label>
           <input
-            disabled
+            readOnly
             id="dateI"
             name="dateI"
             type="date"
@@ -86,7 +86,7 @@ function ViewAtendimento(props: FormValues) {
             Data fim
           </label>
           <input
-            disabled
+            readOnly
             id="dateF"
             name="dateF"
             type="date"
@@ -105,7 +105,7 @@ function ViewAtendimento(props: FormValues) {
             Hora inicio
           </label>
           <input
-            disabled
+            readOnly
             id="timeI"
             name="timeI"
             type="time"
@@ -122,7 +122,7 @@ function ViewAtendimento(props: FormValues) {
             Hora fim
           </label>
           <input
-            disabled
+            readOnly
             id="timeF"
             name="timeF"
             type="time"
@@ -168,12 +168,14 @@ function ViewAtendimento(props: FormValues) {
 
       <div>
         <a href={props.Imagens} target="_blank" rel="noreferrer noopener">
-          <img src={props.Imagens[0]} alt="teste" className="w-10" />
+          {props.Imagens[0] ? <img src={props.Imagens[0]} alt="" className="w-10" /> : ""}
+          {/* <img src={props.Imagens[0]} alt="" className="w-10" /> */}
+          
         </a>
       </div>
       <div className="pt-3">
         <input
-          disabled
+          readOnly
           type="checkbox"
           name="plantao"
           id="plantao"

@@ -26,6 +26,7 @@ interface Empresa {
 }
 
 function CreateAtendimento(props: Props) {
+  var imgArr = []
   const dataAtual = new Date();
   const opcoes = { timeZone: "America/Sao_Paulo", hour12: false };
   const dataFormatada = dataAtual.toLocaleDateString("fr-CA");
@@ -80,13 +81,15 @@ function CreateAtendimento(props: Props) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const formData = new FormData();
-
     if (image !== null) {
-      formData.append("image", image[0]);
+      for (let index = 0; index < image.length; index++) {
+        formData.append(`image`, image[index])
+        console.log(image[index])
+      }
     }
 
+    console.log('array de imagem', image);
     formData.append("data", JSON.stringify(formValues));
 
     try {
@@ -94,6 +97,7 @@ function CreateAtendimento(props: Props) {
         "http://localhost:8080/atendimentos",
         formData
       );
+      
       console.log(response.data);
       setFlashMessage({ message: 'Formulário enviado com sucesso!', type: 'success' });
       resetForm();

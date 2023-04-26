@@ -1,10 +1,14 @@
-import './index.css';
-import 'tailwindcss/tailwind.css';
-import RoutesApp from './routes';
+import "./index.css";
+import "tailwindcss/tailwind.css";
+import RoutesApp from "./routes";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
-    <RoutesApp/>
+    <div>
+      <Toaster position="top-right" reverseOrder={false} />
+      <RoutesApp />
+    </div>
   );
 }
 

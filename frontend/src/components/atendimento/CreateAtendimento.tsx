@@ -1,6 +1,7 @@
 import axios from "axios";
 import { SetStateAction, useEffect, useState } from "react";
-import FlashMessage, { FlashMessageType } from "../flashMessage";
+import toast from 'react-hot-toast';
+
 
 interface Props {
   onCadastro: boolean;
@@ -26,11 +27,10 @@ interface Empresa {
 }
 
 function CreateAtendimento(props: Props) {
-  var imgArr = []
   const dataAtual = new Date();
   const opcoes = { timeZone: "America/Sao_Paulo", hour12: false };
   const dataFormatada = dataAtual.toLocaleDateString("fr-CA");
-  const dataFormatadaBR = dataAtual.toLocaleDateString("pt-BR", opcoes);
+  // const dataFormatadaBR = dataAtual.toLocaleDateString("pt-BR", opcoes);
   const horaFormatada = dataAtual.toLocaleTimeString("pt-BR", opcoes);
   var codUsuario: string | null;
 
@@ -75,40 +75,41 @@ function CreateAtendimento(props: Props) {
     });
   };
 
-  const [flashMessage, setFlashMessage] = useState<FlashMessageType | null>(
-    null
-  );
   
-  const handleImageSubmit = (event: { target: { files: SetStateAction<FileList | null>; }; })=>{
-    if(!image){
-      setImage(event.target.files)
-    }
-    setImage(event.target.files)
 
-  }
+  const handleImageSubmit = (event: {
+    target: { files: SetStateAction<FileList | null> };
+  }) => {
+    if (!image) {
+      setImage(event.target.files);
+    }
+    setImage(event.target.files);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData();
-
     if (image !== null) {
       for (let index = 0; index < image.length; index++) {
-        formData.append(`image`, image[index])
-        console.log(image[index])
+        formData.append(`image`, image[index]);
+        console.log(image[index]);
       }
     }
-
-    console.log('array de imagem', image);
+    console.log("array de imagem", image);
     formData.append("data", JSON.stringify(formValues));
-
     try {
+      toast.loading('Enviando seu atendimento, aguarde!', {
+        duration:10000
+    })
       const response = await axios.post(
         "http://localhost:8080/atendimentos",
         formData
-      );
-      
+        );
       console.log(response.data);
-      setFlashMessage({ message: 'Formulário enviado com sucesso!', type: 'success' });
+     
+      toast.success('Atendimento cadastrado com sucesso!', {
+        duration:4000
+      });
       resetForm();
       // aqui você pode implementar alguma lógica para lidar com a resposta da API
     } catch (error) {
@@ -116,13 +117,8 @@ function CreateAtendimento(props: Props) {
       // aqui você pode implementar alguma lógica para lidar com o erro da API
     }
   };
-  const handleClose = () => {
-    setFlashMessage(null);
-  };
+ 
 
-  const handleButtonClick = () => {
-    setFlashMessage({ message: "Mensagem de sucesso!", type: "success" });
-  };
 
   useEffect(() => {
     axios
@@ -158,8 +154,7 @@ function CreateAtendimento(props: Props) {
       [name]: value,
     }));
   };
-  
- 
+
   return (
     <div>
       <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
@@ -351,7 +346,6 @@ function CreateAtendimento(props: Props) {
         </div>
         <div className="mt-6 text-right">
           <button
-            onClick={handleButtonClick}
             type="submit"
             className="px-4 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-600"
           >
@@ -359,8 +353,8 @@ function CreateAtendimento(props: Props) {
           </button>
         </div>
       </form>
-      <div className="fixed top-0 right-0 p-4 text-white z-50">
-      <FlashMessage message={flashMessage} onClose={handleClose} />
+      <div >
+        {/* <FlashMessage  message={flashMessage} onClose={handleClose} /> */}
       </div>
     </div>
   );

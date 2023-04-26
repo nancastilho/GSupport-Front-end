@@ -16,13 +16,20 @@ export interface FormValues {
   HoraInicio: string;
   HoraFim: string;
   Assunto: string;
-  Imagens: string;
+  Imagens: [];
   Plantao: number;
 }
+
 
 function ViewAtendimento(props: FormValues) {
   console.log("a imagem é esse log", props.Imagens);
   console.log("essa é a hora via props" + props.DataCriacao);
+  
+  var arrImg:[]
+
+  arrImg = props.Imagens
+  
+  console.log('teste', arrImg)
 
   return (
     <div className="max-w-xl mx-auto">
@@ -166,12 +173,13 @@ function ViewAtendimento(props: FormValues) {
         ></textarea>
       </div>
 
-      <div>
-        <a href={props.Imagens} target="_blank" rel="noreferrer noopener">
-          {props.Imagens[0] ? <img src={props.Imagens[0]} alt="" className="w-10" /> : ""}
-          {/* <img src={props.Imagens[0]} alt="" className="w-10" /> */}
+      <div className="flex w-60">
+          {props.Imagens !== null ? 
+          arrImg.map((img:string) => (
+            <a href={img} target="_blank" rel="noopener noreferrer"><img src={img} alt="" className="w-10 h-10 px-1"/></a>
+          ))
+           : ""}
           
-        </a>
       </div>
       <div className="pt-3">
         <input

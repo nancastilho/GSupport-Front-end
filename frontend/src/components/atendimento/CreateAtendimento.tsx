@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import FlashMessage, { FlashMessageType } from "../flashMessage";
 
 interface Props {
@@ -78,6 +78,14 @@ function CreateAtendimento(props: Props) {
   const [flashMessage, setFlashMessage] = useState<FlashMessageType | null>(
     null
   );
+  
+  const handleImageSubmit = (event: { target: { files: SetStateAction<FileList | null>; }; })=>{
+    if(!image){
+      setImage(event.target.files)
+    }
+    setImage(event.target.files)
+
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -322,7 +330,7 @@ function CreateAtendimento(props: Props) {
                     type="file"
                     multiple
                     className="sr-only"
-                    onChange={(e) => setImage(e.target.files)}
+                    onChange={handleImageSubmit}
                   />
                 </label>
                 <p className="pl-1">or drag and drop</p>

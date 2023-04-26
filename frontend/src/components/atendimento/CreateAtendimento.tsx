@@ -82,6 +82,7 @@ function CreateAtendimento(props: Props) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData();
+
     if (image !== null) {
       for (let index = 0; index < image.length; index++) {
         formData.append(`image`, image[index])
@@ -149,7 +150,8 @@ function CreateAtendimento(props: Props) {
       [name]: value,
     }));
   };
-
+  
+ 
   return (
     <div>
       <form onSubmit={handleSubmit} className="max-w-xl mx-auto">

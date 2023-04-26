@@ -16,13 +16,20 @@ export interface FormValues {
   HoraInicio: string;
   HoraFim: string;
   Assunto: string;
-  Imagens: string;
+  Imagens: [];
   Plantao: number;
 }
+
 
 function ViewAtendimento(props: FormValues) {
   console.log("a imagem é esse log", props.Imagens);
   console.log("essa é a hora via props" + props.DataCriacao);
+  
+  var arrImg:[]
+
+  arrImg = props.Imagens
+  
+  console.log('teste', arrImg)
 
   return (
     <div className="max-w-xl mx-auto">
@@ -34,7 +41,7 @@ function ViewAtendimento(props: FormValues) {
           Empresa
         </label>
         <input
-          disabled
+          readOnly
           id="NomeCliente"
           name="NomeCliente"
           type="text"
@@ -51,7 +58,7 @@ function ViewAtendimento(props: FormValues) {
           Nome
         </label>
         <input
-          disabled
+          readOnly
           id="NomeCliente"
           name="NomeCliente"
           type="text"
@@ -69,7 +76,7 @@ function ViewAtendimento(props: FormValues) {
             Data inicio
           </label>
           <input
-            disabled
+            readOnly
             id="dateI"
             name="dateI"
             type="date"
@@ -86,7 +93,7 @@ function ViewAtendimento(props: FormValues) {
             Data fim
           </label>
           <input
-            disabled
+            readOnly
             id="dateF"
             name="dateF"
             type="date"
@@ -105,7 +112,7 @@ function ViewAtendimento(props: FormValues) {
             Hora inicio
           </label>
           <input
-            disabled
+            readOnly
             id="timeI"
             name="timeI"
             type="time"
@@ -122,7 +129,7 @@ function ViewAtendimento(props: FormValues) {
             Hora fim
           </label>
           <input
-            disabled
+            readOnly
             id="timeF"
             name="timeF"
             type="time"
@@ -166,14 +173,17 @@ function ViewAtendimento(props: FormValues) {
         ></textarea>
       </div>
 
-      <div>
-        <a href={props.Imagens} target="_blank" rel="noreferrer noopener">
-          <img src={props.Imagens[0]} alt="teste" className="w-10" />
-        </a>
+      <div className="flex w-60">
+          {props.Imagens !== null ? 
+          arrImg.map((img:string) => (
+            <a href={img} target="_blank" rel="noopener noreferrer"><img src={img} alt="" className="w-10 h-10 px-1"/></a>
+          ))
+           : ""}
+          
       </div>
       <div className="pt-3">
         <input
-          disabled
+          readOnly
           type="checkbox"
           name="plantao"
           id="plantao"

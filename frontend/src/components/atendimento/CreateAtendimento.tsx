@@ -114,6 +114,7 @@ function CreateAtendimento(props: Props) {
       // aqui você pode implementar alguma lógica para lidar com a resposta da API
     } catch (error) {
       console.log(error);
+      toast.error('Erro ao inserir atendimento!')
       // aqui você pode implementar alguma lógica para lidar com o erro da API
     }
   };

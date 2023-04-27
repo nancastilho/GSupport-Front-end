@@ -54,17 +54,17 @@ const Login = () => {
       className="h-screen bg-[#edf2f7] overflow-hidden flex items-center justify-center" /*style="background: #edf2f7;"*/
     >
       <div className="h-screen w-full flex">
-        <div className="flex w-1/2 bg-gradient-to-tr from-blue-950 to-sky-950 i justify-around items-center">
+        <div className="flex w-1/2 bg-gradient-to-tr from-blue-950 to-sky-900 i justify-around items-center">
           <div>
             <h1 className="text-white font-bold text-4xl font-sans">
-              GSuporte
+              GSupport
             </h1>
             <p className="text-white mt-1">
               Sistema de gestao de atendimento HelpDesk
             </p>
             <button
               type="submit"
-              className="block w-28 bg-white text-indigo-800 mt-4 py-2 rounded-2xl font-bold mb-2"
+              className="block w-28 bg-white text-blue-800 mt-4 py-2 rounded-2xl font-bold mb-2"
             >
               Saiba Mais
             </button>

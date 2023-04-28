@@ -84,7 +84,7 @@ const Search = () => {
     <LayoutPadrao>
       <div className="flex">
         <div className="w-1/2 h-screen p-3">
-          <div className="max-w-2xl  mx-auto">
+          <div className="max-w-2xl h-screen mx-auto">
               <div className="flex p-2 justify-around">
                 <div className="max-w-fit mx-3 ">
                   <div className="relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
@@ -169,7 +169,7 @@ const Search = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="">
+                <tbody className="h-64">
                   {dados.map((item: Lista, index) => (
                     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" onClick={() => handleListView(item)}>
                       <th
@@ -382,6 +382,7 @@ const Search = () => {
             : ""}
           </div>
         </div>
+      </div>
         {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
           {/* {dados.map((item: FormValues, index) => {
@@ -398,7 +399,6 @@ const Search = () => {
           })} */}
         </Modal>
       )}
-      </div>
     </LayoutPadrao>
   );
 };

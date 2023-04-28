@@ -16,6 +16,7 @@ const Login = () => {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    console.log('ta enviando')
     try {
       const result = await axios.post<{ senhaHash: string; userData: any }>(
         "http://localhost:8080/login",

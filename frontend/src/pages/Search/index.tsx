@@ -26,6 +26,7 @@ const Search = () => {
   const [list, setList] = useState<Lista>();
   const [codAtend, setCodAtend] = useState<number>();
 
+console.log(usuario)
   function handleModalOpen(codigo: number) {
     setIsModalOpen(true);
     setCodAtend(codigo);
@@ -62,11 +63,10 @@ const Search = () => {
         params: {
           DataInicio: "20230101",
           DataFim: "20231231",
-          Rows: "20",
-          FiltroPaginacao: "1",
+          Rows: "10",
           PageNumber: "1",
-          Texto:{texto},
-          Usuario:{usuario}
+          Texto: texto,
+          Usuario:usuario
         },
       })
       .then((response) => {
@@ -77,7 +77,7 @@ const Search = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [texto, usuario]);
 
 
   return (
@@ -169,7 +169,7 @@ const Search = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="h-64">
+                <tbody >
                   {dados.map((item: Lista, index) => (
                     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" onClick={() => handleListView(item)}>
                       <th

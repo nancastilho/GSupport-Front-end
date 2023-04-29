@@ -7,7 +7,7 @@ import Modal from "../../components/modal";
 import CreateAtendimento from "../../components/atendimento/CreateAtendimento";
 import LayoutPadrao from "../../components/LayoutPadrao";
 
-const Home = () => {
+const Graphics = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const navigate: NavigateFunction = useNavigate();
 
@@ -27,9 +27,9 @@ const Home = () => {
   
   return (
     <LayoutPadrao>
-      <Card/>
+      <h1>tela de relatorios</h1>
     </LayoutPadrao>
   );
 };
 
-export default Home;
+export default Graphics;

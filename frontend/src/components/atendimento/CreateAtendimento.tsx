@@ -99,7 +99,7 @@ function CreateAtendimento(props: Props) {
     formData.append("data", JSON.stringify(formValues));
     try {
       toast.loading('Enviando seu atendimento, aguarde!', {
-        duration:10000
+        duration:2000
     })
       const response = await axios.post(
         "http://localhost:8080/atendimentos",
@@ -108,12 +108,13 @@ function CreateAtendimento(props: Props) {
       console.log(response.data);
      
       toast.success('Atendimento cadastrado com sucesso!', {
-        duration:4000
+        duration:2000
       });
       resetForm();
       // aqui você pode implementar alguma lógica para lidar com a resposta da API
     } catch (error) {
       console.log(error);
+      toast.error('Erro ao inserir atendimento!')
       // aqui você pode implementar alguma lógica para lidar com o erro da API
     }
   };

@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 
-interface Props {
-  onCadastro: boolean;
-}
+// interface Props {
+//   onCadastro: boolean;
+// }
 interface FormValues {
   CodUsuario: number;
   CodEmpresa: number;
@@ -19,16 +19,15 @@ interface FormValues {
   Plantao: number;
 }
 
-function CreateAtendimento(props: Props) {
+function EditAtendimento() {
   const dataAtual = new Date();
   const opcoes = { timeZone: "America/Sao_Paulo", hour12: false };
   const dataFormatada = dataAtual.toLocaleDateString("fr-CA");
   // const dataFormatadaBR = dataAtual.toLocaleDateString("pt-BR", opcoes);
   const horaFormatada = dataAtual.toLocaleTimeString("pt-BR", opcoes);
 
-
   // https://stackoverflow.com/questions/2388115/get-locale-short-date-format-using-javascript
-  
+
   var codUsuario: string | null;
   codUsuario = localStorage.getItem("codUserAuth");
   codUsuario = codUsuario ? codUsuario : "";
@@ -44,25 +43,23 @@ function CreateAtendimento(props: Props) {
     Assunto: "sem assunto",
     CodSistema: 1,
     CodMeioComunicacao: 1,
-    DataCriacao: `${dataFormatada} ${horaFormatada} `, 
+    DataCriacao: `${dataFormatada} ${horaFormatada} `,
     DataInicio: `${dataFormatada} ${horaFormatada}  `,
     DataFim: `${dataFormatada} ${horaFormatada} `,
     Plantao: 0,
   });
 
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData();
-    
+
     if (image !== null) {
-      formData.append('image', image[0]);
+      formData.append("image", image[0]);
     }
-    
+
     formData.append("data", JSON.stringify(formValues));
-  
-    
+
     try {
       const response = await axios.post(
         "http://localhost:8080/atendimentos",
@@ -252,19 +249,15 @@ function CreateAtendimento(props: Props) {
         </label>
       </div>
       <div className="mt-6 text-right">
-        {props.onCadastro === true ? (
-          <button
-            type="submit"
-            className="px-4 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-600"
-          >
-            Cadastrar atendimento
-          </button>
-        ) : (
-          ""
-        )}
+        <button
+          type="submit"
+          className="px-4 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-600"
+        >
+          Cadastrar atendimento
+        </button>
       </div>
     </form>
   );
 }
 
-export default CreateAtendimento;
+export default EditAtendimento;

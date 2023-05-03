@@ -9,7 +9,7 @@ import EditAtendimento from "../../components/atendimento/EditAtendimento";
 import { FormValues } from "../../components/atendimento/ViewAtendimento";
 import Pagination from "../../components/pagination";
 
-interface Lista {
+export interface Lista {
   Codigo: number;
   CodUsuario: number;
   Usuario: string;
@@ -26,7 +26,7 @@ const Search = () => {
   const [texto, setTexto] = useState<string>();
   const [usuario, setUsuario] = useState<string>();
   const [list, setList] = useState<Lista>();
-  const [atend, setAtend] = useState<Lista>();
+  const [codAtend, setCodAtend] = useState<number>();
   const [pages, setPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -35,10 +35,10 @@ const Search = () => {
     console.log(currentPage);
   }
 
-  function handleModalOpen(item:Lista) {
+  console.log(codAtend);
+  function handleModalOpen(codigo: number) {
     setIsModalOpen(true);
-    setAtend(item);
-    
+    setCodAtend(codigo);
   }
 
   const handleModalClose = () => {
@@ -199,7 +199,7 @@ const Search = () => {
                       <td className="px-5 py-4 text-right">
                         <label className="font-medium text-blue-600 dark:text-blue-500 cursor-pointer hover:underline ">
                           <Icon
-                            onClick={() => handleModalOpen(item)}
+                            onClick={() => handleModalOpen(item.Codigo)}
                             icon={"mdi:pencil"}
                             width={18}
                           />
@@ -275,11 +275,25 @@ const Search = () => {
         </div>
       </div>
       {isModalOpen && (
+        
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-          
-          <EditAtendimento />
-
-          
+          <EditAtendimento
+            Assunto=""
+            CodEmpresa={1}
+            CodMeioComunicacao={1}
+            CodSistema={1}
+            CodUsuario={1}
+            Codigo={1}
+            DataCriacao=""
+            DataFim=""
+            DataInicio=""
+            NomeCliente=""
+            Plantao={1}
+            Problema=""
+            Solucao=""
+            Usuario="renan"
+            key={1}
+          />
         </Modal>
       )}
     </LayoutPadrao>

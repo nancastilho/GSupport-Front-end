@@ -18,19 +18,23 @@ const Login = () => {
     event.preventDefault();
     console.log('ta enviando')
     try {
-      const result = await axios.post<{ senhaHash: string; userData: any }>(
+      const result = await axios.post<{ jwtToken: string; userData: any }>(
         "http://localhost:8080/login",
         credentials
       );
 
-      const token = result.data.senhaHash;
+      const token = result.data.jwtToken;
       const userAuth = result.data.userData.Usuario;
       const codUserAuth = result.data.userData.Codigo;
 
       localStorage.setItem("userAuth", userAuth);
+      localStorage.setItem("userName", userAuth);
       localStorage.setItem("codUserAuth", codUserAuth);
       localStorage.setItem("token", token);
-      navigate("/home");
+
+      setTimeout(() => {
+        navigate("/home");
+      }, 1000);
     } catch (error) {
       console.error(error);
     }
@@ -73,8 +77,8 @@ const Login = () => {
         </div>
         <div className="flex w-1/2 justify-center items-center bg-white">
           <form className="bg-white" onSubmit={handleSubmit}>
-            <h1 className="text-gray-800 font-bold text-2xl mb-1">
-              Olá HelpDesk!
+            <h1 className="text-gray-800 font-bold text-2xl mb-1 capitalize">
+              Olá, {localStorage.getItem('userName') ? localStorage.getItem('userName') : 'HelpDesk'}!
             </h1>
             <p className="text-sm font-normal text-gray-600 mb-7">Bem vindo</p>
             <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">

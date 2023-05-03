@@ -21,7 +21,7 @@ const Card = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/atendimentos")
+      .get("http://localhost:8080/atendimentos", {headers: {authorization: `Bearer ${localStorage.getItem('token')}` }})
       .then((response) => {
         setDados(response.data.Result);
         console.log(response.data.Result);

@@ -54,7 +54,7 @@ function EditAtendimento(props: FormValues) {
     try {
       const response = await axios.post(
         "http://localhost:8080/atendimentos",
-        formData
+        formData, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
       );
       console.log(response.data);
       // aqui você pode implementar alguma lógica para lidar com a resposta da API

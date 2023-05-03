@@ -103,7 +103,7 @@ function CreateAtendimento(props: Props) {
     })
       const response = await axios.post(
         "http://localhost:8080/atendimentos",
-        formData
+        formData, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}}
         );
       console.log(response.data);
      

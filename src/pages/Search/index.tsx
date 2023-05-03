@@ -12,6 +12,7 @@ import Pagination from "../../components/pagination";
 interface Lista {
   Codigo: number;
   CodUsuario: number;
+  Usuario: string;
   NomeFantasia: string;
   NomeCliente: string;
   DataCriacao: string;
@@ -25,22 +26,19 @@ const Search = () => {
   const [texto, setTexto] = useState<string>();
   const [usuario, setUsuario] = useState<string>();
   const [list, setList] = useState<Lista>();
-  const [codAtend, setCodAtend] = useState<number>();
-  const [pages, setPages] = useState<number>();
-
-  console.log(pages);
-  console.log("total de dados tratado", pages);
-
+  const [atend, setAtend] = useState<Lista>();
+  const [pages, setPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState(1);
 
   function fetchData(newPage: number) {
-    // Faz a requisição dos dados para a nova página
     setCurrentPage(newPage);
+    console.log(currentPage);
   }
 
-  function handleModalOpen(codigo: number) {
+  function handleModalOpen(item:Lista) {
     setIsModalOpen(true);
-    setCodAtend(codigo);
+    setAtend(item);
+    
   }
 
   const handleModalClose = () => {
@@ -76,7 +74,7 @@ const Search = () => {
           DataInicio: "20230101",
           DataFim: "20231231",
           Rows: "20",
-          PageNumber: "1",
+          PageNumber: currentPage,
           Texto: texto,
           Usuario: usuario,
         },
@@ -91,13 +89,13 @@ const Search = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [texto, usuario]);
+  }, [texto, usuario, currentPage]);
 
   return (
     <LayoutPadrao>
       <div className="flex">
-        <div className="w-1/2 h-screen p-3">
-          <div className="max-w-2xl h-screen mx-auto">
+        <div className="w-4/6 h-screen p-3">
+          <div className="max-w-3xl h-screen mx-auto">
             <div className="flex p-2 justify-around">
               <div className="max-w-fit mx-3 ">
                 <div className="relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
@@ -196,12 +194,12 @@ const Search = () => {
                       </th>
                       <td className="px-5 py-4">{item.DataCriacao}</td>
                       <td className="px-5 py-4">{item.NomeFantasia}</td>
-                      <td className="px-5 py-4">{item.CodUsuario}</td>
+                      <td className="px-5 py-4">{item.Usuario}</td>
                       <td className="px-5 py-4">{item.NomeCliente}</td>
                       <td className="px-5 py-4 text-right">
                         <label className="font-medium text-blue-600 dark:text-blue-500 cursor-pointer hover:underline ">
                           <Icon
-                            onClick={() => handleModalOpen(index)}
+                            onClick={() => handleModalOpen(item)}
                             icon={"mdi:pencil"}
                             width={18}
                           />
@@ -212,150 +210,20 @@ const Search = () => {
                 </tbody>
               </table>
             </div>
-            {/* <div className="flex justify-center">
-                <div className=" inline-flex border border-[#e4e4e4] bg-white p-2 rounded-xl ">
-                  <ul className="flex items-center -mx-[6px]">
-                    <li className="px-[6px]">
-                      <a
-                        href="a"
-                        className="
-                          w-9
-                          h-9
-                          flex
-                          items-center
-                          justify-center
-                          rounded-md
-                          border border-[#EDEFF1]
-                          text-[#838995] text-base
-                          hover:bg-primary hover:border-primary hover:text-white
-                          "
-                      >
-                        <span>
-                          <svg
-                            width="8"
-                            height="15"
-                            viewBox="0 0 8 15"
-                            className="fill-current stroke-current"
-                          >
-                            <path
-                              d="M7.12979 1.91389L7.1299 1.914L7.1344 1.90875C7.31476 1.69833 7.31528 1.36878 7.1047 1.15819C7.01062 1.06412 6.86296 1.00488 6.73613 1.00488C6.57736 1.00488 6.4537 1.07206 6.34569 1.18007L6.34564 1.18001L6.34229 1.18358L0.830207 7.06752C0.830152 7.06757 0.830098 7.06763 0.830043 7.06769C0.402311 7.52078 0.406126 8.26524 0.827473 8.73615L0.827439 8.73618L0.829982 8.73889L6.34248 14.6014L6.34243 14.6014L6.34569 14.6047C6.546 14.805 6.88221 14.8491 7.1047 14.6266C7.30447 14.4268 7.34883 14.0918 7.12833 13.8693L1.62078 8.01209C1.55579 7.93114 1.56859 7.82519 1.61408 7.7797L1.61413 7.77975L1.61729 7.77639L7.12979 1.91389Z"
-                              strokeWidth="0.3"
-                            ></path>
-                          </svg>
-                        </span>
-                      </a>
-                    </li>
-                    <li className="px-[6px]">
-                      <a
-                        href="a"
-                        className="
-                          w-9
-                          h-9
-                          flex
-                          items-center
-                          justify-center
-                          rounded-md
-                          border border-[#EDEFF1]
-                          text-[#838995] text-base
-                          hover:bg-primary hover:border-primary hover:text-white
-                          "
-                      >
-                        1
-                      </a>
-                    </li>
-                    <li className="px-[6px]">
-                      <a
-                        href="a"
-                        className="
-                          w-9
-                          h-9
-                          flex
-                          items-center
-                          justify-center
-                          rounded-md
-                          border border-[#EDEFF1]
-                          text-[#838995] text-base
-                          hover:bg-primary hover:border-primary hover:text-white
-                          "
-                      >
-                        2
-                      </a>
-                    </li>
-                    <li className="px-[6px]">
-                      <a
-                        href="a"
-                        className="
-                          w-9
-                          h-9
-                          flex
-                          items-center
-                          justify-center
-                          rounded-md
-                          border border-[#EDEFF1]
-                          text-[#838995] text-base
-                          hover:bg-primary hover:border-primary hover:text-white
-                          "
-                      >
-                        3
-                      </a>
-                    </li>
-                    <li className="px-[6px]">
-                      <a
-                        href="a"
-                        className="
-                          w-9
-                          h-9
-                          flex
-                          items-center
-                          justify-center
-                          rounded-md
-                          border border-[#EDEFF1]
-                          text-[#838995] text-base
-                          hover:bg-primary hover:border-primary hover:text-white
-                          "
-                      >
-                        4
-                      </a>
-                    </li>
-                    <li className="px-[6px]">
-                      <a
-                        href="a"
-                        className="
-                          w-9
-                          h-9
-                          flex
-                          items-center
-                          justify-center
-                          rounded-md
-                          border border-[#EDEFF1]
-                          text-[#838995] text-base
-                          hover:bg-primary hover:border-primary hover:text-white
-                          "
-                      >
-                        <span>
-                          <svg
-                            width="8"
-                            height="15"
-                            viewBox="0 0 8 15"
-                            className="fill-current stroke-current"
-                          >
-                            <path
-                              d="M0.870212 13.0861L0.870097 13.086L0.865602 13.0912C0.685237 13.3017 0.684716 13.6312 0.895299 13.8418C0.989374 13.9359 1.13704 13.9951 1.26387 13.9951C1.42264 13.9951 1.5463 13.9279 1.65431 13.8199L1.65436 13.82L1.65771 13.8164L7.16979 7.93248C7.16985 7.93243 7.1699 7.93237 7.16996 7.93231C7.59769 7.47923 7.59387 6.73477 7.17253 6.26385L7.17256 6.26382L7.17002 6.26111L1.65752 0.398611L1.65757 0.398563L1.65431 0.395299C1.454 0.194997 1.11779 0.150934 0.895299 0.373424C0.695526 0.573197 0.651169 0.908167 0.871667 1.13067L6.37922 6.98791C6.4442 7.06886 6.43141 7.17481 6.38592 7.2203L6.38587 7.22025L6.38271 7.22361L0.870212 13.0861Z"
-                              strokeWidth="0.3"
-                            ></path>
-                          </svg>
-                        </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div> */}
-            <Pagination currentPage={currentPage} totalPages={10} onPageChange={fetchData} />
+
+            <div className="pt-2">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={pages}
+                onPageChange={fetchData}
+                limit={5}
+              />
+            </div>
 
             <script src="https://unpkg.com/flowbite@1.3.4/dist/flowbite.js"></script>
           </div>
         </div>
-        <div className=" flex flex-col w-1/2 h-screen shadow-md p-3 justify-around">
+        <div className=" flex flex-col w-5/12 h-screen shadow-md p-3 justify-around">
           <div className="mb-4">
             <label
               htmlFor="Problema"
@@ -408,18 +276,10 @@ const Search = () => {
       </div>
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-          {/* {dados.map((item: FormValues, index) => {
-            var Data = item.DataCriacao.split("T");
-            var Hora = Data[1].split(".");
-            console.log("esta é a data", Data[0]);
-            console.log("esta é a HORA", Hora[0]);
-            console.log(dados);
-            console.log(item.Imagens);
-            return( */}
+          
           <EditAtendimento />
 
-          {/* )
-          })} */}
+          
         </Modal>
       )}
     </LayoutPadrao>

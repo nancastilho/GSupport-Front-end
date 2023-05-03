@@ -77,6 +77,8 @@ const Search = () => {
           PageNumber: currentPage,
           Texto: texto,
           Usuario: usuario,
+        }, headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
         },
       })
       .then((response) => {

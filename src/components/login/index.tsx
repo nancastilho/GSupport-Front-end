@@ -18,12 +18,12 @@ const Login = () => {
     event.preventDefault();
     console.log('ta enviando')
     try {
-      const result = await axios.post<{ senhaHash: string; userData: any }>(
+      const result = await axios.post<{ jwtToken: string; userData: any }>(
         "http://localhost:8080/login",
         credentials
       );
 
-      const token = result.data.senhaHash;
+      const token = result.data.jwtToken;
       const userAuth = result.data.userData.Usuario;
       const codUserAuth = result.data.userData.Codigo;
 
@@ -31,7 +31,10 @@ const Login = () => {
       localStorage.setItem("userName", userAuth);
       localStorage.setItem("codUserAuth", codUserAuth);
       localStorage.setItem("token", token);
-      navigate("/home");
+
+      setTimeout(() => {
+        navigate("/home");
+      }, 100);
     } catch (error) {
       console.error(error);
     }

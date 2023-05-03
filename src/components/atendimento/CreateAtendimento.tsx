@@ -1,7 +1,6 @@
 import axios from "axios";
 import { SetStateAction, useEffect, useState } from "react";
-import toast from 'react-hot-toast';
-
+import toast from "react-hot-toast";
 
 interface Props {
   onCadastro: boolean;
@@ -75,8 +74,6 @@ function CreateAtendimento(props: Props) {
     });
   };
 
-  
-
   const handleImageSubmit = (event: {
     target: { files: SetStateAction<FileList | null> };
   }) => {
@@ -98,32 +95,35 @@ function CreateAtendimento(props: Props) {
     console.log("array de imagem", image);
     formData.append("data", JSON.stringify(formValues));
     try {
-      toast.loading('Enviando seu atendimento, aguarde!', {
-        duration:2000
-    })
+      toast.loading("Enviando seu atendimento, aguarde!", {
+        duration: 2000,
+      });
       const response = await axios.post(
         "http://localhost:8080/atendimentos",
-        formData, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}}
-        );
+        formData,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
       console.log(response.data);
-     
-      toast.success('Atendimento cadastrado com sucesso!', {
-        duration:2000
+
+      toast.success("Atendimento cadastrado com sucesso!", {
+        duration: 2000,
       });
       resetForm();
       // aqui você pode implementar alguma lógica para lidar com a resposta da API
     } catch (error) {
       console.log(error);
-      toast.error('Erro ao inserir atendimento!')
+      toast.error("Erro ao inserir atendimento!");
       // aqui você pode implementar alguma lógica para lidar com o erro da API
     }
   };
- 
-
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/empresas?OrderBy=NomeFantasia")
+      .get("http://localhost:8080/empresas?OrderBy=NomeFantasia", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
       .then((response) => {
         setEmpresa(response.data);
         console.log(response.data);
@@ -204,12 +204,12 @@ function CreateAtendimento(props: Props) {
               htmlFor="dateI"
               className="block mb-1 font-medium text-gray-700"
             >
-              Data inicio
+              Inicio
             </label>
             <input
               id="dateI"
               name="dateI"
-              type="date"
+              type="datetime-local"
               onChange={handleInputChange}
               value={dataFormatada}
               className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
@@ -221,12 +221,12 @@ function CreateAtendimento(props: Props) {
               htmlFor="dateF"
               className="block mb-1 font-medium text-gray-700"
             >
-              Data fim
+              Fim
             </label>
             <input
               id="dateF"
               name="dateF"
-              type="date"
+              type="datetime-local"
               value={dataFormatada}
               onChange={handleInputChange}
               className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
@@ -234,42 +234,7 @@ function CreateAtendimento(props: Props) {
             />
           </div>
         </div>
-        <div className="flex justify-between">
-          <div className="mb-4 ">
-            <label
-              htmlFor="time"
-              className="block mb-1 font-medium text-gray-700"
-            >
-              Hora inicio
-            </label>
-            <input
-              id="timeI"
-              name="timeI"
-              type="time"
-              value={horaFormatada}
-              onChange={handleInputChange}
-              className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="time"
-              className="block mb-1 font-medium text-gray-700"
-            >
-              Hora fim
-            </label>
-            <input
-              id="timeF"
-              name="timeF"
-              type="time"
-              value={horaFormatada}
-              onChange={handleInputChange}
-              className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
-              required
-            />
-          </div>
-        </div>
+        
         <div className="mb-4">
           <label
             htmlFor="Problema"
@@ -354,7 +319,7 @@ function CreateAtendimento(props: Props) {
           </button>
         </div>
       </form>
-      <div >
+      <div>
         {/* <FlashMessage  message={flashMessage} onClose={handleClose} /> */}
       </div>
     </div>

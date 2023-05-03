@@ -22,24 +22,22 @@ interface Empresa {
   NomeFantasia: string;
 }
 
- 
 function EditAtendimento(props: FormValues) {
-
   const [empresa, setEmpresa] = useState([]);
   const [formValues, setFormValues] = useState<FormValues>({
     Codigo: 1,
     CodUsuario: 1,
     CodEmpresa: 1,
-    Usuario: '',
+    Usuario: "",
     NomeCliente: "",
     Problema: "",
     Solucao: "",
     Assunto: "sem assunto",
     CodSistema: 1,
     CodMeioComunicacao: 1,
-    DataCriacao: '',
-    DataInicio: '',
-    DataFim: '',
+    DataCriacao: "",
+    DataInicio: "",
+    DataFim: "",
     Plantao: 0,
   });
 
@@ -48,13 +46,15 @@ function EditAtendimento(props: FormValues) {
 
     const formData = new FormData();
 
-
     formData.append("data", JSON.stringify(formValues));
 
     try {
       const response = await axios.post(
         "http://localhost:8080/atendimentos",
-        formData, {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        formData,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
       );
       console.log(response.data);
       // aqui você pode implementar alguma lógica para lidar com a resposta da API
@@ -64,10 +64,11 @@ function EditAtendimento(props: FormValues) {
     }
   };
 
-  
   useEffect(() => {
     axios
-      .get("http://localhost:8080/empresas?OrderBy=NomeFantasia")
+      .get("http://localhost:8080/empresas?OrderBy=NomeFantasia", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
       .then((response) => {
         setEmpresa(response.data);
         console.log(response.data);
@@ -93,32 +94,32 @@ function EditAtendimento(props: FormValues) {
   return (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
       <label
-            htmlFor="CodEmpresa"
-            className="block mb-1 font-medium text-gray-700"
-          >
-            Usuario {props.Usuario}
-          </label>
+        htmlFor="CodEmpresa"
+        className="block mb-1 font-medium text-gray-700"
+      >
+        Usuario {props.Usuario}
+      </label>
       <div className="mb-4">
-          <label
-            htmlFor="CodEmpresa"
-            className="block mb-1 font-medium text-gray-700"
-          >
-            Empresa
-          </label>
-          <select
-            id="CodEmpresa"
-            name="CodEmpresa"
-            className="w-full h-10 px-3 rounded-lg border-2 border-gray-200 mb-2 focus:outline-none focus:border-blue-500"
-            value={formValues.CodEmpresa}
-            onChange={handleInputChange}
-          >
-            {empresa.map((item: Empresa) => (
-              <option value={item.Codigo}>
-                {item.NomeFantasia} - {item.Codigo}
-              </option>
-            ))}
-          </select>
-        </div>
+        <label
+          htmlFor="CodEmpresa"
+          className="block mb-1 font-medium text-gray-700"
+        >
+          Empresa
+        </label>
+        <select
+          id="CodEmpresa"
+          name="CodEmpresa"
+          className="w-full h-10 px-3 rounded-lg border-2 border-gray-200 mb-2 focus:outline-none focus:border-blue-500"
+          value={formValues.CodEmpresa}
+          onChange={handleInputChange}
+        >
+          {empresa.map((item: Empresa) => (
+            <option value={item.Codigo}>
+              {item.NomeFantasia} - {item.Codigo}
+            </option>
+          ))}
+        </select>
+      </div>
       <div className="mb-4">
         <label
           htmlFor="NomeCliente"
@@ -130,7 +131,7 @@ function EditAtendimento(props: FormValues) {
           id="NomeCliente"
           name="NomeCliente"
           type="text"
-          value={''}
+          value={""}
           onChange={handleInputChange}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
           required
@@ -149,7 +150,7 @@ function EditAtendimento(props: FormValues) {
             name="dateI"
             type="date"
             onChange={handleInputChange}
-            value={''}
+            value={""}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />
@@ -165,7 +166,7 @@ function EditAtendimento(props: FormValues) {
             id="dateF"
             name="dateF"
             type="date"
-            value={''}
+            value={""}
             onChange={handleInputChange}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
@@ -184,7 +185,7 @@ function EditAtendimento(props: FormValues) {
             id="timeI"
             name="timeI"
             type="time"
-            value={''}
+            value={""}
             onChange={handleInputChange}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
@@ -201,7 +202,7 @@ function EditAtendimento(props: FormValues) {
             id="timeF"
             name="timeF"
             type="time"
-            value={''}
+            value={""}
             onChange={handleInputChange}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
@@ -218,7 +219,7 @@ function EditAtendimento(props: FormValues) {
         <textarea
           id="Problema"
           name="Problema"
-          value={''}
+          value={""}
           onChange={handleInputChange}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
           rows={4}
@@ -236,14 +237,14 @@ function EditAtendimento(props: FormValues) {
         <textarea
           id="Solucao"
           name="Solucao"
-          value={''}
+          value={""}
           onChange={handleInputChange}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
           rows={4}
           required
         ></textarea>
       </div>
-      
+
       <div>
         <input type="checkbox" name="plantao" id="plantao" className="mr-2" />
         <label htmlFor="agreed" className="font-medium text-gray-700">

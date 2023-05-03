@@ -47,7 +47,7 @@ const Pagination: React.FC<PaginationProps> = ({
           <li key={page}>
             <button
               className={classnames(
-                "relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium",
+                "relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium",
                 {
                   "bg-gray-400": currentPage === page,
                   "hover:bg-gray-100": currentPage !== page,

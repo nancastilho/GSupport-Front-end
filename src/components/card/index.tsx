@@ -2,7 +2,8 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Modal from "../modal";
-import ViewAtendimento, { FormValues } from "../atendimento/ViewAtendimento";
+import ViewAtendimento, { FormValues } from "../../view/atendimento/ViewAtendimento";
+import { atendimentosService } from "../../services/atendimentos/atendimentosService";
 
 const Card = () => {
   interface Card {
@@ -20,16 +21,17 @@ const Card = () => {
   const [codAtend, setCodAtend] = useState<number>();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/atendimentos", {headers: {authorization: `Bearer ${localStorage.getItem('token')}` }})
-      .then((response) => {
+     const fetchData = async() => {
+      atendimentosService.getAll()
+      .then((response:any) => {
         setDados(response.data.Result);
-        console.log(response.data.Result);
-        console.log(dados);
       })
-      .catch((error) => {
+      .catch((error:any) => {
         console.log(error);
       });
+    }
+
+    fetchData()
   }, []);
 
   function handleModalOpen(codigo: number) {

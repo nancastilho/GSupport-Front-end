@@ -4,7 +4,7 @@ import Navbar from "../../components/navbar";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import Modal from "../../components/modal";
-import CreateAtendimento from "../../components/atendimento/CreateAtendimento";
+import CreateAtendimento from "../../view/atendimento/CreateAtendimento";
 import LayoutPadrao from "../../components/LayoutPadrao";
 
 const Graphics = () => {

@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import ListEmpresa from "../../components/listEmpresa";
 
 interface FormValues {
   Codigo: number;
@@ -17,13 +18,9 @@ interface FormValues {
   Assunto: string;
   Plantao: number;
 }
-interface Empresa {
-  Codigo: string;
-  NomeFantasia: string;
-}
+
 
 function EditAtendimento(props: FormValues) {
-  const [empresa, setEmpresa] = useState([]);
   const [formValues, setFormValues] = useState<FormValues>({
     Codigo: 1,
     CodUsuario: 1,
@@ -64,20 +61,7 @@ function EditAtendimento(props: FormValues) {
     }
   };
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8080/empresas?OrderBy=NomeFantasia", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
-      .then((response) => {
-        setEmpresa(response.data);
-        console.log(response.data);
-        console.log(empresa);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+
 
   const handleInputChange = (
     event: React.ChangeEvent<
@@ -101,24 +85,12 @@ function EditAtendimento(props: FormValues) {
       </label>
       <div className="mb-4">
         <label
-          htmlFor="CodEmpresa"
+          htmlFor="ListEmpresa"
           className="block mb-1 font-medium text-gray-700"
         >
           Empresa
         </label>
-        <select
-          id="CodEmpresa"
-          name="CodEmpresa"
-          className="w-full h-10 px-3 rounded-lg border-2 border-gray-200 mb-2 focus:outline-none focus:border-blue-500"
-          value={formValues.CodEmpresa}
-          onChange={handleInputChange}
-        >
-          {empresa.map((item: Empresa) => (
-            <option value={item.Codigo}>
-              {item.NomeFantasia} - {item.Codigo}
-            </option>
-          ))}
-        </select>
+        <ListEmpresa/>
       </div>
       <div className="mb-4">
         <label

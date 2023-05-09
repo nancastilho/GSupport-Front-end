@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { BrowserRouter, Navigate, NavigateFunction, Route, Routes, useNavigate } from "react-router-dom";
 import Home from "../pages/Home";
-import Login from "../components/login";
+import Login from "../view/login";
 import Search from "../pages/Search";
 import Graphics from "../pages/Graphics";
 import Test from "../pages/Test";

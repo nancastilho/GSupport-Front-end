@@ -1,6 +1,7 @@
 import axios from "axios";
-import { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
+import ListEmpresa from "../../components/listEmpresa";
 
 interface Props {
   onCadastro: boolean;
@@ -20,10 +21,7 @@ interface FormValues {
   Plantao: number;
 }
 
-interface Empresa {
-  Codigo: string;
-  NomeFantasia: string;
-}
+
 
 function CreateAtendimento(props: Props) {
   const dataAtual = new Date();
@@ -39,7 +37,7 @@ function CreateAtendimento(props: Props) {
   codUsuario = codUsuario ? codUsuario : "";
 
   const [image, setImage] = useState<FileList | null>(null);
-  const [empresa, setEmpresa] = useState([]);
+  
 
   const [formValues, setFormValues] = useState<FormValues>({
     CodUsuario: parseInt(codUsuario),
@@ -119,20 +117,7 @@ function CreateAtendimento(props: Props) {
     }
   };
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8080/empresas?OrderBy=NomeFantasia", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
-      .then((response) => {
-        setEmpresa(response.data);
-        console.log(response.data);
-        console.log(empresa);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+ 
 
   // const handleInputChange = (
   //   event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -166,19 +151,8 @@ function CreateAtendimento(props: Props) {
           >
             Empresa
           </label>
-          <select
-            id="CodEmpresa"
-            name="CodEmpresa"
-            className="w-full h-10 px-3 rounded-lg border-2 border-gray-200 mb-2 focus:outline-none focus:border-blue-500"
-            value={formValues.CodEmpresa}
-            onChange={handleInputChange}
-          >
-            {empresa.map((item: Empresa) => (
-              <option value={item.Codigo}>
-                {item.NomeFantasia} - {item.Codigo}
-              </option>
-            ))}
-          </select>
+          <ListEmpresa/>
+          
         </div>
 
         <div className="mb-4">
@@ -234,7 +208,7 @@ function CreateAtendimento(props: Props) {
             />
           </div>
         </div>
-        
+
         <div className="mb-4">
           <label
             htmlFor="Problema"

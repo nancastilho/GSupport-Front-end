@@ -4,7 +4,7 @@ import Navbar from "../navbar";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import Modal from "../modal";
-import CreateAtendimento from "../atendimento/CreateAtendimento";
+import CreateAtendimento from "../../view/atendimento/CreateAtendimento";
 
 interface LayoutProps {
     children: React.ReactNode;

@@ -4,14 +4,14 @@ import axios from "axios";
 import Modal from "../../components/modal";
 import EditAtendimento from "../../view/atendimento/EditAtendimento";
 import Pagination from "../../components/pagination";
-import { Lista } from "../../pages/Search";
 import { atendimentosService } from "../../services/atendimentos/atendimentosService";
+import { FormValues } from "../../interface";
 const SearchView = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [dados, setDados] = useState([]);
   const [texto, setTexto] = useState<string>();
   const [usuario, setUsuario] = useState<string>();
-  const [list, setList] = useState<Lista>();
+  const [list, setList] = useState<FormValues>();
   const [codAtend, setCodAtend] = useState<number>();
   const [pages, setPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,7 +31,7 @@ const SearchView = () => {
     setIsModalOpen(false);
   };
 
-  function handleListView(lista: Lista) {
+  function handleListView(lista: FormValues) {
     setList(lista);
   }
 
@@ -165,7 +165,7 @@ const SearchView = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {dados.map((item: Lista, index) => (
+                  {dados.map((item: FormValues, index) => (
                     <tr
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       onClick={() => handleListView(item)}
@@ -183,7 +183,7 @@ const SearchView = () => {
                       <td className="px-5 py-4 text-right">
                         <label className="font-medium text-blue-600 dark:text-blue-500 cursor-pointer hover:underline ">
                           <Icon
-                            onClick={() => handleModalOpen(item.Codigo)}
+                            // onClick={() => handleModalOpen(item.Codigo)}
                             icon={"mdi:pencil"}
                             width={18}
                           />
@@ -243,7 +243,7 @@ const SearchView = () => {
           </div>
 
           <div className="flex w-60">
-            {list?.Imagens !== null
+            {/* {list?.Imagens !== null
               ? list?.Imagens.map((img: string, index) => (
                   <a
                     href={img}
@@ -254,7 +254,7 @@ const SearchView = () => {
                     <img src={img} alt="" className="w-10 h-10 px-1" />
                   </a>
                 ))
-              : ""}
+              : ""} */}
           </div>
         </div>
       </div>

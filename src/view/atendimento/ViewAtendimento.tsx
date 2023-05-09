@@ -1,24 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
+import { FormValues } from "../../interface";
 
-export interface FormValues {
-  CodUsuario: number;
-  CodEmpresa: number;
-  NomeFantasia: string;
-  NomeCliente: string;
-  Problema: string;
-  Solucao: string;
-  CodSistema: number;
-  CodMeioComunicacao: number;
-  DataCriacao: string;
-  DataInicio: string;
-  DataFim: string;
-  HoraInicio: string;
-  HoraFim: string;
-  Assunto: string;
-  Imagens: [];
-  Plantao: number;
-}
+
 
 
 function ViewAtendimento(props: FormValues) {
@@ -27,9 +11,8 @@ function ViewAtendimento(props: FormValues) {
   
   var arrImg:[]
 
-  arrImg = props.Imagens
+  // arrImg = props.Imagens
   
-  console.log('teste', arrImg)
 
   return (
     <div className="max-w-xl mx-auto">
@@ -174,11 +157,11 @@ function ViewAtendimento(props: FormValues) {
       </div>
 
       <div className="flex w-60">
-          {props.Imagens !== null ? 
+          {/* {props.Imagens !== null ? 
           arrImg.map((img:string) => (
             <a href={img} target="_blank" rel="noopener noreferrer"><img src={img} alt="" className="w-10 h-10 px-1"/></a>
           ))
-           : ""}
+           : ""} */}
           
       </div>
       <div className="pt-3">

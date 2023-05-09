@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import Card from "../card";
 import Navbar from "../navbar";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import Modal from "../modal";
 import CreateAtendimento from "../../view/atendimento/CreateAtendimento";
+import { LayoutProps } from "../../interface";
 
-interface LayoutProps {
-    children: React.ReactNode;
-  }
+
 
 const LayoutPadrao: React.FC<LayoutProps> = ({children}) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);

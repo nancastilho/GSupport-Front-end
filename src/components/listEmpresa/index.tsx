@@ -1,11 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { empresasService } from "../../services/empresas/empresasService";
+import { Empresa } from "../../interface";
 // import { Container } from './styles';
-interface Empresa {
-  Codigo: string;
-  NomeFantasia: string;
-}
+
 
 function ListEmpresa() {
   const [empresa, setEmpresa] = useState([]);

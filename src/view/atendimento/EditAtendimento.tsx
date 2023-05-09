@@ -1,23 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import ListEmpresa from "../../components/listEmpresa";
+import { FormValues } from "../../interface";
 
-interface FormValues {
-  Codigo: number;
-  CodUsuario: number;
-  CodEmpresa: number;
-  NomeCliente: string;
-  Problema: string;
-  Usuario: string;
-  Solucao: string;
-  CodSistema: number;
-  CodMeioComunicacao: number;
-  DataCriacao: string;
-  DataInicio: string;
-  DataFim: string;
-  Assunto: string;
-  Plantao: number;
-}
+
 
 
 function EditAtendimento(props: FormValues) {

@@ -1,13 +1,9 @@
 import React from "react";
 import classnames from "classnames";
 import { Icon } from "@iconify/react";
+import { PaginationProps } from "../../interface";
 
-interface PaginationProps {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-  limit?: number;
-}
+
 
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,

@@ -1,11 +1,10 @@
 import { Icon } from "@iconify/react";
 import { FiLogOut } from "react-icons/fi";
+import { LogoutProps } from "../../interface";
 
-interface Props {
-  handleLogout: () => void;
-}
 
-const Navbar: React.FC<Props> = ({ handleLogout }) => {
+
+const Navbar: React.FC<LogoutProps> = ({ handleLogout }) => {
   const user = localStorage.getItem("userAuth");
 
   return (

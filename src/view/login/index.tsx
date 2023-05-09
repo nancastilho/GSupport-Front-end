@@ -1,11 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import { Credentials } from "../../interface";
 
-interface Credentials {
-  Usuario: string;
-  Senha: string;
-}
+
 
 const Login = () => {
   const navigate: NavigateFunction = useNavigate();

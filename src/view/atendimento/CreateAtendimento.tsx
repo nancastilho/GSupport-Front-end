@@ -2,28 +2,13 @@ import axios from "axios";
 import { SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
 import ListEmpresa from "../../components/listEmpresa";
-
-interface Props {
-  onCadastro: boolean;
-}
-interface FormValues {
-  CodUsuario: number;
-  CodEmpresa: number;
-  NomeCliente: string;
-  Problema: string;
-  Solucao: string;
-  CodSistema: number;
-  CodMeioComunicacao: number;
-  DataCriacao: string;
-  DataInicio: string;
-  DataFim: string;
-  Assunto: string;
-  Plantao: number;
-}
+import { FormValues, OnCadastroProps } from "../../interface";
 
 
 
-function CreateAtendimento(props: Props) {
+
+
+function CreateAtendimento(props: OnCadastroProps) {
   const dataAtual = new Date();
   const opcoes = { timeZone: "America/Sao_Paulo", hour12: false };
   const dataFormatada = dataAtual.toLocaleDateString("fr-CA");

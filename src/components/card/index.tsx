@@ -2,19 +2,12 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Modal from "../modal";
-import ViewAtendimento, { FormValues } from "../../view/atendimento/ViewAtendimento";
+import ViewAtendimento from "../../view/atendimento/ViewAtendimento";
 import { atendimentosService } from "../../services/atendimentos/atendimentosService";
+import { FormValues } from "../../interface";
 
 const Card = () => {
-  interface Card {
-    Codigo: string;
-    CodUsuario: string;
-    NomeFantasia: string;
-    NomeCliente: string;
-    DataHoraLancamento: string;
-    Problema: string;
-    Solucao: string;
-  }
+
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dados, setDados] = useState([]);
@@ -45,7 +38,7 @@ const Card = () => {
 
   return (
     <div className="flex flex-wrap pl-3">
-      {dados.map((item: Card, index) => (
+      {dados.map((item: FormValues, index) => (
         <label
           className="cursor-pointer bg-blue-50 rounded-lg shadow-md p-6 m-3 w-72 card flex flex-col justify-between"
           onClick={() => handleModalOpen(index)}
@@ -69,10 +62,10 @@ const Card = () => {
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
           {dados.map((item: FormValues, index) => {
-            var Data = item.DataCriacao.split("T");
-            var Hora = Data[1].split(".");
-            console.log("esta é a data", Data[0]);
-            console.log("esta é a HORA", Hora[0]);
+            // var Data = item.DataCriacao.split("T");
+            // var Hora = Data[1].split(".");
+            // console.log("esta é a data", Data[0]);
+            // console.log("esta é a HORA", Hora[0]);
             console.log(dados);
             console.log(item.Imagens);
             return index === codAtend ? (
@@ -82,11 +75,11 @@ const Card = () => {
                 CodMeioComunicacao={item.CodMeioComunicacao}
                 CodSistema={item.CodSistema}
                 CodUsuario={item.CodUsuario}
-                DataCriacao={Data[0]}
-                DataFim={Data[0]}
-                DataInicio={Data[0]}
-                HoraFim={Hora[0]}
-                HoraInicio={Hora[0]}
+                // DataCriacao={Data[0]}
+                // DataFim={Data[0]}
+                // DataInicio={Data[0]}
+                // HoraFim={Hora[0]}
+                // HoraInicio={Hora[0]}
                 NomeCliente={item.NomeCliente}
                 Plantao={1}
                 Problema={item.Problema}

@@ -9,12 +9,16 @@ const SearchView = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [dados, setDados] = useState([]);
   const [texto, setTexto] = useState<string>();
+  const [dateI, setDateI] = useState<string>('20230101');
+  const [dateF, setDateF] = useState<string>('20231231');
   const [usuario, setUsuario] = useState<string>();
   const [list, setList] = useState<FormValues>();
   const [codAtend, setCodAtend] = useState<number>();
   const [pages, setPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState(1);
 
+  console.log(dateF);
+  console.log(dateI);
   function fetchData(newPage: number) {
     setCurrentPage(newPage);
     console.log(currentPage);
@@ -43,6 +47,25 @@ const SearchView = () => {
     setTexto(value);
   };
 
+  const handleSearchDateI = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { value } = event.target;
+    let date = value.split('-')
+    setDateI(date[0]+date[1]+date[2]);
+  };
+  const handleSearchDateF = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { value } = event.target;
+    let date = value.split('-')
+    setDateF(date[0]+date[1]+date[2]);
+  };
+
   const handleSearchUsuario = (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -56,8 +79,8 @@ const SearchView = () => {
     const fetchData = async () => {
       atendimentosService
         .getPart({
-          DataInicio: "20230101",
-          DataFim: "20231231",
+          DataInicio: dateI,
+          DataFim: dateF,
           Rows: "20",
           PageNumber: currentPage,
           Texto: texto,
@@ -88,7 +111,7 @@ const SearchView = () => {
                     type="date"
                     id="texto"
                     name="texto"
-                    onChange={handleSearchTexto}
+                    onChange={handleSearchDateI}
                     placeholder="Texto"
                   />
                 </div>
@@ -101,7 +124,7 @@ const SearchView = () => {
                     type="date"
                     id="texto"
                     name="texto"
-                    onChange={handleSearchTexto}
+                    onChange={handleSearchDateF}
                     placeholder="Texto"
                   />
                 </div>

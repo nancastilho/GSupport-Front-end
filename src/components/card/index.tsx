@@ -5,26 +5,25 @@ import Modal from "../modal";
 import ViewAtendimento from "../../view/atendimento/ViewAtendimento";
 import { atendimentosService } from "../../services/atendimentos/atendimentosService";
 import { FormValues } from "../../interface";
-
+import { Icon } from "@iconify/react";
 const Card = () => {
-
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dados, setDados] = useState([]);
   const [codAtend, setCodAtend] = useState<number>();
 
   useEffect(() => {
-     const fetchData = async() => {
-      atendimentosService.getAll()
-      .then((response:any) => {
-        setDados(response.data.Result);
-      })
-      .catch((error:any) => {
-        console.log(error);
-      });
-    }
+    const fetchData = async () => {
+      atendimentosService
+        .getAll()
+        .then((response: any) => {
+          setDados(response.data.Result);
+        })
+        .catch((error: any) => {
+          console.log(error);
+        });
+    };
 
-    fetchData()
+    fetchData();
   }, []);
 
   function handleModalOpen(codigo: number) {
@@ -44,9 +43,12 @@ const Card = () => {
           onClick={() => handleModalOpen(index)}
           key={item.Codigo}
         >
-          <h2 className="text-2xl font-bold mb-4 text-blue-900 ">
-            {item.NomeFantasia}
-          </h2>
+          <div className="flex ">
+            <h2 className="text-2xl font-bold mb-4 text-blue-900 ">
+              {item.NomeFantasia}
+            </h2>
+            <Icon icon={"mdi:lead-pencil"} className="text-2xl"/>
+          </div>
           <div>
             <p className="text-gray-700 mb-2 max-sm:hidden">{item.Codigo}</p>
             <p className="text-gray-700 mb-2 max-sm:hidden ">
@@ -62,35 +64,30 @@ const Card = () => {
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
           {dados.map((item: FormValues, index) => {
-            // var Data = item.DataCriacao.split("T");
-            // var Hora = Data[1].split(".");
-            // console.log("esta é a data", Data[0]);
-            // console.log("esta é a HORA", Hora[0]);
-            console.log(dados);
-            console.log(item.Imagens);
-            return index === codAtend ? (
-              <ViewAtendimento
-                Assunto=""
-                CodEmpresa={item.CodEmpresa}
-                CodMeioComunicacao={item.CodMeioComunicacao}
-                CodSistema={item.CodSistema}
-                CodUsuario={item.CodUsuario}
-                // DataCriacao={Data[0]}
-                // DataFim={Data[0]}
-                // DataInicio={Data[0]}
-                // HoraFim={Hora[0]}
-                // HoraInicio={Hora[0]}
-                NomeCliente={item.NomeCliente}
-                Plantao={1}
-                Problema={item.Problema}
-                Solucao={item.Solucao}
-                Imagens={item.Imagens}
-                NomeFantasia={item.NomeFantasia}
-                key={codAtend}
-              />
-            ) : (
-              ""
-            );
+            if (item.DataCriacao !== undefined) {
+              var Data = item.DataCriacao.split("T");
+              var Hora = Data[1].split(".");
+              var HoraMin = Hora[0].split(":");
+              return index === codAtend ? (
+                <ViewAtendimento
+                  Assunto=""
+                  CodEmpresa={item.CodEmpresa}
+                  CodMeioComunicacao={item.CodMeioComunicacao}
+                  CodSistema={item.CodSistema}
+                  CodUsuario={item.CodUsuario}
+                  DataCriacao={Data[0] + "T" + HoraMin[0] + ":" + HoraMin[1]}
+                  NomeCliente={item.NomeCliente}
+                  Plantao={1}
+                  Problema={item.Problema}
+                  Solucao={item.Solucao}
+                  Imagens={item.Imagens}
+                  NomeFantasia={item.NomeFantasia}
+                  key={codAtend}
+                />
+              ) : (
+                ""
+              );
+            }
           })}
         </Modal>
       )}

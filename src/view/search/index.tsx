@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
-import axios from "axios";
 import Modal from "../../components/modal";
 import EditAtendimento from "../../view/atendimento/EditAtendimento";
 import Pagination from "../../components/pagination";
@@ -21,8 +20,8 @@ const SearchView = () => {
     console.log(currentPage);
   }
 
-  console.log(codAtend);
-  function handleModalOpen(codigo: number) {
+  console.log(dados);
+  function handleModalOpen(codigo: number | undefined) {
     setIsModalOpen(true);
     setCodAtend(codigo);
   }
@@ -81,6 +80,32 @@ const SearchView = () => {
         <div className="w-4/6 h-screen p-3">
           <div className="max-w-3xl h-screen mx-auto">
             <div className="flex p-2 justify-around">
+              <div className="max-w-fit mx-3 ">
+                <div className="relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
+                  <span className="pl-2 text-sm">Inicio: </span>
+                  <input
+                    className="peer h-full w-full outline-none bg-white text-sm text-gray-700 px-2"
+                    type="date"
+                    id="texto"
+                    name="texto"
+                    onChange={handleSearchTexto}
+                    placeholder="Texto"
+                  />
+                </div>
+              </div>
+              <div className="max-w-fit mx-3 ">
+                <div className="relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
+                  <span className="pl-2 text-sm">Fim: </span>
+                  <input
+                    className="peer h-full w-full outline-none bg-white text-sm text-gray-700 px-2"
+                    type="date"
+                    id="texto"
+                    name="texto"
+                    onChange={handleSearchTexto}
+                    placeholder="Texto"
+                  />
+                </div>
+              </div>
               <div className="max-w-fit mx-3 ">
                 <div className="relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
                   <div className="grid place-items-center h-full w-12 text-gray-300">
@@ -183,8 +208,8 @@ const SearchView = () => {
                       <td className="px-5 py-4 text-right">
                         <label className="font-medium text-blue-600 dark:text-blue-500 cursor-pointer hover:underline ">
                           <Icon
-                            // onClick={() => handleModalOpen(item.Codigo)}
-                            icon={"mdi:pencil"}
+                            onClick={() => handleModalOpen(item.Codigo)}
+                            icon={"mdi:lead-pencil"}
                             width={18}
                           />
                         </label>
@@ -243,7 +268,7 @@ const SearchView = () => {
           </div>
 
           <div className="flex w-60">
-            {/* {list?.Imagens !== null
+            {list?.Imagens !== undefined
               ? list?.Imagens.map((img: string, index) => (
                   <a
                     href={img}
@@ -254,29 +279,40 @@ const SearchView = () => {
                     <img src={img} alt="" className="w-10 h-10 px-1" />
                   </a>
                 ))
-              : ""} */}
+              : ""}
           </div>
         </div>
       </div>
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-          <EditAtendimento
-            Assunto=""
-            CodEmpresa={1}
-            CodMeioComunicacao={1}
-            CodSistema={1}
-            CodUsuario={1}
-            Codigo={1}
-            DataCriacao=""
-            DataFim=""
-            DataInicio=""
-            NomeCliente=""
-            Plantao={1}
-            Problema=""
-            Solucao=""
-            Usuario="renan"
-            key={1}
-          />
+          {dados.map((item: FormValues, index) => {
+            if (item.DataCriacao !== undefined) {
+              var Data = item.DataCriacao.split("T");
+              var Hora = Data[1].split(".");
+              var HoraMin = Hora[0].split(":");
+              return item.Codigo === codAtend ? (
+                <EditAtendimento
+                  Assunto={item.Assunto}
+                  CodEmpresa={item.CodEmpresa}
+                  CodMeioComunicacao={item.CodMeioComunicacao}
+                  CodSistema={item.CodSistema}
+                  CodUsuario={item.CodUsuario}
+                  Codigo={item.Codigo}
+                  DataCriacao={Data[0] + "T" + HoraMin[0] + ":" + HoraMin[1]}
+                  NomeCliente={item.NomeCliente}
+                  NomeFantasia={item.NomeFantasia}
+                  Plantao={item.Plantao}
+                  Problema={item.Problema}
+                  Solucao={item.Solucao}
+                  Usuario={item.Usuario}
+                  Imagens={item.Imagens}
+                  key={index}
+                />
+              ) : (
+                ""
+              );
+            }
+          })}
         </Modal>
       )}
     </>

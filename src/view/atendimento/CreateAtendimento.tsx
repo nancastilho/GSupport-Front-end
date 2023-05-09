@@ -10,12 +10,14 @@ import { FormValues, OnCadastroProps } from "../../interface";
 
 function CreateAtendimento(props: OnCadastroProps) {
   const dataAtual = new Date();
-  const opcoes = { timeZone: "America/Sao_Paulo", hour12: false };
   const dataFormatada = dataAtual.toLocaleDateString("fr-CA");
   // const dataFormatadaBR = dataAtual.toLocaleDateString("pt-BR", opcoes);
-  const horaFormatada = dataAtual.toLocaleTimeString("pt-BR", opcoes);
+  const horaFormatada = dataAtual.toLocaleTimeString("pt-BR", {hour12: false, timeStyle: 'short', timeZone: "America/Sao_Paulo"});
+  console.log(dataFormatada+"T"+horaFormatada);
+
   var codUsuario: string | null;
 
+    console.log("TESTEEEE",dataFormatada,horaFormatada);
   // https://stackoverflow.com/questions/2388115/get-locale-short-date-format-using-javascript
 
   codUsuario = localStorage.getItem("codUserAuth");
@@ -170,7 +172,7 @@ function CreateAtendimento(props: OnCadastroProps) {
               name="dateI"
               type="datetime-local"
               onChange={handleInputChange}
-              value={dataFormatada}
+               value= {dataFormatada+"T"+horaFormatada}
               className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
               required
             />
@@ -186,7 +188,7 @@ function CreateAtendimento(props: OnCadastroProps) {
               id="dateF"
               name="dateF"
               type="datetime-local"
-              value={dataFormatada}
+              value={dataFormatada+"T"+horaFormatada}
               onChange={handleInputChange}
               className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
               required

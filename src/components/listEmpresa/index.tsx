@@ -1,11 +1,10 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { empresasService } from "../../services/empresas/empresasService";
-import { Empresa } from "../../interface";
+import { Empresa, FormValues } from "../../interface";
 // import { Container } from './styles';
 
-
-function ListEmpresa() {
+function ListEmpresa(props: FormValues) {
   const [empresa, setEmpresa] = useState([]);
 
   useEffect(() => {
@@ -31,6 +30,15 @@ function ListEmpresa() {
       // value={formValues.CodEmpresa}
       // onChange={handleInputChange}
     >
+      {props.CodEmpresa !== undefined ? (
+        <option value={props.CodEmpresa} selected >
+          {props.NomeFantasia} - {props.CodEmpresa}
+        </option>
+      ) : (
+        <option value="0" selected disabled>
+          Selecionar...
+        </option>
+      )}
       {empresa.map((item: Empresa) => (
         <option value={item.Codigo}>
           {item.NomeFantasia} - {item.Codigo}

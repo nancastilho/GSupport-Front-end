@@ -6,17 +6,18 @@ import { Icon } from "@iconify/react";
 
 function EditAtendimento(props: FormValues) {
   const [formValues, setFormValues] = useState<FormValues>({
-    Codigo: 1,
-    CodUsuario: 1,
-    CodEmpresa: 1,
-    Usuario: "",
-    NomeCliente: "",
-    Problema: "",
-    Solucao: "",
-    Assunto: "sem assunto",
-    CodSistema: 1,
-    CodMeioComunicacao: 1,
-    DataCriacao: "",
+    Codigo: props.Codigo,
+    CodUsuario: props.CodUsuario,
+    CodEmpresa: props.CodUsuario,
+    Usuario: props.Usuario,
+    NomeCliente: props.NomeCliente,
+    NomeFantasia: props.NomeFantasia,
+    Problema: props.Problema,
+    Solucao: props.Solucao,
+    Assunto: props.Assunto,
+    CodSistema: props.CodSistema,
+    CodMeioComunicacao: props.CodMeioComunicacao,
+    DataCriacao: props.DataCriacao,
     DataInicio: "",
     DataFim: "",
     Plantao: 0,
@@ -67,7 +68,7 @@ function EditAtendimento(props: FormValues) {
         htmlFor="CodEmpresa"
         className="block mb-1 font-medium text-gray-700"
       >
-        Usuario {props.CodUsuario}-{props.Usuario}
+        Usuario {formValues.CodUsuario}-{formValues.Usuario}
       </label>
       <div className="mb-4">
         <label
@@ -77,8 +78,8 @@ function EditAtendimento(props: FormValues) {
           Empresa
         </label>
         <ListEmpresa
-          CodEmpresa={props.CodEmpresa}
-          NomeFantasia={props.NomeFantasia}
+          CodEmpresa={formValues.CodEmpresa}
+          NomeFantasia={formValues.NomeFantasia}
         />
       </div>
       <div className="mb-4">
@@ -92,7 +93,7 @@ function EditAtendimento(props: FormValues) {
           id="NomeCliente"
           name="NomeCliente"
           type="text"
-          value={props.NomeCliente}
+          value={formValues.NomeCliente}
           onChange={handleInputChange}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
           required
@@ -110,7 +111,7 @@ function EditAtendimento(props: FormValues) {
             id="dateI"
             name="dateI"
             type="datetime-local"
-            value={props.DataCriacao}
+            value={formValues.DataCriacao}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />
@@ -126,7 +127,7 @@ function EditAtendimento(props: FormValues) {
             id="dateF"
             name="dateF"
             type="datetime-local"
-            value={props.DataCriacao}
+            value={formValues.DataCriacao}
             className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />
@@ -142,7 +143,7 @@ function EditAtendimento(props: FormValues) {
         <textarea
           id="Problema"
           name="Problema"
-          value={props.Problema}
+          value={formValues.Problema}
           onChange={handleInputChange}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
           rows={4}
@@ -160,7 +161,7 @@ function EditAtendimento(props: FormValues) {
         <textarea
           id="Solucao"
           name="Solucao"
-          value={props.Solucao}
+          value={formValues.Solucao}
           onChange={handleInputChange}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
           rows={4}
@@ -168,8 +169,8 @@ function EditAtendimento(props: FormValues) {
         ></textarea>
       </div>
       <div className="flex w-60">
-        {props.Imagens !== undefined
-          ? props.Imagens.map((img: string) => (
+        {formValues.Imagens !== undefined
+          ? formValues.Imagens.map((img: string) => (
               <>
                 <a href={img} target="_blank" rel="noopener noreferrer">
                   <img src={img} alt="" className="w-10 h-10 px-1" />

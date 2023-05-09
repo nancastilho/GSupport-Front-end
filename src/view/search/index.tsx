@@ -229,7 +229,7 @@ const SearchView = () => {
                       <td className="px-5 py-4">{item.Usuario}</td>
                       <td className="px-5 py-4">{item.NomeCliente}</td>
                       <td className="px-5 py-4 text-right">
-                        <label className="font-medium text-blue-600 dark:text-blue-500 cursor-pointer hover:underline ">
+                        <label className="font-medium text-blue-950 dark:text-blue-500 cursor-pointer hover:underline ">
                           <Icon
                             onClick={() => handleModalOpen(item.Codigo)}
                             icon={"mdi:lead-pencil"}

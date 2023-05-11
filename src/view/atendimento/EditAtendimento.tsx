@@ -18,11 +18,12 @@ function EditAtendimento(props: FormValues) {
     CodSistema: props.CodSistema,
     CodMeioComunicacao: props.CodMeioComunicacao,
     DataCriacao: props.DataCriacao,
-    DataInicio: "",
-    DataFim: "",
+    DataInicio: props.DataCriacao,
+    DataFim :props.DataCriacao,
     Plantao: 0,
   });
 
+  console.log(props.Codigo);
   function handleModalOpen() {
     console.log("DELETANDO IMAGENS");
   }
@@ -36,7 +37,7 @@ function EditAtendimento(props: FormValues) {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/atendimentos",
+        "http://localhost:8080/atendimentos/update",
         formData,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },

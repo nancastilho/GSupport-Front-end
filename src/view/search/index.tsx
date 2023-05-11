@@ -95,7 +95,7 @@ const SearchView = () => {
         });
     };
     fetchData();
-  }, [texto, usuario, currentPage]);
+  }, [texto, usuario, currentPage, dateF, dateI]);
 
   return (
     <>

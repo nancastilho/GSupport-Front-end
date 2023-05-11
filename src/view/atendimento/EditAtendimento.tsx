@@ -6,7 +6,7 @@ import { Icon } from "@iconify/react";
 
 function EditAtendimento(props: FormValues) {
   const [formValues, setFormValues] = useState<FormValues>({
-    Codigo: props.Codigo,
+    Codigo: 52173,
     CodUsuario: props.CodUsuario,
     CodEmpresa: props.CodUsuario,
     Usuario: props.Usuario,

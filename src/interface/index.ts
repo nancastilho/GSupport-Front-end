@@ -19,6 +19,12 @@ export interface FormValues {
   Plantao?: number;
 }
 
+export interface Usuario{
+  Codigo: number,
+  Usuario: string,
+  Senha: string,
+  Ativo: boolean
+}
 export interface PaginationProps {
   currentPage: number;
   totalPages: number;
@@ -51,3 +57,5 @@ export interface LogoutProps {
 export interface OnCadastroProps {
   onCadastro: boolean;
 }
+
+

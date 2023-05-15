@@ -3,12 +3,13 @@ import { useState } from "react";
 import ListEmpresa from "../../components/listEmpresa";
 import { FormValues } from "../../interface";
 import { Icon } from "@iconify/react";
+import ListUsuario from "../../components/listUser";
 
 function EditAtendimento(props: FormValues) {
   const [formValues, setFormValues] = useState<FormValues>({
-    Codigo: 52173,
+    Codigo: props.Codigo,
     CodUsuario: props.CodUsuario,
-    CodEmpresa: props.CodUsuario,
+    CodEmpresa: props.CodEmpresa,
     Usuario: props.Usuario,
     NomeCliente: props.NomeCliente,
     NomeFantasia: props.NomeFantasia,
@@ -23,7 +24,6 @@ function EditAtendimento(props: FormValues) {
     Plantao: 0,
   });
 
-  console.log(props.Codigo);
   function handleModalOpen() {
     console.log("DELETANDO IMAGENS");
   }
@@ -31,14 +31,11 @@ function EditAtendimento(props: FormValues) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData();
-
-    formData.append("data", JSON.stringify(formValues));
 
     try {
       const response = await axios.post(
         "http://localhost:8080/atendimentos/update",
-        formData,
+        formValues,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
@@ -65,12 +62,19 @@ function EditAtendimento(props: FormValues) {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
-      <label
-        htmlFor="CodEmpresa"
-        className="block mb-1 font-medium text-gray-700"
-      >
-        Usuario {formValues.CodUsuario}-{formValues.Usuario}
-      </label>
+      
+      <div className="mb-4">
+        <label
+          htmlFor="ListEmpresa"
+          className="block mb-1 font-medium text-gray-700"
+        >
+          Usuario
+        </label>
+        <ListUsuario
+          CodUsuario={formValues.CodUsuario}
+          Usuario={formValues.Usuario}
+        />
+      </div>
       <div className="mb-4">
         <label
           htmlFor="ListEmpresa"

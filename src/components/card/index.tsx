@@ -47,6 +47,7 @@ const Card = () => {
           <Icon
             icon={"mdi:lead-pencil"}
             className="text-2xl relative left-72 top-7"
+            cursor={'pointer'}
             onClick={() => handleModalOpen(index, true)}
           />
           <label

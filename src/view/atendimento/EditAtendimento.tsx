@@ -22,6 +22,7 @@ function EditAtendimento(props: FormValues) {
     DataInicio: props.DataCriacao,
     DataFim :props.DataCriacao,
     Plantao: 0,
+    Imagens: props.Imagens
   });
 
   function handleModalOpen() {

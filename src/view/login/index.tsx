@@ -52,7 +52,7 @@ const Login = () => {
       className="h-screen bg-[#edf2f7] overflow-hidden flex items-center justify-center" /*style="background: #edf2f7;"*/
     >
       <div className="h-screen w-full flex">
-        <div className="flex w-1/2 bg-gradient-to-tr from-blue-950 to-sky-900 i justify-around items-center">
+        <div className="flex w-4/6 bg-gradient-to-tr from-blue-950 to-sky-900 i justify-around items-center">
           <div>
             <h1 className="text-white font-bold text-4xl font-sans">
               GSupport
@@ -68,7 +68,7 @@ const Login = () => {
             </button>
           </div>
         </div>
-        <div className="flex w-1/2 justify-center items-center bg-white">
+        <div className="flex w-2/6 justify-center items-center bg-white">
           <form className="bg-white" onSubmit={handleSubmit}>
             <h1 className="text-gray-800 font-bold text-2xl mb-1 capitalize">
               Olá,{" "}

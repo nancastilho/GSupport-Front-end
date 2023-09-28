@@ -1,4 +1,3 @@
-import axios from "axios";
 import { SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
 import ListEmpresa from "../../components/listEmpresa";
@@ -83,16 +82,13 @@ function CreateAtendimento(props: OnCadastroProps) {
     }
   };
 
-  // const handleInputChange = (
-  //   event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  // ) => {
-  //   const { name, value } = event.target;
+  const handleChangeCliente = (novoValor: string) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      ["CodEmpresa"]: parseInt(novoValor),
+    }));
+  };
 
-  //   setFormValues((prevValues) => ({
-  //     ...prevValues,
-  //     [name]: value,
-  //   }));
-  // };
   const handleInputChange = (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -115,7 +111,7 @@ function CreateAtendimento(props: OnCadastroProps) {
           >
             Empresa
           </label>
-          <ListEmpresa />
+          <ListEmpresa OnChangeCliente={handleChangeCliente} />
         </div>
 
         <div className="mb-4">

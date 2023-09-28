@@ -3,28 +3,24 @@ import { SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
 import ListEmpresa from "../../components/listEmpresa";
 import { FormValues, OnCadastroProps } from "../../interface";
-
-
-
-
+import { atendimentosService } from "../../services/atendimentos/atendimentosService";
 
 function CreateAtendimento(props: OnCadastroProps) {
   const dataAtual = new Date();
   const dataFormatada = dataAtual.toLocaleDateString("fr-CA");
   // const dataFormatadaBR = dataAtual.toLocaleDateString("pt-BR", opcoes);
-  const horaFormatada = dataAtual.toLocaleTimeString("pt-BR", {hour12: false, timeStyle: 'short', timeZone: "America/Sao_Paulo"});
-  console.log(dataFormatada+"T"+horaFormatada);
+  const horaFormatada = dataAtual.toLocaleTimeString("pt-BR", {
+    hour12: false,
+    timeStyle: "short",
+    timeZone: "America/Sao_Paulo",
+  });
 
   var codUsuario: string | null;
-
-    console.log("TESTEEEE",dataFormatada,horaFormatada);
-  // https://stackoverflow.com/questions/2388115/get-locale-short-date-format-using-javascript
 
   codUsuario = localStorage.getItem("codUserAuth");
   codUsuario = codUsuario ? codUsuario : "";
 
   const [image, setImage] = useState<FileList | null>(null);
-  
 
   const [formValues, setFormValues] = useState<FormValues>({
     CodUsuario: parseInt(codUsuario),
@@ -74,37 +70,18 @@ function CreateAtendimento(props: OnCadastroProps) {
     if (image !== null) {
       for (let index = 0; index < image.length; index++) {
         formData.append(`image`, image[index]);
-        console.log(image[index]);
       }
     }
-    console.log("array de imagem", image);
     formData.append("data", JSON.stringify(formValues));
     try {
-      toast.loading("Enviando seu atendimento, aguarde!", {
-        duration: 2000,
-      });
-      const response = await axios.post(
-        "http://localhost:8080/atendimentos",
-        formData,
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
-      console.log(response.data);
-
-      toast.success("Atendimento cadastrado com sucesso!", {
-        duration: 2000,
-      });
+      await atendimentosService.postForm(formData);
+      toast.success("Atendimento cadastrado com sucesso!");
       resetForm();
-      // aqui você pode implementar alguma lógica para lidar com a resposta da API
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Erro ao inserir atendimento!");
-      // aqui você pode implementar alguma lógica para lidar com o erro da API
     }
   };
-
- 
 
   // const handleInputChange = (
   //   event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -138,8 +115,7 @@ function CreateAtendimento(props: OnCadastroProps) {
           >
             Empresa
           </label>
-          <ListEmpresa/>
-          
+          <ListEmpresa />
         </div>
 
         <div className="mb-4">
@@ -172,7 +148,7 @@ function CreateAtendimento(props: OnCadastroProps) {
               name="dateI"
               type="datetime-local"
               onChange={handleInputChange}
-               value= {dataFormatada+"T"+horaFormatada}
+              value={dataFormatada + "T" + horaFormatada}
               className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
               required
             />
@@ -188,7 +164,7 @@ function CreateAtendimento(props: OnCadastroProps) {
               id="dateF"
               name="dateF"
               type="datetime-local"
-              value={dataFormatada+"T"+horaFormatada}
+              value={dataFormatada + "T" + horaFormatada}
               onChange={handleInputChange}
               className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
               required

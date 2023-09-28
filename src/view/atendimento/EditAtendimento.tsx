@@ -1,9 +1,10 @@
-import axios from "axios";
 import { useState } from "react";
 import ListEmpresa from "../../components/listEmpresa";
 import { FormValues } from "../../interface";
 import { Icon } from "@iconify/react";
 import ListUsuario from "../../components/listUser";
+import { atendimentosService } from "../../services/atendimentos/atendimentosService";
+import toast from "react-hot-toast";
 
 function EditAtendimento(props: FormValues) {
   const [formValues, setFormValues] = useState<FormValues>({
@@ -20,32 +21,39 @@ function EditAtendimento(props: FormValues) {
     CodMeioComunicacao: props.CodMeioComunicacao,
     DataCriacao: props.DataCriacao,
     DataInicio: props.DataCriacao,
-    DataFim :props.DataCriacao,
+    DataFim: props.DataCriacao,
     Plantao: 0,
-    Imagens: props.Imagens
+    Imagens: props.Imagens,
   });
 
   function handleModalOpen() {
     console.log("DELETANDO IMAGENS");
   }
 
+  const handleChangeCliente = (novoValor: string) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      ["CodEmpresa"]: parseInt(novoValor),
+    }));
+  };
+
+  const handleChangeUsuario = (novoValor: string) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      ["CodUsuario"]: parseInt(novoValor),
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-
     try {
-      const response = await axios.post(
-        "http://localhost:8080/atendimentos/update",
-        formValues,
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
-      console.log(response.data);
-      // aqui você pode implementar alguma lógica para lidar com a resposta da API
+      await atendimentosService.postEditForm(formValues);
+      toast.success("Edição concluída com sucesso!", {
+        duration: 2000,
+      });
     } catch (error) {
-      console.log(error);
-      // aqui você pode implementar alguma lógica para lidar com o erro da API
+      console.error(error);
+      toast.error("Erro ao editar atendimento!");
     }
   };
 
@@ -63,7 +71,6 @@ function EditAtendimento(props: FormValues) {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
-      
       <div className="mb-4">
         <label
           htmlFor="ListEmpresa"
@@ -74,6 +81,7 @@ function EditAtendimento(props: FormValues) {
         <ListUsuario
           CodUsuario={formValues.CodUsuario}
           Usuario={formValues.Usuario}
+          OnChangeUsuario={handleChangeUsuario}
         />
       </div>
       <div className="mb-4">
@@ -86,6 +94,7 @@ function EditAtendimento(props: FormValues) {
         <ListEmpresa
           CodEmpresa={formValues.CodEmpresa}
           NomeFantasia={formValues.NomeFantasia}
+          OnChangeCliente={handleChangeCliente}
         />
       </div>
       <div className="mb-4">
@@ -176,8 +185,8 @@ function EditAtendimento(props: FormValues) {
       </div>
       <div className="flex w-60">
         {formValues.Imagens !== undefined
-          ? formValues.Imagens.map((img: string) => (
-              <>
+          ? formValues.Imagens.map((img: string, index) => (
+              <div key={index}>
                 <a href={img} target="_blank" rel="noopener noreferrer">
                   <img src={img} alt="" className="w-10 h-10 px-1" />
                 </a>
@@ -186,7 +195,7 @@ function EditAtendimento(props: FormValues) {
                   onClick={() => handleModalOpen()}
                   className="relative bottom-2 right-3 text-red-700 cursor-pointer hover:underline"
                 />
-              </>
+              </div>
             ))
           : ""}
         <a href={"a"} target="_blank" rel="noopener noreferrer">

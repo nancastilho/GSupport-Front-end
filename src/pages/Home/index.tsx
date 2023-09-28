@@ -1,13 +1,11 @@
-import Card from "../../components/card";
 import LayoutPadrao from "../../components/LayoutPadrao";
+import HomeView from "../../view/home";
 
 const Home = () => {
-
-
   
   return (
     <LayoutPadrao>
-      <Card/>
+      <HomeView/>
     </LayoutPadrao>
   );
 };

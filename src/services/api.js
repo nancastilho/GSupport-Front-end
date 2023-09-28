@@ -1,6 +1,6 @@
 import axios from 'axios'
-const PORT = 8080
-const URL = `http://localhost:${PORT}`
+const PORT = 8081
+const URL = `http://adm.gsoft.com.br:${PORT}`
 const api = axios.create({
     baseURL: URL,
     

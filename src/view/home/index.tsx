@@ -1,20 +1,16 @@
-import React from "react";
-import axios from "axios";
 import { useEffect, useState } from "react";
-import Modal from "../modal";
 import ViewAtendimento from "../../view/atendimento/ViewAtendimento";
 import { atendimentosService } from "../../services/atendimentos/atendimentosService";
 import { FormValues } from "../../interface";
 import { Icon } from "@iconify/react";
 import EditAtendimento from "../../view/atendimento/EditAtendimento";
-const Card = () => {
+import Modal from "../../components/modal";
+const HomeView = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [dados, setDados] = useState([]);
   const [codAtend, setCodAtend] = useState<number>();
 
-    console.log(isModalEdit)
-    console.log(codAtend)
   useEffect(() => {
     const fetchData = async () => {
       atendimentosService
@@ -32,7 +28,7 @@ const Card = () => {
 
   function handleModalOpen(codigo: number, edit: boolean) {
     setIsModalOpen(true);
-    setIsModalEdit(edit)
+    setIsModalEdit(edit);
     setCodAtend(codigo);
   }
 
@@ -41,37 +37,44 @@ const Card = () => {
   };
 
   return (
-    <div className="flex flex-wrap pl-3">
-      {dados.map((item: FormValues, index) => (
-        <>
-          <Icon
-            icon={"mdi:lead-pencil"}
-            className="text-2xl relative left-72 top-7"
-            cursor={'pointer'}
-            onClick={() => handleModalOpen(index, true)}
-          />
-          <label
-            className="cursor-pointer bg-blue-50 rounded-lg shadow-md p-6 m-3 w-72 card flex flex-col justify-between"
-            onClick={() => handleModalOpen(index, false)}
-            key={item.Codigo}
+    <>
+      <div className="ml-4 grid gap-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+        {dados.map((item: FormValues, index) => (
+          <div
+            className="bg-blue-50 rounded-lg shadow-md p-2 m-2 w-64 card flex"
+            key={index}
           >
-            <h2 className="text-2xl font-bold mb-4 text-blue-900 ">
-              {item.NomeFantasia}
-            </h2>
+            <div
+              className="cursor-pointer w-11/12"
+              onClick={() => handleModalOpen(index, false)}
+            >
+              <h2 className="text-2xl font-bold mb-4 text-blue-900 line-clamp-2">
+                {item.NomeFantasia}
+              </h2>
 
-            <div>
-              <p className="text-gray-700 mb-2 max-sm:hidden">{item.Codigo}</p>
-              <p className="text-gray-700 mb-2 max-sm:hidden ">
-                Usuário: {item.CodUsuario}
-              </p>
-              <p className="text-gray-700 mb-2 max-sm:hidden ">
-                Nome: {item.NomeCliente}
-              </p>
-              {/* <p className="text-gray-700 mb-2 max-sm:hidden ">Ticket: {item.Ticket}</p> */}
+              <div>
+                <p className="text-gray-700 mb-2 max-sm:hidden">
+                  {item.Codigo}
+                </p>
+                <p className="text-gray-700 mb-2 max-sm:hidden ">
+                  Usuário: {item.Usuario}
+                </p>
+                <p className="text-gray-700 mb-2 max-sm:hidden ">
+                  Nome: {item.NomeCliente}
+                </p>
+              </div>
             </div>
-          </label>
-        </>
-      ))}
+            <div className="w-1/12">
+              <Icon
+                icon={"mdi:lead-pencil"}
+                cursor={"pointer"}
+                fontSize={19}
+                onClick={() => handleModalOpen(index, true)}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
           {dados.map((item: FormValues, index) => {
@@ -102,12 +105,11 @@ const Card = () => {
                   ""
                 );
               }
-            }
-            else{
+            } else {
               if (item.DataCriacao !== undefined) {
-                var Data = item.DataCriacao.split("T");
-                var Hora = Data[1].split(".");
-                var HoraMin = Hora[0].split(":");
+                const Data = item.DataCriacao.split("T");
+                const Hora = Data[1].split(".");
+                const HoraMin = Hora[0].split(":");
                 return index === codAtend ? (
                   <ViewAtendimento
                     Assunto=""
@@ -132,7 +134,7 @@ const Card = () => {
           })}
         </Modal>
       )}
-    </div>
+    </>
   );
 };
-export default Card;
+export default HomeView;

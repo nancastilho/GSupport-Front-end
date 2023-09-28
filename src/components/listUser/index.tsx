@@ -1,20 +1,37 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { FormValues, Usuario } from "../../interface";
+import { Usuario } from "../../interface";
 import { usuariosService } from "../../services/usuarios";
 // import { Container } from './styles';
 
-function ListUsuario(props: FormValues) {
-  const [Usuario, setUsuario] = useState([]);
+interface ListUserProps {
+  OnChangeUsuario?: (novoValor: string) => void;
+  CodUsuario?: number;
+  Usuario?: string;
+}
+
+function ListUsuario({
+  CodUsuario,
+  Usuario,
+  OnChangeUsuario = () => "",
+}: ListUserProps) {
+  const [user, setUser] = useState([]);
+
+  const [valorSelecionado, setValorSelecionado] = useState<string>("");
+
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const novoValor = event.target.value.split("-");
+    setValorSelecionado(event.target.value);
+    // Chama a função do Pai para atualizar o valor selecionado
+    OnChangeUsuario(novoValor[0]);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       usuariosService
         .getAll()
         .then((response) => {
-          setUsuario(response.data);
-          console.log(response.data);
-          console.log(Usuario);
+          setUser(response.data);
         })
         .catch((error) => {
           console.log(error);
@@ -27,21 +44,21 @@ function ListUsuario(props: FormValues) {
       id="CodUsuario"
       name="CodUsuario"
       className="w-full h-10 px-3 rounded-lg border-2 border-gray-200 mb-2 focus:outline-none focus:border-blue-500"
-      // value={formValues.CodUsuario}
-      // onChange={handleInputChange}
+      onChange={handleChange}
+      value={valorSelecionado}
     >
-      {props.CodUsuario !== undefined ? (
-        <option value={props.CodUsuario} selected>
-          {props.CodUsuario} - {props.Usuario}
+      {CodUsuario !== undefined ? (
+        <option value={CodUsuario} selected>
+          {CodUsuario} - {Usuario}
         </option>
       ) : (
         <option value="0" selected disabled>
           Selecionar...
         </option>
       )}
-      {Usuario.map((item: Usuario) =>
+      {user.map((item: Usuario, index) =>
         item.Ativo === true ? (
-          <option value={item.Codigo}>
+          <option value={item.Codigo + "-" + item.Usuario} key={index}>
             {item.Codigo} - {item.Usuario}
           </option>
         ) : (

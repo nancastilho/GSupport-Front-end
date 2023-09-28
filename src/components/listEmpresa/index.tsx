@@ -1,11 +1,25 @@
-import React from "react";
 import { useEffect, useState } from "react";
 import { empresasService } from "../../services/empresas/empresasService";
-import { Empresa, FormValues } from "../../interface";
+import { Empresa } from "../../interface";
 // import { Container } from './styles';
-
-function ListEmpresa(props: FormValues) {
+interface ListEmpresaProps {
+  OnChangeCliente?: (novoValor: string) => void;
+  CodEmpresa?: number;
+  NomeFantasia?: string;
+}
+const ListEmpresa = ({
+  CodEmpresa,
+  NomeFantasia,
+  OnChangeCliente = () => "",
+}: ListEmpresaProps) => {
   const [empresa, setEmpresa] = useState([]);
+  const [valorSelecionado, setValorSelecionado] = useState<string>("");
+
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const novoValor = event.target.value.split("-");
+    setValorSelecionado(event.target.value);
+    OnChangeCliente(novoValor[1]);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -13,8 +27,6 @@ function ListEmpresa(props: FormValues) {
         .getPart({ OrderBy: "NomeFantasia" })
         .then((response) => {
           setEmpresa(response.data);
-          console.log(response.data);
-          console.log(empresa);
         })
         .catch((error) => {
           console.log(error);
@@ -22,30 +34,31 @@ function ListEmpresa(props: FormValues) {
     };
     fetchData();
   }, []);
+
   return (
     <select
       id="CodEmpresa"
       name="CodEmpresa"
       className="w-full h-10 px-3 rounded-lg border-2 border-gray-200 mb-2 focus:outline-none focus:border-blue-500"
-      // value={formValues.CodEmpresa}
-      // onChange={handleInputChange}
+      onChange={handleChange}
+      value={valorSelecionado}
     >
-      {props.CodEmpresa !== undefined ? (
-        <option value={props.CodEmpresa} selected >
-          {props.NomeFantasia} - {props.CodEmpresa}
+      {CodEmpresa !== undefined ? (
+        <option value={CodEmpresa} selected>
+          {NomeFantasia} - {CodEmpresa}
         </option>
       ) : (
         <option value="0" selected disabled>
           Selecionar...
         </option>
       )}
-      {empresa.map((item: Empresa) => (
-        <option value={item.Codigo}>
+      {empresa.map((item: Empresa, index) => (
+        <option value={item.NomeFantasia + "-" + item.Codigo} key={index}>
           {item.NomeFantasia} - {item.Codigo}
         </option>
       ))}
     </select>
   );
-}
+};
 
 export default ListEmpresa;

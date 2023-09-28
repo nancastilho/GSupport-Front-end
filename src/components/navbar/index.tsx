@@ -2,38 +2,50 @@ import { Icon } from "@iconify/react";
 import { FiLogOut } from "react-icons/fi";
 import { LogoutProps } from "../../interface";
 
-
-
 const Navbar: React.FC<LogoutProps> = ({ handleLogout }) => {
   const user = localStorage.getItem("userAuth");
 
   return (
     <div className="fixed left-0 top-0 w-1/6">
       <div className=" flex flex-col bg-gray-800 h-screen ">
-        <div className="bg-gray-900 text-white text-xl font-bold p-4">
-          <a href="/home">GSupport</a>
-          
-        </div>
+        <a href="/home">
+          <div className="bg-gray-900 text-white text-xl font-bold p-4 flex align-top" >
+          <img src="/favicon.png" alt="" className="w-8"/>
+            GSupport
+          </div>
+        </a>
         <div className="flex-grow p-4">
-          <a href={"/home"} className="block text-gray-300 hover:text-white mb-4">
+          <a
+            href={"/home"}
+            className="block text-gray-300 hover:text-white mb-4"
+          >
             <div className="flex items-center">
               <Icon icon={"mdi:home"} />
               <span className="pl-3">Atendimentos</span>
             </div>
           </a>
-          <a href={"/search"} className="block text-gray-300 hover:text-white mb-4">
+          <a
+            href={"/search"}
+            className="block text-gray-300 hover:text-white mb-4"
+          >
             <div className="flex items-center">
               <Icon icon={"mdi:search"} />
               <span className="pl-3">Pesquisa</span>
             </div>
           </a>
-          <a href={"/graph"} className="block text-gray-300 hover:text-white mb-4">
+          <a
+            href={"/graph"}
+            className="block text-gray-300 hover:text-white mb-4"
+          >
             <div className="flex items-center">
               <Icon icon={"mdi:graph-line"} />
               <span className="pl-3">Relatorios</span>
             </div>
           </a>
-          <a href={"/test"} className="block text-gray-300 hover:text-white mb-4">
+          <a
+            href={"/test"}
+            className="block text-gray-300 hover:text-white mb-4"
+          >
             <div className="flex items-center">
               <Icon icon={"mdi:test-tube"} />
               <span className="pl-3">Testes</span>

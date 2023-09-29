@@ -39,11 +39,11 @@ const HomeView = () => {
   return (
     <div className=" max-md:flex max-md:justify-around overflow-auto max-md:mt-14">
       <div className="h-screen mx-2 grow  max-md:pb-14 max-md:h-5/6 ">
-        <div className="p-3 grid gap-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
+        <div className="p-3 grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
           
             {dados.map((item: FormValues, index) => (
               <div
-                className="bg-blue-50 w-full rounded-lg shadow-md my-1 p-2 w-64 card flex"
+                className="bg-blue-50 w-full rounded-lg shadow-md my-1 p-2 card flex"
                 key={index}
               >
                 <div

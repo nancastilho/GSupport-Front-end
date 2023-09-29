@@ -114,7 +114,7 @@ function EditAtendimento(props: FormValues) {
           required
         />
       </div>
-      <div className="flex justify-between">
+      <div className="flex justify-between max-md:flex-col max-md:grow">
         <div className="mb-4">
           <label
             htmlFor="dateI"
@@ -127,7 +127,7 @@ function EditAtendimento(props: FormValues) {
             name="dateI"
             type="datetime-local"
             value={formValues.DataCriacao}
-            className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+            className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />
         </div>
@@ -143,7 +143,7 @@ function EditAtendimento(props: FormValues) {
             name="dateF"
             type="datetime-local"
             value={formValues.DataCriacao}
-            className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+            className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />
         </div>
@@ -183,7 +183,7 @@ function EditAtendimento(props: FormValues) {
           required
         ></textarea>
       </div>
-      <div className="flex w-60">
+      <div className="flex w-60 hidden">
         {formValues.Imagens !== undefined
           ? formValues.Imagens.map((img: string, index) => (
               <div key={index}>

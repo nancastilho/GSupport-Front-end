@@ -8,8 +8,8 @@ import CreateAtendimento from "../../view/atendimento/CreateAtendimento";
 import NavbarMobile from "../navbarMobile";
 
 const LayoutPadrao = ({ children }: LayoutProps) => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const navigate: NavigateFunction = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -18,6 +18,7 @@ const LayoutPadrao = ({ children }: LayoutProps) => {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
+  
   function handleLogout() {
     localStorage.removeItem("token");
     localStorage.removeItem("userAuth");

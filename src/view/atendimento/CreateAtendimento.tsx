@@ -131,42 +131,40 @@ function CreateAtendimento(props: OnCadastroProps) {
             required
           />
         </div>
-        <div className="flex justify-between">
-          <div className="mb-4">
-            <label
-              htmlFor="dateI"
-              className="block mb-1 font-medium text-gray-700"
-            >
-              Inicio
-            </label>
-            <input
-              id="dateI"
-              name="dateI"
-              type="datetime-local"
-              onChange={handleInputChange}
-              value={dataFormatada + "T" + horaFormatada}
-              className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="dateF"
-              className="block mb-1 font-medium text-gray-700"
-            >
-              Fim
-            </label>
-            <input
-              id="dateF"
-              name="dateF"
-              type="datetime-local"
-              value={dataFormatada + "T" + horaFormatada}
-              onChange={handleInputChange}
-              className="block w-56 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
-              required
-            />
-          </div>
+        <div className="flex justify-between max-md:flex-col max-md:grow">
+        <div className="mb-4">
+          <label
+            htmlFor="dateI"
+            className="block mb-1 font-medium text-gray-700"
+          >
+            Inicio
+          </label>
+          <input
+            id="dateI"
+            name="dateI"
+            type="datetime-local"
+            value={formValues.DataCriacao}
+            className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+            required
+          />
         </div>
+        <div className="mb-4">
+          <label
+            htmlFor="dateF"
+            className="block mb-1 font-medium text-gray-700"
+          >
+            Fim
+          </label>
+          <input
+            id="dateF"
+            name="dateF"
+            type="datetime-local"
+            value={formValues.DataCriacao}
+            className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+            required
+          />
+        </div>
+      </div>
 
         <div className="mb-4">
           <label
@@ -203,7 +201,7 @@ function CreateAtendimento(props: OnCadastroProps) {
             required
           ></textarea>
         </div>
-        <div className="mb-6 w-full">
+        <div className="mb-6 w-full hidden">
           <label
             htmlFor="cover-photo"
             className="block text-sm font-medium leading-6 text-gray-900"

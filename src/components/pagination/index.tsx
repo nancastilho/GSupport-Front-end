@@ -20,7 +20,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <nav className="flex items-center justify-center" aria-label="Pagination">
-      <ul className="flex justify-center space-x-4">
+      <ul className="flex justify-center space-x-4 max-md:space-x-1">
         <li>
           <button
             className={classnames(

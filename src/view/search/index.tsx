@@ -270,14 +270,13 @@ const SearchView = () => {
                     </div>
                   </div>
                 ))}
-                <div className="mt-2">
+                
                   <Pagination
                     currentPage={currentPage}
                     totalPages={pages}
                     onPageChange={fetchData}
                     limit={5}
                   />
-                </div>
               </div>
             </div>
           </div>

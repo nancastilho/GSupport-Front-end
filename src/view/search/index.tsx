@@ -16,6 +16,16 @@ const SearchView = () => {
   const [codAtend, setCodAtend] = useState<number>();
   const [pages, setPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const toggleAccordion = (index: number, lista: FormValues) => {
+    if (activeIndex === index) {
+      setActiveIndex(null); // Fechar o item se já estiver aberto
+    } else {
+      setActiveIndex(index); // Abrir o item clicado
+    }
+    handleListView(lista);
+  };
 
   function fetchData(newPage: number) {
     setCurrentPage(newPage);
@@ -95,7 +105,185 @@ const SearchView = () => {
 
   return (
     <>
-      <div className="flex">
+      <div className=" flex justify-around overflow-auto mt-14 md:hidden">
+        <div className="h-screen mx-2  max-md:pb-14 max-md:h-5/6">
+          <div className="p3 flex flex-col">
+            <div className="flex">
+              <div className="flex flex-col w-1/2 m-1">
+                <div className="mb-2 relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden ">
+                  <span className="pl-2  text-sm">Inicio:</span>
+                  <input
+                    className="peer h-full w-full outline-none bg-white text-sm text-gray-700 px-2"
+                    type="date"
+                    id="texto"
+                    name="texto"
+                    onChange={handleSearchDateI}
+                    placeholder="Texto"
+                  />
+                </div>
+
+                <div className="relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
+                  <span className="pl-2 text-sm">Fim:</span>
+                  <input
+                    className="peer h-full w-full outline-none bg-white text-sm text-gray-700 px-2"
+                    type="date"
+                    id="texto"
+                    name="texto"
+                    onChange={handleSearchDateF}
+                    placeholder="Texto"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col w-1/2 m-1">
+                <div className=" mb-2 relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
+                  <div className="grid place-items-center h-full w-12 text-gray-300">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </div>
+
+                  <input
+                    className="peer h-full w-full outline-none bg-white text-sm text-gray-700 pr-2"
+                    type="text"
+                    id="texto"
+                    name="texto"
+                    onChange={handleSearchTexto}
+                    placeholder="Texto"
+                  />
+                </div>
+
+                <div className=" relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
+                  <div className="grid place-items-center h-full w-12 text-gray-300 ">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </div>
+
+                  <input
+                    className="peer h-full w-full outline-none bg-white text-sm text-gray-700 pr-2"
+                    type="text"
+                    id="usuario"
+                    name="usuario"
+                    onChange={handleSearchUsuario}
+                    placeholder="USUARIOS"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <div>
+                {dados.map((item: FormValues, index) => (
+                  <div key={index} className="border m-1 rounded-md">
+                    <button
+                      onClick={() => toggleAccordion(index, item)}
+                      className={`w-full flex rounded-md text-left p-3 bg-gray-200 hover:bg-gray-300 ${
+                        activeIndex === index ? "bg-gray-300" : ""
+                      } `}
+                    >
+                      <div className="grow">
+                        <div className="flex flex-col">
+                          <p className="text-base font-bold mb-2 text-blue-900 line-clamp-2 ">
+                            {item.NomeFantasia}
+                          </p>
+                          <p className="text-gray-700 ">
+                            Cliente: {item.NomeCliente}
+                          </p>
+                        </div>
+                        <hr className="my-2" />
+                        <div className="flex ">
+                          <p className="text-gray-700 ">
+                            Codigo: {item.Codigo}
+                          </p>
+                          <p className="text-gray-700 ml-3">
+                            Usuario: {item.Usuario}
+                          </p>
+                        </div>
+                      </div>
+                      <Icon
+                        icon={"mdi:chevron-down"}
+                        fontSize={20}
+                        className={`ml-auto transition-transform ${
+                          activeIndex === index ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                    <div
+                      className={` max-h-0 overflow-hidden transition-max-h duration-300 ease-in-out ${
+                        activeIndex === index ? "max-h-screen" : ""
+                      }`}
+                    >
+                      <div className="grow flex flex-col ">
+                        <label
+                          htmlFor="Problema"
+                          className="block mb-1 font-medium text-gray-700"
+                        >
+                          Problema
+                        </label>
+                        <textarea
+                          id="Problema"
+                          name="Problema"
+                          value={list?.Problema}
+                          className="block w-full h-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+                          rows={4}
+                          required
+                        ></textarea>
+                      </div>
+
+                      <div className="grow flex flex-col ">
+                        <label
+                          htmlFor="Solucao"
+                          className="block mb-1 font-medium text-gray-700"
+                        >
+                          Solução
+                        </label>
+                        <textarea
+                          id="Solucao"
+                          name="Solucao"
+                          value={list?.Solucao}
+                          className="block w-full h-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+                          rows={4}
+                          required
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <div className="mt-2">
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={pages}
+                    onPageChange={fetchData}
+                    limit={5}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex max-md:hidden">
         <div className="w-4/6 h-screen flex flex-col justify-around">
           <div className="flex px-1 justify-between">
             <div className="mx-1 relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden ">
@@ -233,7 +421,6 @@ const SearchView = () => {
               </tbody>
             </table>
           </div>
-
           <div>
             <Pagination
               currentPage={currentPage}
@@ -242,11 +429,10 @@ const SearchView = () => {
               limit={5}
             />
           </div>
-
           <script src="https://unpkg.com/flowbite@1.3.4/dist/flowbite.js"></script>
         </div>
-        <div className=" flex flex-col w-5/12 h-screen shadow-md p-3 justify-around">
-          <div className="mb-4">
+        <div className="w-2/6  h-screen p-3 flex flex-col justify-around">
+          <div className="grow flex flex-col ">
             <label
               htmlFor="Problema"
               className="block mb-1 font-medium text-gray-700"
@@ -257,13 +443,13 @@ const SearchView = () => {
               id="Problema"
               name="Problema"
               value={list?.Problema}
-              className="block w-full h-60 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+              className="block w-full h-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
               rows={4}
               required
             ></textarea>
           </div>
 
-          <div className="mb-4">
+          <div className="grow flex flex-col ">
             <label
               htmlFor="Solucao"
               className="block mb-1 font-medium text-gray-700"
@@ -274,13 +460,13 @@ const SearchView = () => {
               id="Solucao"
               name="Solucao"
               value={list?.Solucao}
-              className="block w-full h-60 px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+              className="block w-full h-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
               rows={4}
               required
             ></textarea>
           </div>
 
-          <div className="flex w-60">
+          <div className=" grow flex">
             {list?.Imagens !== undefined
               ? list?.Imagens.map((img: string, index) => (
                   <div key={index}>

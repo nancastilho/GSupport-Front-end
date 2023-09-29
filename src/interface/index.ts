@@ -52,6 +52,7 @@ export interface LayoutProps {
 
 export interface LogoutProps {
   handleLogout: () => void;
+  children?: any
 }
 
 export interface OnCadastroProps {

@@ -103,7 +103,7 @@ const SearchView = () => {
           console.log(error);
         });
     };
-    
+
     if (localStorage.getItem("token") == null) {
       navigate("/");
     }
@@ -116,92 +116,92 @@ const SearchView = () => {
     <>
       <div className=" flex justify-around overflow-auto mt-14 md:hidden">
         <div className="h-screen mx-2  max-md:pb-14 max-md:h-5/6">
-          <div className="p3 flex flex-col">
-            <div className="flex">
-              <div className="flex flex-col w-1/2 m-1">
-                <div className="mb-2 relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden ">
-                  <span className="pl-2  text-sm">Inicio:</span>
-                  <input
-                    className="peer h-full w-full outline-none bg-white text-sm text-gray-700 px-2"
-                    type="date"
-                    id="texto"
-                    name="texto"
-                    onChange={handleSearchDateI}
-                    placeholder="Texto"
-                  />
-                </div>
-
-                <div className="relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
-                  <span className="pl-2 text-sm">Fim:</span>
-                  <input
-                    className="peer h-full w-full outline-none bg-white text-sm text-gray-700 px-2"
-                    type="date"
-                    id="texto"
-                    name="texto"
-                    onChange={handleSearchDateF}
-                    placeholder="Texto"
-                  />
-                </div>
-              </div>
-              <div className="flex flex-col w-1/2 m-1">
-                <div className=" mb-2 relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
-                  <div className="grid place-items-center h-full w-12 text-gray-300">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      />
-                    </svg>
-                  </div>
-
-                  <input
-                    className="peer h-full w-full outline-none bg-white text-sm text-gray-700 pr-2"
-                    type="text"
-                    id="texto"
-                    name="texto"
-                    onChange={handleSearchTexto}
-                    placeholder="Texto"
-                  />
-                </div>
-
-                <div className=" relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
-                  <div className="grid place-items-center h-full w-12 text-gray-300 ">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      />
-                    </svg>
-                  </div>
-
-                  <input
-                    className="peer h-full w-full outline-none bg-white text-sm text-gray-700 pr-2"
-                    type="text"
-                    id="usuario"
-                    name="usuario"
-                    onChange={handleSearchUsuario}
-                    placeholder="USUARIOS"
-                  />
-                </div>
-              </div>
-            </div>
+          <div className="p3">
             <div className="flex flex-col">
+              <div className="flex">
+                <div className="flex flex-col w-1/2 m-1">
+                  <div className="mb-2 relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden ">
+                    <span className="pl-2  text-sm">Inicio:</span>
+                    <input
+                      className="peer h-full w-full outline-none bg-white text-sm text-gray-700 px-2"
+                      type="date"
+                      id="texto"
+                      name="texto"
+                      onChange={handleSearchDateI}
+                      placeholder="Texto"
+                    />
+                  </div>
+
+                  <div className="relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
+                    <span className="pl-2 text-sm">Fim:</span>
+                    <input
+                      className="peer h-full w-full outline-none bg-white text-sm text-gray-700 px-2"
+                      type="date"
+                      id="texto"
+                      name="texto"
+                      onChange={handleSearchDateF}
+                      placeholder="Texto"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col w-1/2 m-1">
+                  <div className=" mb-2 relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
+                    <div className="grid place-items-center h-full w-12 text-gray-300">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        />
+                      </svg>
+                    </div>
+
+                    <input
+                      className="peer h-full w-full outline-none bg-white text-sm text-gray-700 pr-2"
+                      type="text"
+                      id="texto"
+                      name="texto"
+                      onChange={handleSearchTexto}
+                      placeholder="Texto"
+                    />
+                  </div>
+
+                  <div className=" relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
+                    <div className="grid place-items-center h-full w-12 text-gray-300 ">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        />
+                      </svg>
+                    </div>
+
+                    <input
+                      className="peer h-full w-full outline-none bg-white text-sm text-gray-700 pr-2"
+                      type="text"
+                      id="usuario"
+                      name="usuario"
+                      onChange={handleSearchUsuario}
+                      placeholder="USUARIOS"
+                    />
+                  </div>
+                </div>
+              </div>
               <div>
                 {dados.map((item: FormValues, index) => (
                   <div key={index} className="border m-1 rounded-md">

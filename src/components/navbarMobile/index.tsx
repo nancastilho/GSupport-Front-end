@@ -19,7 +19,7 @@ const NavbarMobile = ({ handleLogout, children }: LogoutProps) => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 hidden p-3 bg-gray-800 max-md:block">
+      <div className="fixed top-0 left-0 right-0 hidden p-3 bg-gray-800 z-50 max-md:block">
         <div className="flex justify-between text-gray-300 hover:text-white">
           <div className=" text-white text-lg font-bold flex content-center">
             <img src="/favicon.png" alt="" className="w-6" />

@@ -5,14 +5,17 @@ import { FormValues } from "../../interface";
 import { Icon } from "@iconify/react";
 import EditAtendimento from "../../view/atendimento/EditAtendimento";
 import Modal from "../../components/modal";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 const HomeView = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [dados, setDados] = useState([]);
   const [codAtend, setCodAtend] = useState<number>();
+  const navigate: NavigateFunction = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
+      localStorage.getItem("token");
       atendimentosService
         .getAll()
         .then((response: any) => {
@@ -22,8 +25,12 @@ const HomeView = () => {
           console.log(error);
         });
     };
-
-    fetchData();
+    if (localStorage.getItem("token") == null) {
+      navigate("/");
+    }
+    if (localStorage.getItem("token")) {
+      fetchData();
+    }
   }, [isModalOpen]);
 
   function handleModalOpen(codigo: number, edit: boolean) {
@@ -40,43 +47,41 @@ const HomeView = () => {
     <div className=" max-md:flex max-md:justify-around overflow-auto max-md:mt-14">
       <div className="h-screen mx-2 grow  max-md:pb-14 max-md:h-5/6 ">
         <div className="p-3 grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
-          
-            {dados.map((item: FormValues, index) => (
+          {dados.map((item: FormValues, index) => (
+            <div
+              className="bg-blue-50 w-full rounded-lg shadow-md my-1 p-2 card flex"
+              key={index}
+            >
               <div
-                className="bg-blue-50 w-full rounded-lg shadow-md my-1 p-2 card flex"
-                key={index}
+                className=" cursor-pointer w-11/12"
+                onClick={() => handleModalOpen(index, false)}
               >
-                <div
-                  className=" cursor-pointer w-11/12"
-                  onClick={() => handleModalOpen(index, false)}
-                >
-                  <h2 className="text-2xl font-bold mb-4 text-blue-900 line-clamp-2">
-                    {item.NomeFantasia}
-                  </h2>
+                <h2 className="text-2xl font-bold mb-4 text-blue-900 line-clamp-2">
+                  {item.NomeFantasia}
+                </h2>
 
-                  <div>
-                    <p className="text-gray-700 mb-2 max-sm:hidden">
-                      {item.Codigo}
-                    </p>
-                    <p className="text-gray-700 mb-2 max-sm:hidden ">
-                      Usuário: {item.Usuario}
-                    </p>
-                    <p className="text-gray-700 mb-2  ">
-                      Nome: {item.NomeCliente}
-                    </p>
-                  </div>
-                </div>
-                <div className="w-1/12 ml-3">
-                  <Icon
-                    icon={"mdi:lead-pencil"}
-                    cursor={"pointer"}
-                    fontSize={19}
-                    onClick={() => handleModalOpen(index, true)}
-                  />
+                <div>
+                  <p className="text-gray-700 mb-2 max-sm:hidden">
+                    {item.Codigo}
+                  </p>
+                  <p className="text-gray-700 mb-2 max-sm:hidden ">
+                    Usuário: {item.Usuario}
+                  </p>
+                  <p className="text-gray-700 mb-2  ">
+                    Nome: {item.NomeCliente}
+                  </p>
                 </div>
               </div>
-            ))}
-          
+              <div className="w-1/12 ml-3">
+                <Icon
+                  icon={"mdi:lead-pencil"}
+                  cursor={"pointer"}
+                  fontSize={19}
+                  onClick={() => handleModalOpen(index, true)}
+                />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 

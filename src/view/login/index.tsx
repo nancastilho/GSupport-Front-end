@@ -4,33 +4,16 @@ import { Credentials } from "../../interface";
 import { loginService } from "../../services/login/loginService";
 
 const Login = () => {
-   const navigate: NavigateFunction = useNavigate()
+  const navigate: NavigateFunction = useNavigate();
 
   const [credentials, setCredentials] = useState<Credentials>({
     Usuario: "",
     Senha: "",
   });
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Evitar o envio padrão do formulário
-
-    
-    try {
-      console.log(event)
-      const response = await loginService.login(credentials);
-      const token = response.data.jwtToken;
-      const userAuth = response.data.userData.Usuario;
-      const codUserAuth = response.data.userData.Codigo;
-      localStorage.setItem("userAuth", userAuth);
-      localStorage.setItem("userName", userAuth);
-      localStorage.setItem("codUserAuth", codUserAuth);
-      localStorage.setItem("token", token);
-
-      // Navegar para a nova rota após o login bem-sucedido
-      navigate('/home');
-    } catch (error) {
-      console.error(error);
-    }
+    loginService.login(credentials, navigate);
   };
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -52,7 +35,7 @@ const Login = () => {
       className="h-screen bg-[#edf2f7] overflow-hidden flex items-center justify-center" /*style="background: #edf2f7;"*/
     >
       <div className="h-screen w-full flex">
-        <div className="flex w-4/6 bg-gradient-to-tr from-blue-950 to-sky-900 i justify-around items-center">
+        <div className="flex w-4/6 bg-gradient-to-tr from-blue-950 to-sky-900 i justify-around items-center max-md:hidden">
           <div>
             <h1 className="text-white font-bold text-4xl font-sans">
               GSupport
@@ -134,7 +117,6 @@ const Login = () => {
             >
               Entrar
             </button>
-            
           </form>
         </div>
       </div>

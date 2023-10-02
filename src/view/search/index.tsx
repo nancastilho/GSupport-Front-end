@@ -5,6 +5,7 @@ import EditAtendimento from "../../view/atendimento/EditAtendimento";
 import Pagination from "../../components/pagination";
 import { atendimentosService } from "../../services/atendimentos/atendimentosService";
 import { FormValues } from "../../interface";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 const SearchView = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [dados, setDados] = useState([]);
@@ -17,6 +18,8 @@ const SearchView = () => {
   const [pages, setPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const navigate: NavigateFunction = useNavigate();
 
   const toggleAccordion = (index: number, lista: FormValues) => {
     if (activeIndex === index) {
@@ -100,7 +103,13 @@ const SearchView = () => {
           console.log(error);
         });
     };
-    fetchData();
+    
+    if (localStorage.getItem("token") == null) {
+      navigate("/");
+    }
+    if (localStorage.getItem("token")) {
+      fetchData();
+    }
   }, [texto, usuario, currentPage, dateF, dateI]);
 
   return (
@@ -270,13 +279,13 @@ const SearchView = () => {
                     </div>
                   </div>
                 ))}
-                
-                  <Pagination
-                    currentPage={currentPage}
-                    totalPages={pages}
-                    onPageChange={fetchData}
-                    limit={5}
-                  />
+
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={pages}
+                  onPageChange={fetchData}
+                  limit={5}
+                />
               </div>
             </div>
           </div>

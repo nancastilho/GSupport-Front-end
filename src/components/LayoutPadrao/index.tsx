@@ -7,7 +7,7 @@ import { BsFillPlusSquareFill } from "react-icons/bs";
 import CreateAtendimento from "../../view/atendimento/CreateAtendimento";
 import NavbarMobile from "../navbarMobile";
 
-const LayoutPadrao = ({ children }: LayoutProps) => {
+const LayoutPadrao = ({ children, onDataFromChild  }: LayoutProps) => {
   const navigate: NavigateFunction = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -17,6 +17,7 @@ const LayoutPadrao = ({ children }: LayoutProps) => {
 
   const handleModalClose = () => {
     setIsModalOpen(false);
+    onDataFromChild(isModalOpen);
   };
   
   function handleLogout() {

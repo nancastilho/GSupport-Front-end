@@ -50,6 +50,7 @@ export interface Empresa {
 
 export interface LayoutProps {
   children: React.ReactNode;
+  onDataFromChild?: any
 }
 
 export interface LogoutProps {

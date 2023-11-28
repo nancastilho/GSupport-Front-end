@@ -1,18 +1,18 @@
 import { SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
 import ListEmpresa from "../../components/listEmpresa";
-import { FormValues} from "../../interface";
+import { FormValues } from "../../interface";
 import { atendimentosService } from "../../services/atendimentos/atendimentosService";
 import ListUsuario from "../../components/listUser";
 import { formatToTimeZone } from "date-fns-timezone";
 import ListNomeClientes from "../../components/listNomeClientes";
 import { Icon } from "@iconify/react";
 
-interface PropsCreate{
-  onClose?: () => void
+interface PropsCreate {
+  onClose?: () => void;
 }
 
-function CreateAtendimento(props:PropsCreate) {
+function CreateAtendimento(props: PropsCreate) {
   const brasilTimeZone = "America/Sao_Paulo";
 
   // Obtém a data e hora atual no fuso horário do Brasil
@@ -133,16 +133,6 @@ function CreateAtendimento(props:PropsCreate) {
 
         <div className="mb-4">
           <label
-            htmlFor="ListEmpresa"
-            className="block mb-1 font-medium text-gray-700"
-          >
-            Usuario
-          </label>
-          <ListUsuario OnChangeUsuario={handleChangeUsuario} />
-        </div>
-
-        <div className="mb-4">
-          <label
             htmlFor="NomeCliente"
             className="block mb-1 font-medium text-gray-700"
           >
@@ -151,41 +141,50 @@ function CreateAtendimento(props:PropsCreate) {
           <div className="flex justify-center items-center ">
             {newCliente ? (
               <>
-              <input
-                id="NomeCliente"
-                name="NomeCliente"
-                type="text"
-                value={formValues.NomeCliente}
-                onChange={handleInputChange}
-                className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
-                required
-              />
-            <button
-              type="button"
-              onClick={() => setNewCliente(!newCliente)}
-              className="px-4 py-2 ml-1 text-white bg-red-900 rounded-md hover:bg-red-700 focus:outline-none focus:bg-red-600"
-            >
-              <Icon icon={ "mdi:close"} />
-            </button>
+                <input
+                  id="NomeCliente"
+                  name="NomeCliente"
+                  type="text"
+                  value={formValues.NomeCliente}
+                  onChange={handleInputChange}
+                  className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setNewCliente(!newCliente)}
+                  className="px-4 py-2 ml-1 text-white bg-red-900 rounded-md hover:bg-red-700 focus:outline-none focus:bg-red-600"
+                >
+                  <Icon icon={"mdi:close"} />
+                </button>
               </>
-            ) : (<>
-              <ListNomeClientes
-                OnChangeUsuario={handleChangeNomeCliente}
-                codEmpresa={formValues.CodEmpresa}
-              />
-            <button
-              type="button"
-              onClick={() => setNewCliente(!newCliente)}
-              
-              className="px-4 py-2 ml-1 text-white bg-blue-900 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-600"
-            >
-              <Icon icon={"mdi:plus"} />
-            </button>
-            </>
+            ) : (
+              <>
+                <ListNomeClientes
+                  OnChangeUsuario={handleChangeNomeCliente}
+                  codEmpresa={formValues.CodEmpresa}
+                />
+                <button
+                  type="button"
+                  onClick={() => setNewCliente(!newCliente)}
+                  className="px-4 py-2 ml-1 text-white bg-blue-900 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-600"
+                >
+                  <Icon icon={"mdi:plus"} />
+                </button>
+              </>
             )}
-
           </div>
         </div>
+        <div className="mb-4">
+          <label
+            htmlFor="ListEmpresa"
+            className="block mb-1 font-medium text-gray-700"
+          >
+            Usuario
+          </label>
+          <ListUsuario OnChangeUsuario={handleChangeUsuario} />
+        </div>
+
         <div className="flex justify-between max-md:flex-col max-md:grow">
           <div className="mb-4">
             <label

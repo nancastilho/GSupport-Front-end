@@ -36,6 +36,22 @@ function ViewAtendimento(props: FormValues) {
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
         />
       </div>
+      <div className="mb-4">
+        <label
+          htmlFor="NomeCliente"
+          className="block mb-1 font-medium text-gray-700"
+        >
+          Usuário
+        </label>
+        <input
+          readOnly
+          id="Usuario"
+          name="Usuario"
+          type="text"
+          value={props.Usuario}
+          className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+        />
+      </div>
       <div className="flex justify-between max-md:flex-col max-md:grow">
         <div className="mb-4">
           <label

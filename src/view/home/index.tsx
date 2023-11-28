@@ -133,6 +133,7 @@ const HomeView = (createSucess:any) => {
                     CodUsuario={item.CodUsuario}
                     DataCriacao={Data[0] + "T" + HoraMin[0] + ":" + HoraMin[1]}
                     NomeCliente={item.NomeCliente}
+                    Usuario={item.Usuario}
                     Plantao={1}
                     Problema={item.Problema}
                     Solucao={item.Solucao}

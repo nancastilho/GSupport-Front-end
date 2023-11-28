@@ -17,7 +17,9 @@ export interface FormValues {
   Assunto?: string;
   Imagens?: [];
   Plantao?: number;
+  onClose?: () => void
 }
+
 
 export interface Usuario{
   Codigo: number,
@@ -55,8 +57,5 @@ export interface LogoutProps {
   children?: any
 }
 
-export interface OnCadastroProps {
-  onCadastro: boolean;
-}
 
 

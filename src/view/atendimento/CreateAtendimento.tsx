@@ -1,28 +1,30 @@
 import { SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
 import ListEmpresa from "../../components/listEmpresa";
-import { FormValues, OnCadastroProps } from "../../interface";
+import { FormValues} from "../../interface";
 import { atendimentosService } from "../../services/atendimentos/atendimentosService";
+import ListUsuario from "../../components/listUser";
+import { formatToTimeZone } from "date-fns-timezone";
+import ListNomeClientes from "../../components/listNomeClientes";
+import { Icon } from "@iconify/react";
 
-function CreateAtendimento(props: OnCadastroProps) {
+interface PropsCreate{
+  onClose?: () => void
+}
+
+function CreateAtendimento(props:PropsCreate) {
+  const brasilTimeZone = "America/Sao_Paulo";
+
+  // Obtém a data e hora atual no fuso horário do Brasil
   const dataAtual = new Date();
-  const dataFormatada = dataAtual.toLocaleDateString("fr-CA");
-  // const dataFormatadaBR = dataAtual.toLocaleDateString("pt-BR", opcoes);
-  const horaFormatada = dataAtual.toLocaleTimeString("pt-BR", {
-    hour12: false,
-    timeStyle: "short",
-    timeZone: "America/Sao_Paulo",
+  const dataHoraBrasil = formatToTimeZone(dataAtual, "YYYY-MM-DDTHH:mm", {
+    timeZone: brasilTimeZone,
   });
 
-  var codUsuario: string | null;
-
-  codUsuario = localStorage.getItem("codUserAuth");
-  codUsuario = codUsuario ? codUsuario : "";
-
+  const [newCliente, setNewCliente] = useState<boolean>(false);
   const [image, setImage] = useState<FileList | null>(null);
 
   const [formValues, setFormValues] = useState<FormValues>({
-    CodUsuario: parseInt(codUsuario),
     CodEmpresa: 0,
     NomeCliente: "",
     Problema: "",
@@ -30,16 +32,14 @@ function CreateAtendimento(props: OnCadastroProps) {
     Assunto: "sem assunto",
     CodSistema: 1,
     CodMeioComunicacao: 1,
-    DataCriacao: `${dataFormatada} ${horaFormatada} `,
-    DataInicio: `${dataFormatada} ${horaFormatada}  `,
-    DataFim: `${dataFormatada} ${horaFormatada} `,
+    DataCriacao: dataHoraBrasil,
+    DataInicio: dataHoraBrasil,
+    DataFim: dataHoraBrasil,
     Plantao: 0,
   });
 
   const resetForm = () => {
-    codUsuario = codUsuario ? codUsuario : "";
     setFormValues({
-      CodUsuario: parseInt(codUsuario),
       CodEmpresa: 0,
       NomeCliente: "",
       Problema: "",
@@ -47,9 +47,9 @@ function CreateAtendimento(props: OnCadastroProps) {
       Assunto: "sem assunto",
       CodSistema: 1,
       CodMeioComunicacao: 1,
-      DataCriacao: `${dataFormatada} ${horaFormatada} `,
-      DataInicio: `${dataFormatada} ${horaFormatada}  `,
-      DataFim: `${dataFormatada} ${horaFormatada} `,
+      DataCriacao: dataHoraBrasil,
+      DataInicio: dataHoraBrasil,
+      DataFim: dataHoraBrasil,
       Plantao: 0,
     });
   };
@@ -74,6 +74,9 @@ function CreateAtendimento(props: OnCadastroProps) {
     formData.append("data", JSON.stringify(formValues));
     try {
       await atendimentosService.postForm(formData);
+      if (props.onClose) {
+        props.onClose();
+      }
       toast.success("Atendimento cadastrado com sucesso!");
       resetForm();
     } catch (error) {
@@ -101,6 +104,20 @@ function CreateAtendimento(props: OnCadastroProps) {
     }));
   };
 
+  const handleChangeUsuario = (novoValor: string) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      ["CodUsuario"]: parseInt(novoValor),
+    }));
+  };
+
+  const handleChangeNomeCliente = (novoValor: string) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      ["NomeCliente"]: novoValor,
+    }));
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
@@ -116,55 +133,95 @@ function CreateAtendimento(props: OnCadastroProps) {
 
         <div className="mb-4">
           <label
+            htmlFor="ListEmpresa"
+            className="block mb-1 font-medium text-gray-700"
+          >
+            Usuario
+          </label>
+          <ListUsuario OnChangeUsuario={handleChangeUsuario} />
+        </div>
+
+        <div className="mb-4">
+          <label
             htmlFor="NomeCliente"
             className="block mb-1 font-medium text-gray-700"
           >
             Nome
           </label>
-          <input
-            id="NomeCliente"
-            name="NomeCliente"
-            type="text"
-            value={formValues.NomeCliente}
-            onChange={handleInputChange}
-            className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
-            required
-          />
+          <div className="flex justify-center items-center ">
+            {newCliente ? (
+              <>
+              <input
+                id="NomeCliente"
+                name="NomeCliente"
+                type="text"
+                value={formValues.NomeCliente}
+                onChange={handleInputChange}
+                className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+                required
+              />
+            <button
+              type="button"
+              onClick={() => setNewCliente(!newCliente)}
+              className="px-4 py-2 ml-1 text-white bg-red-900 rounded-md hover:bg-red-700 focus:outline-none focus:bg-red-600"
+            >
+              <Icon icon={ "mdi:close"} />
+            </button>
+              </>
+            ) : (<>
+              <ListNomeClientes
+                OnChangeUsuario={handleChangeNomeCliente}
+                codEmpresa={formValues.CodEmpresa}
+              />
+            <button
+              type="button"
+              onClick={() => setNewCliente(!newCliente)}
+              
+              className="px-4 py-2 ml-1 text-white bg-blue-900 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-600"
+            >
+              <Icon icon={"mdi:plus"} />
+            </button>
+            </>
+            )}
+
+          </div>
         </div>
         <div className="flex justify-between max-md:flex-col max-md:grow">
-        <div className="mb-4">
-          <label
-            htmlFor="dateI"
-            className="block mb-1 font-medium text-gray-700"
-          >
-            Inicio
-          </label>
-          <input
-            id="dateI"
-            name="dateI"
-            type="datetime-local"
-            value={formValues.DataCriacao}
-            className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
-            required
-          />
+          <div className="mb-4">
+            <label
+              htmlFor="dateI"
+              className="block mb-1 font-medium text-gray-700"
+            >
+              Inicio
+            </label>
+            <input
+              id="dateI"
+              name="DataInicio"
+              type="datetime-local"
+              value={formValues.DataInicio}
+              onChange={handleInputChange}
+              className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="dateF"
+              className="block mb-1 font-medium text-gray-700"
+            >
+              Fim
+            </label>
+            <input
+              id="dateF"
+              name="DataFim"
+              type="datetime-local"
+              value={formValues.DataFim}
+              onChange={handleInputChange}
+              className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+              required
+            />
+          </div>
         </div>
-        <div className="mb-4">
-          <label
-            htmlFor="dateF"
-            className="block mb-1 font-medium text-gray-700"
-          >
-            Fim
-          </label>
-          <input
-            id="dateF"
-            name="dateF"
-            type="datetime-local"
-            value={formValues.DataCriacao}
-            className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
-            required
-          />
-        </div>
-      </div>
 
         <div className="mb-4">
           <label

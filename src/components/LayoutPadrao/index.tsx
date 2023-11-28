@@ -38,7 +38,7 @@ const LayoutPadrao = ({ children }: LayoutProps) => {
       />
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-          <CreateAtendimento onCadastro={true} />
+          <CreateAtendimento onClose={handleModalClose}/>
         </Modal>
       )}{" "}
     </div>

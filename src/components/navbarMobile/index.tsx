@@ -65,7 +65,7 @@ const NavbarMobile = ({ handleLogout, children }: LogoutProps) => {
       </div>
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-          <CreateAtendimento onCadastro={true} />
+          <CreateAtendimento onClose={handleModalClose} />
         </Modal>
       )}
     </>

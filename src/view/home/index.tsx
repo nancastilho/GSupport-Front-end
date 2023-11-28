@@ -6,6 +6,7 @@ import { Icon } from "@iconify/react";
 import EditAtendimento from "../../view/atendimento/EditAtendimento";
 import Modal from "../../components/modal";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import { converterDataParaBrasil } from "../../components/functions";
 const HomeView = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalEdit, setIsModalEdit] = useState(false);
@@ -108,8 +109,11 @@ const HomeView = () => {
                     Problema={item.Problema}
                     Solucao={item.Solucao}
                     Usuario={item.Usuario}
+                    DataInicio={converterDataParaBrasil(item.DataInicio)}
+                    DataFim={converterDataParaBrasil(item.DataFim)}
                     Imagens={item.Imagens}
                     key={index}
+                    onClose={handleModalClose}
                   />
                 ) : (
                   ""
@@ -134,7 +138,10 @@ const HomeView = () => {
                     Solucao={item.Solucao}
                     Imagens={item.Imagens}
                     NomeFantasia={item.NomeFantasia}
+                    DataInicio={converterDataParaBrasil(item.DataInicio)}
+                    DataFim={converterDataParaBrasil(item.DataFim)}
                     key={codAtend}
+
                   />
                 ) : (
                   ""

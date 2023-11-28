@@ -1,6 +1,7 @@
 import { FormValues } from "../../interface";
 
 function ViewAtendimento(props: FormValues) {
+
   return (
     <div className="max-w-xl mx-auto">
       <div className="mb-4">
@@ -17,7 +18,6 @@ function ViewAtendimento(props: FormValues) {
           type="text"
           value={`${props.NomeFantasia} - ${props.CodEmpresa}`}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
-          required
         />
       </div>
       <div className="mb-4">
@@ -34,7 +34,6 @@ function ViewAtendimento(props: FormValues) {
           type="text"
           value={props.NomeCliente}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
-          required
         />
       </div>
       <div className="flex justify-between max-md:flex-col max-md:grow">
@@ -46,10 +45,11 @@ function ViewAtendimento(props: FormValues) {
             Inicio
           </label>
           <input
+           readOnly
             id="dateI"
             name="dateI"
             type="datetime-local"
-            value={props.DataCriacao}
+            value={props.DataInicio}
             className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />
@@ -62,10 +62,11 @@ function ViewAtendimento(props: FormValues) {
             Fim
           </label>
           <input
+           readOnly
             id="dateF"
             name="dateF"
             type="datetime-local"
-            value={props.DataCriacao}
+            value={props.DataFim}
             className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />
@@ -79,12 +80,12 @@ function ViewAtendimento(props: FormValues) {
           Problema
         </label>
         <textarea
+        readOnly
           id="Problema"
           name="Problema"
           value={props.Problema}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
           rows={4}
-          required
         ></textarea>
       </div>
 
@@ -96,12 +97,12 @@ function ViewAtendimento(props: FormValues) {
           Solução
         </label>
         <textarea
+        readOnly
           id="Solucao"
           name="Solucao"
           value={props.Solucao}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
           rows={4}
-          required
         ></textarea>
       </div>
 

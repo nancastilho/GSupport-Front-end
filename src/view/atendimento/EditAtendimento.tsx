@@ -20,8 +20,8 @@ function EditAtendimento(props: FormValues) {
     CodSistema: props.CodSistema,
     CodMeioComunicacao: props.CodMeioComunicacao,
     DataCriacao: props.DataCriacao,
-    DataInicio: props.DataCriacao,
-    DataFim: props.DataCriacao,
+    DataInicio: props.DataInicio,
+    DataFim: props.DataFim,
     Plantao: 0,
     Imagens: props.Imagens,
   });
@@ -48,6 +48,9 @@ function EditAtendimento(props: FormValues) {
     e.preventDefault();
     try {
       await atendimentosService.postEditForm(formValues);
+      if (props.onClose) {
+        props.onClose();
+      }
       toast.success("Edição concluída com sucesso!", {
         duration: 2000,
       });
@@ -76,12 +79,12 @@ function EditAtendimento(props: FormValues) {
           htmlFor="ListEmpresa"
           className="block mb-1 font-medium text-gray-700"
         >
-          Usuario
+          Empresa
         </label>
-        <ListUsuario
-          CodUsuario={formValues.CodUsuario}
-          Usuario={formValues.Usuario}
-          OnChangeUsuario={handleChangeUsuario}
+        <ListEmpresa
+          CodEmpresa={formValues.CodEmpresa}
+          NomeFantasia={formValues.NomeFantasia}
+          OnChangeCliente={handleChangeCliente}
         />
       </div>
       <div className="mb-4">
@@ -89,12 +92,12 @@ function EditAtendimento(props: FormValues) {
           htmlFor="ListEmpresa"
           className="block mb-1 font-medium text-gray-700"
         >
-          Empresa
+          Usuario
         </label>
-        <ListEmpresa
-          CodEmpresa={formValues.CodEmpresa}
-          NomeFantasia={formValues.NomeFantasia}
-          OnChangeCliente={handleChangeCliente}
+        <ListUsuario
+          CodUsuario={formValues.CodUsuario}
+          Usuario={formValues.Usuario}
+          OnChangeUsuario={handleChangeUsuario}
         />
       </div>
       <div className="mb-4">
@@ -124,9 +127,10 @@ function EditAtendimento(props: FormValues) {
           </label>
           <input
             id="dateI"
-            name="dateI"
+            name="DataInicio"
             type="datetime-local"
-            value={formValues.DataCriacao}
+            onChange={handleInputChange}
+            value={formValues.DataInicio}
             className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />
@@ -140,9 +144,10 @@ function EditAtendimento(props: FormValues) {
           </label>
           <input
             id="dateF"
-            name="dateF"
+            name="DataFim"
+            onChange={handleInputChange}
             type="datetime-local"
-            value={formValues.DataCriacao}
+            value={formValues.DataFim}
             className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />

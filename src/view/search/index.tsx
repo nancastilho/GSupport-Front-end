@@ -8,6 +8,7 @@ import { FormValues } from "../../interface";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { converterDataParaBrasil, formatarDataBrasil } from "../../components/functions";
 const SearchView = () => {
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [dados, setDados] = useState([]);
   const [texto, setTexto] = useState<string>();
@@ -86,7 +87,9 @@ const SearchView = () => {
   };
 
   useEffect(() => {
+
     const fetchData = async () => {
+      console.log('aqtttewr')
       atendimentosService
         .getPart({
           DataInicio: dateI,
@@ -101,7 +104,7 @@ const SearchView = () => {
           setPages(Math.ceil(response.data.Total / 20));
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
     };
 
@@ -111,7 +114,7 @@ const SearchView = () => {
     if (localStorage.getItem("token")) {
       fetchData();
     }
-  }, [texto, usuario, currentPage, dateF, dateI]);
+  }, [texto, usuario, currentPage, dateF, dateI, isModalOpen]);
   
   return (
     <>

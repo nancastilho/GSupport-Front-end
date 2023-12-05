@@ -85,13 +85,6 @@ function CreateAtendimento(props: PropsCreate) {
     }
   };
 
-  const handleChangeCliente = (novoValor: string) => {
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      ["CodEmpresa"]: parseInt(novoValor),
-    }));
-  };
-
   const handleInputChange = (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -101,6 +94,13 @@ function CreateAtendimento(props: PropsCreate) {
     setFormValues((prevValues) => ({
       ...prevValues,
       [name]: value,
+    }));
+  };
+
+  const handleChangeCliente = (novoValor: string) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      ["CodEmpresa"]: parseInt(novoValor),
     }));
   };
 

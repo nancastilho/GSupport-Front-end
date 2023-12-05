@@ -23,7 +23,7 @@ const HomeView = (createSucess:any) => {
           setDados(response.data.Result);
         })
         .catch((error: any) => {
-          console.log(error);
+          console.error(error);
         });
     };
     if (localStorage.getItem("token") == null) {

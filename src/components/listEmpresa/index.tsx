@@ -16,9 +16,9 @@ const ListEmpresa = ({
   const [valorSelecionado, setValorSelecionado] = useState<string>("");
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const novoValor = event.target.value.split("-");
+    const novoValor = event.target.value;
     setValorSelecionado(event.target.value);
-    OnChangeCliente(novoValor[1]);
+    OnChangeCliente(novoValor);
   };
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const ListEmpresa = ({
           setEmpresa(response.data);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
     };
     fetchData();
@@ -48,12 +48,12 @@ const ListEmpresa = ({
           {NomeFantasia} - {CodEmpresa}
         </option>
       ) : (
-        <option value="0" selected disabled>
+        <option value="0" selected>
           Selecionar...
         </option>
       )}
       {empresa.map((item: Empresa, index) => (
-        <option value={item.NomeFantasia + "-" + item.Codigo} key={index}>
+        <option value={item.Codigo + item.NomeFantasia} key={index}>
           {item.NomeFantasia} - {item.Codigo}
         </option>
       ))}

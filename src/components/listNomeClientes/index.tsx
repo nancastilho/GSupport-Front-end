@@ -9,13 +9,13 @@ interface ListUserProps {
 }
 
 const ListNomeClientes = ({
-  codEmpresa,
+  codEmpresa = 0,
   NomeCliente,
   OnChangeUsuario = () => "",
 }: ListUserProps) => {
   const [nomeClientes, setNomeClientes] = useState([]);
 
-  const [valorSelecionado, setValorSelecionado] = useState<string>("");
+  const [valorSelecionado, setValorSelecionado] = useState<string>(NomeCliente || '');
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const novoValor = event.target.value.split("-");
@@ -27,18 +27,16 @@ const ListNomeClientes = ({
   useEffect(() => {
     const fetchData = async () => {
       clientesService
-        .getPart({codEmpresa})
+        .getPart({ codEmpresa })
         .then((response) => {
-            setNomeClientes(response.data);
+          setNomeClientes(response.data);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
-
     };
     fetchData();
   }, [codEmpresa]);
-
 
   return (
     <select
@@ -48,22 +46,20 @@ const ListNomeClientes = ({
       onChange={handleChange}
       value={valorSelecionado}
     >
-      {codEmpresa !== undefined ? (
-        <option value={NomeCliente} selected>
-          {NomeCliente}
-        </option>
-      ) : (
+      {codEmpresa === undefined ? (
         <option value="0" selected disabled>
           Selecionar...
         </option>
+      ) : (
+        <option value={NomeCliente} selected>
+          {NomeCliente}
+        </option>
       )}
-      {nomeClientes.map((item: any, index) =>
-        
-          <option value={item.NomeCliente} key={index}>
-            {item.NomeCliente}
-          </option>
-        
-      )}
+      {nomeClientes.map((item: any, index) => (
+        <option value={item.NomeCliente} key={index}>
+          {item.NomeCliente}
+        </option>
+      ))}
     </select>
   );
 };

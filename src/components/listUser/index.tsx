@@ -20,10 +20,10 @@ function ListUsuario({
   const [valorSelecionado, setValorSelecionado] = useState<string>("");
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const novoValor = event.target.value.split("-");
+    const novoValor = event.target.value;
     setValorSelecionado(event.target.value);
     // Chama a função do Pai para atualizar o valor selecionado
-    OnChangeUsuario(novoValor[0]);
+    OnChangeUsuario(novoValor);
   };
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function ListUsuario({
           setUser(response.data);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
     };
     fetchData();
@@ -47,13 +47,13 @@ function ListUsuario({
       onChange={handleChange}
       value={valorSelecionado}
     >
-      {CodUsuario !== undefined ? (
-        <option value={CodUsuario} selected>
-          {CodUsuario} - {Usuario}
+      {CodUsuario === undefined ? (
+        <option value="0" selected>
+          Selecionar...
         </option>
       ) : (
-        <option value="0" selected disabled>
-          Selecionar...
+        <option value={CodUsuario} selected>
+          {CodUsuario} - {Usuario}
         </option>
       )}
       {user.map((item: Usuario, index) =>

@@ -5,6 +5,7 @@ import { Icon } from "@iconify/react";
 import ListUsuario from "../../components/listUser";
 import { atendimentosService } from "../../services/atendimentos/atendimentosService";
 import toast from "react-hot-toast";
+import ListNomeClientes from "../../components/listNomeClientes";
 
 function EditAtendimento(props: FormValues) {
   const [formValues, setFormValues] = useState<FormValues>({
@@ -27,8 +28,9 @@ function EditAtendimento(props: FormValues) {
   });
 
   function handleModalOpen() {
-    console.log("DELETANDO IMAGENS");
+    console.debug("DELETANDO IMAGENS");
   }
+  const [newCliente, setNewCliente] = useState<boolean>(false);
 
   const handleChangeCliente = (novoValor: string) => {
     setFormValues((prevValues) => ({
@@ -41,6 +43,13 @@ function EditAtendimento(props: FormValues) {
     setFormValues((prevValues) => ({
       ...prevValues,
       ["CodUsuario"]: parseInt(novoValor),
+    }));
+  };
+
+  const handleChangeNomeCliente = (novoValor: string) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      ["NomeCliente"]: novoValor,
     }));
   };
 
@@ -94,15 +103,43 @@ function EditAtendimento(props: FormValues) {
         >
           Nome
         </label>
-        <input
-          id="NomeCliente"
-          name="NomeCliente"
-          type="text"
-          value={formValues.NomeCliente}
-          onChange={handleInputChange}
-          className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
-          required
-        />
+        <div className="flex justify-center items-center ">
+          {newCliente ? (
+            <>
+              <input
+                id="NomeCliente"
+                name="NomeCliente"
+                type="text"
+                value={formValues.NomeCliente}
+                onChange={handleInputChange}
+                className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setNewCliente(!newCliente)}
+                className="px-4 py-2 ml-1 text-white bg-red-900 rounded-md hover:bg-red-700 focus:outline-none focus:bg-red-600"
+              >
+                <Icon icon={"mdi:close"} />
+              </button>
+            </>
+          ) : (
+            <>
+              <ListNomeClientes
+                OnChangeUsuario={handleChangeNomeCliente}
+                codEmpresa={formValues.CodEmpresa}
+                NomeCliente={formValues.NomeCliente}
+              />
+              <button
+                type="button"
+                onClick={() => setNewCliente(!newCliente)}
+                className="px-4 py-2 ml-1 text-white bg-blue-900 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-600"
+              >
+                <Icon icon={"mdi:plus"} />
+              </button>
+            </>
+          )}
+        </div>
       </div>
       <div className="mb-4">
         <label

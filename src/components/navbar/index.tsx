@@ -38,12 +38,24 @@ const Navbar = ({ handleLogout }:LogoutProps) => {
             <span className="pl-3">Relatorios</span>
           </div>
         </a>
-        <a href={"/test"} className="block text-gray-300 hover:text-white mb-4">
+        <a href={"/alerts"} className="block text-gray-300 hover:text-white mb-4">
+          <div className="flex items-center">
+            <Icon icon={"mdi:alert"} />
+            <span className="pl-3">Alertas</span>
+          </div>
+        </a>
+        <a href={"/admin"} className="block text-gray-300 hover:text-white mb-4">
+          <div className="flex items-center">
+            <Icon icon={"mdi:gear"} />
+            <span className="pl-3">Administrativo</span>
+          </div>
+        </a>
+        {/* <a href={"/test"} className="block text-gray-300 hover:text-white mb-4">
           <div className="flex items-center">
             <Icon icon={"mdi:test-tube"} />
             <span className="pl-3">Testes</span>
           </div>
-        </a>
+        </a> */}
       </div>
       <div className="flex justify-around text-gray-300 hover:text-white mb-4">
         <p className="capitalize">Olá, {user}!</p>

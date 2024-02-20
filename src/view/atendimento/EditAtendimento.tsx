@@ -3,6 +3,7 @@ import ListEmpresa from "../../components/listEmpresa";
 import { FormValues } from "../../interface";
 import { Icon } from "@iconify/react";
 import ListUsuario from "../../components/listUser";
+import ModalAlert from "../../components/modalAlert";
 import { atendimentosService } from "../../services/atendimentos/atendimentosService";
 import toast from "react-hot-toast";
 import ListNomeClientes from "../../components/listNomeClientes";
@@ -24,13 +25,14 @@ function EditAtendimento(props: FormValues) {
     DataInicio: props.DataInicio,
     DataFim: props.DataFim,
     Plantao: 0,
-    Imagens: props.Imagens,
+    Imagens: props.Imagens
   });
 
   function handleModalOpen() {
     console.debug("DELETANDO IMAGENS");
   }
   const [newCliente, setNewCliente] = useState<boolean>(false);
+  const [isAlertCreated, setisAlertCreated] = useState<boolean>(false)
 
   const handleChangeCliente = (novoValor: string) => {
     setFormValues((prevValues) => ({
@@ -69,6 +71,8 @@ function EditAtendimento(props: FormValues) {
     }
   };
 
+
+
   const handleInputChange = (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -79,8 +83,32 @@ function EditAtendimento(props: FormValues) {
       ...prevValues,
       [name]: value,
     }));
-  };
 
+  };
+  // const handleInputAlert = (
+  //   event: React.ChangeEvent<
+  //   HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+  // >) => {
+  //   setisChecked(!isChecked)
+  //   console.log(`*** input de alerta ativado: ${isChecked}`)
+  // }
+
+  const handleCreateAlert = (e:any) => {
+    setisAlertCreated(!isAlertCreated)
+    console.log(`*** Alerta criado: ${isAlertCreated}`)
+
+    
+
+  }
+
+  const handleAlertInput = (prev:any) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      Alerta: prev,
+    }));
+ console.log(formValues.Alerta)
+  } 
+  
   return (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
       <div className="mb-4">
@@ -251,12 +279,41 @@ function EditAtendimento(props: FormValues) {
         </a>
       </div>
       <div className="mt-6">
-        <input type="checkbox" name="plantao" id="plantao" className="mr-2" />
-        <label htmlFor="agreed" className="font-medium text-gray-700">
-          Plantão
-        </label>
+        <div>
+          <input type="checkbox" name="plantao" id="plantao" className="mr-2" />
+          <label htmlFor="agreed" className="font-medium text-gray-700">
+            Plantão
+          </label>
+        </div>
+        
+        {/* {
+          isChecked ? (
+            <textarea
+              id="alertaObservacao"
+              name="alertaObservacao"
+              value={formValues.Solucao}
+              onChange={handleInputChange}
+              className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+              rows={2}
+              required
+            ></textarea>
+          ) : ''
+        } */}
       </div>
-      <div className="mt-6 text-right">
+      <div className="mt-6 flex justify-between">
+      
+        <button 
+        type="button" 
+        className="px-4 py-2 text-white bg-red-700 rounded-md hover:bg-red-600 focus:outline-none focus:bg-blue-600"
+        onClick={handleCreateAlert}
+        >
+          Criar Alerta!
+        </button>
+            {
+              isAlertCreated ? (
+                <ModalAlert isOpen={isAlertCreated} OnAlertInput={handleAlertInput}/>
+              ) : ''
+            } 
         <button
           type="submit"
           className="px-4 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-600"

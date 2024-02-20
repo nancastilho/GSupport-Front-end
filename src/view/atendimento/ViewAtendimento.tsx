@@ -61,7 +61,7 @@ function ViewAtendimento(props: FormValues) {
             Inicio
           </label>
           <input
-           readOnly
+            readOnly
             id="dateI"
             name="dateI"
             type="datetime-local"
@@ -78,7 +78,7 @@ function ViewAtendimento(props: FormValues) {
             Fim
           </label>
           <input
-           readOnly
+            readOnly
             id="dateF"
             name="dateF"
             type="datetime-local"
@@ -96,7 +96,7 @@ function ViewAtendimento(props: FormValues) {
           Problema
         </label>
         <textarea
-        readOnly
+          readOnly
           id="Problema"
           name="Problema"
           value={props.Problema}
@@ -113,7 +113,7 @@ function ViewAtendimento(props: FormValues) {
           Solução
         </label>
         <textarea
-        readOnly
+          readOnly
           id="Solucao"
           name="Solucao"
           value={props.Solucao}
@@ -125,23 +125,35 @@ function ViewAtendimento(props: FormValues) {
       <div className="flex w-60">
         {props.Imagens !== undefined
           ? props.Imagens.map((img: string) => (
-              <a href={img} target="_blank" rel="noopener noreferrer">
-                <img src={img} alt="" className="w-10 h-10 px-1" />
-              </a>
-            ))
+            <a href={img} target="_blank" rel="noopener noreferrer">
+              <img src={img} alt="" className="w-10 h-10 px-1" />
+            </a>
+          ))
           : ""}
       </div>
-      <div className="pt-3">
-        <input
-          readOnly
-          type="checkbox"
-          name="plantao"
-          id="plantao"
-          className="mr-2"
-        />
-        <label htmlFor="agreed" className="font-medium text-gray-700">
-          Plantão
-        </label>
+      <div className="grid justify-items-start" >
+        <div>
+          <input
+            readOnly
+            type="checkbox"
+            name="plantao"
+            id="plantao"
+            className="mr-2"
+          />
+          <label htmlFor="agreed" className="font-medium text-gray-700">
+            Plantão
+          </label>
+        </div>
+        <div>
+          {props.Alerta ? (
+            <button
+              type="button"
+              className=" rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-900 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gay-500 sm:ml-3 sm:w-auto sm:text-sm">
+              Resolver aviso
+            </button>)
+           : null}
+        </div>
+
       </div>
     </div>
   );

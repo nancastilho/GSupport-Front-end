@@ -13,7 +13,7 @@ const SearchView = () => {
   const [dados, setDados] = useState([]);
   const [texto, setTexto] = useState<string>();
   const [dateI, setDateI] = useState<string>("20230101");
-  const [dateF, setDateF] = useState<string>("20231231");
+  const [dateF, setDateF] = useState<string>("20251231");
   const [usuario, setUsuario] = useState<string>();
   const [list, setList] = useState<FormValues>();
   const [codAtend, setCodAtend] = useState<number>();

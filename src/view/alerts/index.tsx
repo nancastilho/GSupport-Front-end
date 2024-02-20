@@ -7,7 +7,7 @@ import EditAtendimento from "../../view/atendimento/EditAtendimento";
 import Modal from "../../components/modal";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { converterDataParaBrasil } from "../../components/functions";
-const HomeView = (createSucess:any) => {
+const AlertView = (createSucess: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [dados, setDados] = useState([]);
@@ -17,13 +17,15 @@ const HomeView = (createSucess:any) => {
   useEffect(() => {
     const fetchData = async () => {
       localStorage.getItem("token");
+      const opt = { Alerta: 1 }
       atendimentosService
-        .getAll()
+        .getPart(opt)
         .then((response: any) => {
-          setDados(response.data.Result);
+          let dados = response.data.Result
+          setDados(dados);
         })
         .catch((error: any) => {
-          console.error('*** Erro fetch data', error);
+          console.error(error);
         });
     };
     if (localStorage.getItem("token") == null) {
@@ -50,36 +52,36 @@ const HomeView = (createSucess:any) => {
         <div className="p-3 grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
           {dados.map((item: FormValues, index) => (
             <div
-              className="bg-blue-50 w-full rounded-lg shadow-md my-1 p-2 card flex"
+              className="bg-[#e74661] w-full rounded-lg shadow-md my-1 p-2 card flex"
               key={index}
             >
               <div
                 className=" cursor-pointer w-11/12"
                 onClick={() => handleModalOpen(index, false)}
               >
-                <h2 className="text-2xl font-bold mb-4 text-blue-900 line-clamp-2">
+                <h1 className="text-3xl font-bold mb-4 text-white line-clamp-2"> Resolver</h1>
+                <h2 className="text-2xl font-bold mb-4 text-white line-clamp-2">
                   {item.NomeFantasia}
                 </h2>
 
                 <div>
-                  <p className="text-gray-700 mb-2 max-sm:hidden">
+                  <p className="text-white mb-2 max-sm:hidden">
                     {item.Codigo}
                   </p>
-                  <p className="text-gray-700 mb-2 max-sm:hidden ">
+                  <p className="text-white mb-2 max-sm:hidden ">
                     Usuário: {item.Usuario}
                   </p>
-                  <p className="text-gray-700 mb-2  ">
+                  <p className="text-white mb-2  ">
                     Nome: {item.NomeCliente}
                   </p>
-                  <p>{item.Alerta ? ' alerta' : ' nao alerta'} </p>
                 </div>
               </div>
               <div className="w-1/12 ml-3">
                 <Icon
-                  icon={"mdi:lead-pencil"}
+                  icon={"mdi:alert"}
                   cursor={"pointer"}
-                  fontSize={19}
-                  onClick={() => handleModalOpen(index, true)}
+                  fontSize={25}
+                  color="white"
                 />
               </div>
             </div>
@@ -142,8 +144,8 @@ const HomeView = (createSucess:any) => {
                     NomeFantasia={item.NomeFantasia}
                     DataInicio={converterDataParaBrasil(item.DataInicio)}
                     DataFim={converterDataParaBrasil(item.DataFim)}
+                    Alerta={item.Alerta}
                     key={codAtend}
-
                   />
                 ) : (
                   ""
@@ -156,4 +158,4 @@ const HomeView = (createSucess:any) => {
     </div>
   );
 };
-export default HomeView;
+export default AlertView;

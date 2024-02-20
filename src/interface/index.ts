@@ -17,6 +17,7 @@ export interface FormValues {
   Assunto?: string;
   Imagens?: [];
   Plantao?: number;
+  Alerta?: string;
   onClose?: () => void
 }
 

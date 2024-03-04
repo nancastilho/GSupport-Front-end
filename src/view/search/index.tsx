@@ -89,7 +89,6 @@ const SearchView = () => {
   useEffect(() => {
 
     const fetchData = async () => {
-      console.log('aqtttewr')
       atendimentosService
         .getPart({
           DataInicio: dateI,

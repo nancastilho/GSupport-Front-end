@@ -3,13 +3,14 @@ import ListEmpresa from "../../components/listEmpresa";
 import { FormValues } from "../../interface";
 import { Icon } from "@iconify/react";
 import ListUsuario from "../../components/listUser";
-import ModalAlert from "../../components/modalAlert";
 import { atendimentosService } from "../../services/atendimentos/atendimentosService";
 import toast from "react-hot-toast";
 import ListNomeClientes from "../../components/listNomeClientes";
+import ModalAlert from "../../components/modalAlert";
 
 function EditAtendimento(props: FormValues) {
   const [formValues, setFormValues] = useState<FormValues>({
+
     Codigo: props.Codigo,
     CodUsuario: props.CodUsuario,
     CodEmpresa: props.CodEmpresa,
@@ -25,14 +26,16 @@ function EditAtendimento(props: FormValues) {
     DataInicio: props.DataInicio,
     DataFim: props.DataFim,
     Plantao: 0,
-    Imagens: props.Imagens
+    Imagens: props.Imagens,
+    Alerta: 0,
+    ObservacaoTexto: ''
   });
 
   function handleModalOpen() {
     console.debug("DELETANDO IMAGENS");
   }
   const [newCliente, setNewCliente] = useState<boolean>(false);
-  const [isAlertCreated, setisAlertCreated] = useState<boolean>(false)
+  const [isAlertCreated, setisAlertCreated] = useState<boolean>(false);
 
   const handleChangeCliente = (novoValor: string) => {
     setFormValues((prevValues) => ({
@@ -71,8 +74,6 @@ function EditAtendimento(props: FormValues) {
     }
   };
 
-
-
   const handleInputChange = (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -83,32 +84,30 @@ function EditAtendimento(props: FormValues) {
       ...prevValues,
       [name]: value,
     }));
-
   };
-  // const handleInputAlert = (
-  //   event: React.ChangeEvent<
-  //   HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-  // >) => {
-  //   setisChecked(!isChecked)
-  //   console.log(`*** input de alerta ativado: ${isChecked}`)
-  // }
 
-  const handleCreateAlert = (e:any) => {
-    setisAlertCreated(!isAlertCreated)
-    console.log(`*** Alerta criado: ${isAlertCreated}`)
+  const handleCreateAlert = (e: any) => {
+    setisAlertCreated(!isAlertCreated);
+  };
 
-    
-
-  }
-
-  const handleAlertInput = (prev:any) => {
+  const handleAlertInput = (prev: any) => {
+    if (prev !== "") {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        Alerta: 1,
+      }));
+    } else {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        Alerta: 0,
+      }));
+    }
     setFormValues((prevValues) => ({
       ...prevValues,
-      Alerta: prev,
+      ObservacaoTexto: prev,
     }));
- console.log(formValues.Alerta)
-  } 
-  
+  };
+
   return (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
       <div className="mb-4">
@@ -285,35 +284,16 @@ function EditAtendimento(props: FormValues) {
             Plantão
           </label>
         </div>
-        
-        {/* {
-          isChecked ? (
-            <textarea
-              id="alertaObservacao"
-              name="alertaObservacao"
-              value={formValues.Solucao}
-              onChange={handleInputChange}
-              className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
-              rows={2}
-              required
-            ></textarea>
-          ) : ''
-        } */}
       </div>
       <div className="mt-6 flex justify-between">
-      
-        <button 
-        type="button" 
-        className="px-4 py-2 text-white bg-red-700 rounded-md hover:bg-red-600 focus:outline-none focus:bg-blue-600"
-        onClick={handleCreateAlert}
+        <button
+          type="button"
+          className="px-4 py-2 text-white bg-red-700 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600"
+          onClick={handleCreateAlert}
         >
           Criar Alerta!
         </button>
-            {
-              isAlertCreated ? (
-                <ModalAlert isOpen={isAlertCreated} OnAlertInput={handleAlertInput}/>
-              ) : ''
-            } 
+
         <button
           type="submit"
           className="px-4 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-600"
@@ -321,7 +301,16 @@ function EditAtendimento(props: FormValues) {
           Salvar alterações
         </button>
       </div>
+      {isAlertCreated ? (
+        <ModalAlert
+          OnAlertInput={handleAlertInput}
+          isOpen={true}
+          onClose={() => setisAlertCreated(false)}
+          InputData={formValues.ObservacaoTexto}
+        />
+      ) : null}
     </form>
+    // <ModalAlert isOpen={isAlertCreated} OnAlertInput={handleAlertInput} />
   );
 }
 

@@ -7,10 +7,9 @@ const Home = () => {
   const [childData, setChildData] = useState(false);
 
   // Callback que será passado para o componente filho
-  const handleChildData = (dataFromChild:any) => {
-    setChildData(dataFromChild);
+  const handleChildData = (teste:any) => {
+    setChildData(teste)
   };
-
   
   return (
     <LayoutPadrao onDataFromChild={handleChildData}>

@@ -5,7 +5,7 @@ import { useState } from "react";
 import Modal from "../modal";
 import CreateAtendimento from "../../view/atendimento/CreateAtendimento";
 
-const NavbarMobile = ({ handleLogout, children }: LogoutProps) => {
+const NavbarMobile = ({ handleLogout, children, alertLength }: LogoutProps) => {
   const user = localStorage.getItem("userAuth");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -48,7 +48,11 @@ const NavbarMobile = ({ handleLogout, children }: LogoutProps) => {
           </a>
           <div className="block text-gray-300 hover:text-white">
             <div className="flex items-center">
-              <Icon fontSize={25} icon={"ph:plus-fill"} onClick={handleModalOpen} />
+              <Icon
+                fontSize={25}
+                icon={"ph:plus-fill"}
+                onClick={handleModalOpen}
+              />
             </div>
           </div>
           <a href={"/graph"} className="block text-gray-300 hover:text-white">
@@ -59,6 +63,9 @@ const NavbarMobile = ({ handleLogout, children }: LogoutProps) => {
           <a href={"/alerts"} className="block text-gray-300 hover:text-white">
             <div className="flex items-center">
               <Icon fontSize={25} icon={"mdi:alert"} />
+              <span className="items-center px-1 py-0 font-sans text-xs font-bold text-white uppercase bg-red-600 rounded-md select-none whitespace-nowrap">
+                {alertLength}
+              </span>
             </div>
           </a>
         </div>

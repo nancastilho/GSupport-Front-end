@@ -7,7 +7,13 @@ import EditAtendimento from "../../view/atendimento/EditAtendimento";
 import Modal from "../../components/modal";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { converterDataParaBrasil } from "../../components/functions";
-const HomeView = (createSucess:any) => {
+
+interface IHomeView{
+  createSucess:boolean
+}
+
+
+const HomeView = ({createSucess}:IHomeView) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [dados, setDados] = useState([]);
@@ -33,7 +39,7 @@ const HomeView = (createSucess:any) => {
       fetchData();
     }
   }, [isModalOpen, createSucess]);
-
+  
   function handleModalOpen(codigo: number, edit: boolean) {
     setIsModalOpen(true);
     setIsModalEdit(edit);
@@ -71,7 +77,6 @@ const HomeView = (createSucess:any) => {
                   <p className="text-gray-700 mb-2  ">
                     Nome: {item.NomeCliente}
                   </p>
-                  <p>{item.Alerta ? ' alerta' : ' nao alerta'} </p>
                 </div>
               </div>
               <div className="w-1/12 ml-3">

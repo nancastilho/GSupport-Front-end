@@ -17,9 +17,8 @@ const AlertView = (createSucess: any) => {
   useEffect(() => {
     const fetchData = async () => {
       localStorage.getItem("token");
-      const opt = { Alerta: 1 }
       atendimentosService
-        .getPart(opt)
+        .getPart({ Alerta: 1 })
         .then((response: any) => {
           let dados = response.data.Result
           setDados(dados);

@@ -3,7 +3,7 @@ const PORT = 8081
 const URLTeste = `//localhost:8081`
 const URL = `http://adm.gsoft.com.br:${PORT}`
 const api = axios.create({
-    baseURL: URL,
+    baseURL: URLTeste,
     
 })
 

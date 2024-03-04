@@ -222,7 +222,7 @@ function CreateAtendimento(props: PropsCreate) {
           </div>
         </div>
 
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label
             htmlFor="Problema"
             className="block mb-1 font-medium text-gray-700"
@@ -256,47 +256,13 @@ function CreateAtendimento(props: PropsCreate) {
             rows={4}
             required
           ></textarea>
-        </div>
-        <div className="mb-6 w-full hidden">
-          <label
-            htmlFor="cover-photo"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Imagem
-          </label>
-          <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-            <div className="text-center">
-              <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                <label
-                  htmlFor="file-upload"
-                  className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                >
-                  <span>Upload a file</span>
-                  <input
-                    id="file-upload"
-                    name="file-upload"
-                    type="file"
-                    multiple
-                    className="sr-only"
-                    onChange={handleImageSubmit}
-                  />
-                </label>
-                <p className="pl-1">or drag and drop</p>
-              </div>
-              <p className="text-xs leading-5 text-gray-600">
-                PNG, JPG, GIF up to 10MB
-              </p>
-            </div>
-          </div>
-          <p>Imagens selecionas</p>
-          {image ? image.length : ""}
-        </div>
-        <div>
+        </div> */}
+        {/* <div>
           <input type="checkbox" name="plantao" id="plantao" className="mr-2" />
           <label htmlFor="agreed" className="font-medium text-gray-700">
             Plantão
           </label>
-        </div>
+        </div> */}
         <div className="mt-6 text-right">
           <button
             type="submit"
@@ -313,4 +279,38 @@ function CreateAtendimento(props: PropsCreate) {
   );
 }
 
+{/* <div className="mb-6 w-full hidden">
+  <label
+    htmlFor="cover-photo"
+    className="block text-sm font-medium leading-6 text-gray-900"
+  >
+    Imagem
+  </label>
+  <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+    <div className="text-center">
+      <div className="mt-4 flex text-sm leading-6 text-gray-600">
+        <label
+          htmlFor="file-upload"
+          className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+        >
+          <span>Upload a file</span>
+          <input
+            id="file-upload"
+            name="file-upload"
+            type="file"
+            multiple
+            className="sr-only"
+            onChange={handleImageSubmit}
+          />
+        </label>
+        <p className="pl-1">or drag and drop</p>
+      </div>
+      <p className="text-xs leading-5 text-gray-600">
+        PNG, JPG, GIF up to 10MB
+      </p>
+    </div>
+  </div>
+  <p>Imagens selecionas</p>
+  {image ? image.length : ""}
+</div> */}
 export default CreateAtendimento;

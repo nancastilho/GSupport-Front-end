@@ -1,9 +1,10 @@
 import { Icon } from "@iconify/react";
 import { FiLogOut } from "react-icons/fi";
-import { LogoutProps } from "../../interface";
+import { LogoutProps } from "../../interface"
 
-const Navbar = ({ handleLogout }:LogoutProps) => {
+const Navbar = ({ handleLogout, alertLength }: LogoutProps) => {
   const user = localStorage.getItem("userAuth");
+
 
   return (
     <div className=" flex flex-col bg-gray-800 h-full max-md:hidden">
@@ -17,7 +18,7 @@ const Navbar = ({ handleLogout }:LogoutProps) => {
         <a href={"/home"} className="block text-gray-300 hover:text-white mb-4">
           <div className="flex items-center">
             <Icon icon={"mdi:home"} />
-            <span className="pl-3">Atendimentos</span>
+            <span className="pl-3">Home</span>
           </div>
         </a>
         <a
@@ -38,13 +39,23 @@ const Navbar = ({ handleLogout }:LogoutProps) => {
             <span className="pl-3">Relatorios</span>
           </div>
         </a>
-        <a href={"/alerts"} className="block text-gray-300 hover:text-white mb-4">
+        <a
+          href={"/alerts"}
+          className="block text-gray-300 hover:text-white mb-4"
+        >
           <div className="flex items-center">
             <Icon icon={"mdi:alert"} />
             <span className="pl-3">Alertas</span>
+
+            <div className="items-center ml-2 px-1 py-0 font-sans text-xs font-bold text-white uppercase bg-red-600 rounded-md select-none whitespace-nowrap">
+              <span >{alertLength}</span>
+            </div>
           </div>
         </a>
-        <a href={"/admin"} className="block text-gray-300 hover:text-white mb-4">
+        <a
+          href={"/admin"}
+          className="block text-gray-300 hover:text-white mb-4"
+        >
           <div className="flex items-center">
             <Icon icon={"mdi:gear"} />
             <span className="pl-3">Administrativo</span>

@@ -17,7 +17,8 @@ export interface FormValues {
   Assunto?: string;
   Imagens?: [];
   Plantao?: number;
-  Alerta?: string;
+  ObservacaoTexto?: string;
+  Alerta?: number;
   onClose?: () => void
 }
 
@@ -56,7 +57,8 @@ export interface LayoutProps {
 
 export interface LogoutProps {
   handleLogout: () => void;
-  children?: any
+  children?: any,
+  alertLength:number
 }
 
 

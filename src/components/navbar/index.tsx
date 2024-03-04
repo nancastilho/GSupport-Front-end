@@ -47,7 +47,7 @@ const Navbar = ({ handleLogout, alertLength }: LogoutProps) => {
             <Icon icon={"mdi:alert"} />
             <span className="pl-3">Alertas</span>
 
-            <div className="items-center ml-2 px-1 py-0 font-sans text-xs font-bold text-white uppercase bg-red-600 rounded-md select-none whitespace-nowrap">
+            <div className="items-center ml-2 px-1 py-0 font-sans text-xs font-bold text-white uppercase bg-red-600 rounded-md border-2 border-white rounded-full select-none whitespace-nowrap">
               <span >{alertLength}</span>
             </div>
           </div>

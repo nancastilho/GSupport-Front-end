@@ -60,12 +60,13 @@ const NavbarMobile = ({ handleLogout, children, alertLength }: LogoutProps) => {
               <Icon fontSize={25} icon={"mdi:graph-line"} />
             </div>
           </a>
+
           <a href={"/alerts"} className="block text-gray-300 hover:text-white">
-            <div className="flex items-center">
+            <div className="relative inline-flex items-center">
               <Icon fontSize={25} icon={"mdi:alert"} />
-              <span className="items-center px-1 py-0 font-sans text-xs font-bold text-white uppercase bg-red-600 rounded-md select-none whitespace-nowrap">
+              <div className="absolute inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">
                 {alertLength}
-              </span>
+              </div>
             </div>
           </a>
         </div>

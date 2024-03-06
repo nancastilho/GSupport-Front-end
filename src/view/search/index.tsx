@@ -121,12 +121,12 @@ const SearchView = () => {
         <div className="h-screen mx-2  max-md:pb-14 max-md:h-5/6">
           <div className="p3">
             <div className="flex flex-col">
-              <div className="flex">
+              <div className="flex text-blue-900">
                 <div className="flex flex-col w-1/2 m-1">
-                  <div className="mb-2 relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden ">
+                  <div className="mb-2 relative flex items-center w-full h-8 rounded-lg border border-blue-900 bg-transparent overflow-hidden ">
                     <span className="pl-2  text-sm">Inicio:</span>
                     <input
-                      className="peer h-full w-full outline-none bg-white text-sm text-gray-700 px-2"
+                      className="peer h-full w-full outline-none bg-transparent text-sm text-blue-900 px-2"
                       type="date"
                       id="texto"
                       name="texto"
@@ -135,10 +135,10 @@ const SearchView = () => {
                     />
                   </div>
 
-                  <div className="relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
+                  <div className="relative flex items-center w-full h-8 rounded-lg border border-blue-900 bg-transparent overflow-hidden">
                     <span className="pl-2 text-sm">Fim:</span>
                     <input
-                      className="peer h-full w-full outline-none bg-white text-sm text-gray-700 px-2"
+                      className="peer h-full w-full outline-none bg-transparent text-sm text-blue-900 px-2"
                       type="date"
                       id="texto"
                       name="texto"
@@ -148,8 +148,8 @@ const SearchView = () => {
                   </div>
                 </div>
                 <div className="flex flex-col w-1/2 m-1">
-                  <div className=" mb-2 relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
-                    <div className="grid place-items-center h-full w-12 text-gray-300">
+                  <div className=" mb-2 relative flex items-center w-full h-8 rounded-lg border border-blue-900 bg-transparent overflow-hidden">
+                    <div className="grid place-items-center h-full w-12 text-blue-900">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-6 w-6"
@@ -167,7 +167,7 @@ const SearchView = () => {
                     </div>
 
                     <input
-                      className="peer h-full w-full outline-none bg-white text-sm text-gray-700 pr-2"
+                      className="peer h-full w-full outline-none bg-transparent text-sm placeholder-blue-900 text-blue-900 pr-2"
                       type="text"
                       id="texto"
                       name="texto"
@@ -176,8 +176,8 @@ const SearchView = () => {
                     />
                   </div>
 
-                  <div className=" relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
-                    <div className="grid place-items-center h-full w-12 text-gray-300 ">
+                  <div className=" relative flex items-center w-full h-8 rounded-lg border border-blue-900 bg-transparent overflow-hidden">
+                    <div className="grid place-items-center h-full w-12 text-blue-900 ">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-6 w-6"
@@ -195,7 +195,7 @@ const SearchView = () => {
                     </div>
 
                     <input
-                      className="peer h-full w-full outline-none bg-white text-sm text-gray-700 pr-2"
+                      className="peer h-full w-full outline-none bg-transparent text-sm placeholder-blue-900 text-blue-900 pr-2"
                       type="text"
                       id="usuario"
                       name="usuario"
@@ -207,11 +207,11 @@ const SearchView = () => {
               </div>
               <div>
                 {dados.map((item: FormValues, index) => (
-                  <div key={index} className="border m-1 rounded-md">
+                  <div key={index} className="m-1 rounded-md">
                     <button
                       onClick={() => toggleAccordion(index, item)}
-                      className={`w-full flex rounded-md text-left p-3 bg-gray-200 hover:bg-gray-300 ${
-                        activeIndex === index ? "bg-gray-300" : ""
+                      className={`w-full border border-blue-900  flex rounded-md text-left p-3 bg-blue-100 hover:bg-blue-200 ${
+                        activeIndex === index ? "bg-blue-200" : ""
                       } `}
                     >
                       <div className="grow">
@@ -219,16 +219,16 @@ const SearchView = () => {
                           <p className="text-base font-bold mb-2 text-blue-900 line-clamp-2 ">
                             {item.NomeFantasia}
                           </p>
-                          <p className="text-gray-700 ">
+                          <p className="text-blue-900 ">
                             Cliente: {item.NomeCliente}
                           </p>
                         </div>
-                        <hr className="my-2" />
+                        <hr className="my-2 bg-black text-black" />
                         <div className="flex ">
-                          <p className="text-gray-700 ">
+                          <p className="text-blue-900 ">
                             Codigo: {item.Codigo}
                           </p>
-                          <p className="text-gray-700 ml-3">
+                          <p className="text-blue-900 ml-3">
                             Usuario: {item.Usuario}
                           </p>
                         </div>
@@ -249,7 +249,7 @@ const SearchView = () => {
                       <div className="grow flex flex-col ">
                         <label
                           htmlFor="Problema"
-                          className="block mb-1 font-medium text-gray-700"
+                          className="block mb-1 font-medium text-blue-900"
                         >
                           Problema
                         </label>
@@ -266,7 +266,7 @@ const SearchView = () => {
                       <div className="grow flex flex-col ">
                         <label
                           htmlFor="Solucao"
-                          className="block mb-1 font-medium text-gray-700"
+                          className="block mb-1 font-medium text-blue-900"
                         >
                           Solução
                         </label>

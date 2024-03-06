@@ -4,7 +4,7 @@ const Graphics = () => {
 
    
   return (
-    <LayoutPadrao>
+    <LayoutPadrao onDataFromChild={() => ''}>
       <h1>tela de relatorios</h1>
     </LayoutPadrao>
   );

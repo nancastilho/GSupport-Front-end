@@ -5,7 +5,7 @@ import AdminView from "../../view/admin";
 const Admin = () => {
 
     return (
-        <LayoutPadrao>
+        <LayoutPadrao onDataFromChild={() => ''}>
             <AdminView />
         </LayoutPadrao>
     );

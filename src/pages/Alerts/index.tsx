@@ -4,7 +4,7 @@ import AlertView from "../../view/alerts";
 const Alerts = () => {
 
   return (
-    <LayoutPadrao>
+    <LayoutPadrao onDataFromChild={() => ''}>
       <AlertView />
     </LayoutPadrao>
   );

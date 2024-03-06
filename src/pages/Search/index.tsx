@@ -3,7 +3,7 @@ import SearchView from "../../view/search";
 
 const Search = () => {
   return (
-    <LayoutPadrao>
+    <LayoutPadrao onDataFromChild={() => ''}>
       <SearchView />
     </LayoutPadrao>
   );

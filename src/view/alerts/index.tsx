@@ -1,27 +1,51 @@
 import { useEffect, useState } from "react";
-import ViewAtendimento from "../../view/atendimento/ViewAtendimento";
-import { atendimentosService } from "../../services/atendimentos/atendimentosService";
-import { FormValues } from "../../interface";
+import { AlertaGet, FormValues } from "../../interface";
 import { Icon } from "@iconify/react";
-import EditAtendimento from "../../view/atendimento/EditAtendimento";
-import Modal from "../../components/modal";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { converterDataParaBrasil } from "../../components/functions";
+import { alertService } from "../../services/alerta/alertaService";
+import { atendimentosService } from "../../services/atendimentos/atendimentosService";
+import Modal from "../../components/modal";
+import EditAtendimento from "../atendimento/EditAtendimento";
+
+interface AlertaData {
+  Pendentes: AlertaGet[];
+  Resolvidos: AlertaGet[];
+}
 const AlertView = (createSucess: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isModalEdit, setIsModalEdit] = useState(false);
-  const [dados, setDados] = useState([]);
-  const [codAtend, setCodAtend] = useState<number>();
+  const [dados, setDados] = useState<AlertaData>({
+    Pendentes: [],
+    Resolvidos: [],
+  } as AlertaData);
+  const [atendimento, setAtendimento] = useState<FormValues>({} as FormValues);
   const navigate: NavigateFunction = useNavigate();
+  const [activeTab, setActiveTab] = useState("pendente");
+  const [alertData, setAlertData] = useState<AlertaGet>();
 
+ 
+  const handleTabClick = (tab: string) => {
+    setActiveTab(tab);
+  };
+
+  const getByCod = async (Codigo: number) => {
+    localStorage.getItem("token");
+    atendimentosService
+      .getPart({ Codigo: Codigo })
+      .then((response: any) => {
+        let data = response.data.Result[0] ?? atendimento;
+        setAtendimento(data);
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+  };
   useEffect(() => {
     const fetchData = async () => {
       localStorage.getItem("token");
-      atendimentosService
-        .getPart({ Alerta: 1 })
+      alertService
+        .getAll()
         .then((response: any) => {
-          let dados = response.data.Result
-          setDados(dados);
+          setDados(response.data);
         })
         .catch((error: any) => {
           console.error(error);
@@ -33,127 +57,133 @@ const AlertView = (createSucess: any) => {
     if (localStorage.getItem("token")) {
       fetchData();
     }
-  }, [isModalOpen, createSucess]);
 
-  function handleModalOpen(codigo: number, edit: boolean) {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isModalOpen]);
+
+  const handleModalOpen = async (codigo: number) => {
+    await getByCod(codigo);
     setIsModalOpen(true);
-    setIsModalEdit(edit);
-    setCodAtend(codigo);
-  }
+  };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
+    setAtendimento({} as FormValues);
+    setAlertData(undefined);
   };
 
   return (
     <div className=" max-md:flex max-md:justify-around overflow-auto max-md:mt-14">
       <div className="h-screen mx-2 grow  max-md:pb-14 max-md:h-5/6 ">
-        <div className="p-3 grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
-          {dados.map((item: FormValues, index) => (
-            <div
-              className="bg-[#e74661] w-full rounded-lg shadow-md my-1 p-2 card flex"
-              key={index}
-            >
+        <div className="flex max-md:justify-around">
+          <div
+            onClick={() => handleTabClick("pendente")}
+            className={`cursor-pointer mr-2 px-4 py-2 rounded-md  ${
+              activeTab === "pendente" ? "bg-red-500 text-white" : "bg-gray-300"
+            }`}
+          >
+            Pendentes
+          </div>
+          <div
+            onClick={() => handleTabClick("resolvido")}
+            className={`cursor-pointer px-4 py-2 rounded-md  ${
+              activeTab === "resolvido"
+                ? "bg-green-500 text-white"
+                : "bg-gray-300"
+            }`}
+          >
+            Resolvidos
+          </div>
+        </div>
+        {activeTab === "pendente" ? (
+          <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
+            {dados.Pendentes.map((item: AlertaGet, index) => (
               <div
-                className=" cursor-pointer w-11/12"
-                onClick={() => handleModalOpen(index, false)}
+                className="bg-red-50 w-full rounded-lg shadow-md my-1 p-2 card flex"
+                key={index}
               >
-                <h1 className="text-3xl font-bold mb-4 text-white line-clamp-2"> Resolver</h1>
-                <h2 className="text-2xl font-bold mb-4 text-white line-clamp-2">
-                  {item.NomeFantasia}
-                </h2>
+                <div
+                  className=" cursor-pointer w-11/12"
+                  onClick={() => (
+                    handleModalOpen(item.CodAtendimento), setAlertData(item)
+                  )}
+                >
+                  <h2 className="text-2xl font-bold mb-4 text-red-900 line-clamp-2">
+                    {item.NomeFantasia}
+                  </h2>
 
-                <div>
-                  <p className="text-white mb-2 max-sm:hidden">
-                    {item.Codigo}
-                  </p>
-                  <p className="text-white mb-2 max-sm:hidden ">
-                    Usuário: {item.Usuario}
-                  </p>
-                  <p className="text-white mb-2  ">
-                    Nome: {item.NomeCliente}
-                  </p>
+                  <div>
+                    <p className="text-gray-700 mb-2 max-sm:hidden">
+                      {item.CodAlerta}
+                    </p>
+                    <p className="text-gray-700 mb-2 max-sm:hidden ">
+                      Usuário: {item.Usuario}
+                    </p>
+                  </div>
+                </div>
+                <div className="w-1/12 ml-3">
+                  <Icon
+                    icon={"mdi:alert"}
+                    cursor={"pointer"}
+                    fontSize={25}
+                    color="red"
+                  />
                 </div>
               </div>
-              <div className="w-1/12 ml-3">
-                <Icon
-                  icon={"mdi:alert"}
-                  cursor={"pointer"}
-                  fontSize={25}
-                  color="white"
-                />
+            ))}
+          </div>
+        ) : (
+          <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
+            {dados.Resolvidos.map((item: AlertaGet, index) => (
+              <div
+                className="bg-green-50 w-full rounded-lg shadow-md my-1 p-2 card flex"
+                key={index}
+              >
+                <div
+                  className=" cursor-pointer w-11/12"
+                  onClick={() => (
+                    handleModalOpen(item.CodAtendimento), setAlertData(item)
+                  )}
+                >
+                  <h2 className="text-2xl font-bold mb-4 text-green-900 line-clamp-2">
+                    {item.NomeFantasia}
+                  </h2>
+
+                  <div>
+                    <p className="text-gray-700 mb-2 max-sm:hidden">
+                      {item.CodAlerta}
+                    </p>
+                    <p className="text-gray-700 mb-2 max-sm:hidden ">
+                      Usuário: {item.Usuario}
+                    </p>
+                  </div>
+                </div>
+                <div className="w-1/12 ml-3">
+                  <Icon
+                    icon={"mdi:check"}
+                    cursor={"pointer"}
+                    fontSize={25}
+                    color="green"
+                  />
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      {isModalOpen && (
-        <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-          {dados.map((item: FormValues, index) => {
-            if (isModalEdit === true) {
-              if (item.DataCriacao !== undefined) {
-                var Data = item.DataCriacao.split("T");
-                var Hora = Data[1].split(".");
-                var HoraMin = Hora[0].split(":");
-                return index === codAtend ? (
-                  <EditAtendimento
-                    Assunto={item.Assunto}
-                    CodEmpresa={item.CodEmpresa}
-                    CodMeioComunicacao={item.CodMeioComunicacao}
-                    CodSistema={item.CodSistema}
-                    CodUsuario={item.CodUsuario}
-                    Codigo={item.Codigo}
-                    DataCriacao={Data[0] + "T" + HoraMin[0] + ":" + HoraMin[1]}
-                    NomeCliente={item.NomeCliente}
-                    NomeFantasia={item.NomeFantasia}
-                    Plantao={item.Plantao}
-                    Problema={item.Problema}
-                    Solucao={item.Solucao}
-                    Usuario={item.Usuario}
-                    DataInicio={converterDataParaBrasil(item.DataInicio)}
-                    DataFim={converterDataParaBrasil(item.DataFim)}
-                    Imagens={item.Imagens}
-                    key={index}
-                    onClose={handleModalClose}
-                  />
-                ) : (
-                  ""
-                );
-              }
-            } else {
-              if (item.DataCriacao !== undefined) {
-                const Data = item.DataCriacao.split("T");
-                const Hora = Data[1].split(".");
-                const HoraMin = Hora[0].split(":");
-                return index === codAtend ? (
-                  <ViewAtendimento
-                    Assunto=""
-                    CodEmpresa={item.CodEmpresa}
-                    CodMeioComunicacao={item.CodMeioComunicacao}
-                    CodSistema={item.CodSistema}
-                    CodUsuario={item.CodUsuario}
-                    DataCriacao={Data[0] + "T" + HoraMin[0] + ":" + HoraMin[1]}
-                    NomeCliente={item.NomeCliente}
-                    Usuario={item.Usuario}
-                    Plantao={1}
-                    Problema={item.Problema}
-                    Solucao={item.Solucao}
-                    Imagens={item.Imagens}
-                    NomeFantasia={item.NomeFantasia}
-                    DataInicio={converterDataParaBrasil(item.DataInicio)}
-                    DataFim={converterDataParaBrasil(item.DataFim)}
-                    Alerta={item.Alerta}
-                    key={codAtend}
-                  />
-                ) : (
-                  ""
-                );
-              }
-            }
-          })}
-        </Modal>
-      )}
+      {isModalOpen && atendimento.Codigo
+        ? (() => (
+            <Modal isOpen={isModalOpen} onClose={handleModalClose}>
+              <EditAtendimento
+                receivedAlertData={alertData}
+                alertMode={!!alertData}
+                receivedData={atendimento}
+                onClose={handleModalClose}
+              />
+            </Modal>
+          ))()
+        : null}
     </div>
   );
 };

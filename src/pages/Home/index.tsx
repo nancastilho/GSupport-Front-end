@@ -6,9 +6,8 @@ const Home = () => {
 
   const [childData, setChildData] = useState(false);
 
-  // Callback que será passado para o componente filho
-  const handleChildData = (teste:any) => {
-    setChildData(teste)
+  const handleChildData = (value:any) => {
+    setChildData(value)
   };
   
   return (

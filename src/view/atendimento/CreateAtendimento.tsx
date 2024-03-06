@@ -13,12 +13,11 @@ interface PropsCreate {
 }
 
 function CreateAtendimento(props: PropsCreate) {
-  const brasilTimeZone = "America/Sao_Paulo";
 
   // Obtém a data e hora atual no fuso horário do Brasil
   const dataAtual = new Date();
   const dataHoraBrasil = formatToTimeZone(dataAtual, "YYYY-MM-DDTHH:mm", {
-    timeZone: brasilTimeZone,
+    timeZone: "America/Sao_Paulo",
   });
 
   const [newCliente, setNewCliente] = useState<boolean>(false);

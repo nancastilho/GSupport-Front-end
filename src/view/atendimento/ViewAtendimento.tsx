@@ -1,7 +1,18 @@
 import { FormValues } from "../../interface";
 
-function ViewAtendimento(props: FormValues) {
+interface View {
+  receivedData: FormValues;
+  DataInicio: string;
+  DataFim: string;
+  DataCriacao: string;
+}
 
+const ViewAtendimento = ({
+  receivedData,
+  DataCriacao,
+  DataFim,
+  DataInicio,
+}: View) => {
   return (
     <div className="max-w-xl mx-auto">
       <div className="mb-4">
@@ -16,7 +27,7 @@ function ViewAtendimento(props: FormValues) {
           id="NomeCliente"
           name="NomeCliente"
           type="text"
-          value={`${props.NomeFantasia} - ${props.CodEmpresa}`}
+          value={`${receivedData.NomeFantasia} - ${receivedData.CodEmpresa}`}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
         />
       </div>
@@ -32,7 +43,7 @@ function ViewAtendimento(props: FormValues) {
           id="NomeCliente"
           name="NomeCliente"
           type="text"
-          value={props.NomeCliente}
+          value={receivedData.NomeCliente}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
         />
       </div>
@@ -48,7 +59,7 @@ function ViewAtendimento(props: FormValues) {
           id="Usuario"
           name="Usuario"
           type="text"
-          value={props.Usuario}
+          value={receivedData.Usuario}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
         />
       </div>
@@ -65,7 +76,7 @@ function ViewAtendimento(props: FormValues) {
             id="dateI"
             name="dateI"
             type="datetime-local"
-            value={props.DataInicio}
+            value={DataInicio}
             className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />
@@ -82,7 +93,7 @@ function ViewAtendimento(props: FormValues) {
             id="dateF"
             name="dateF"
             type="datetime-local"
-            value={props.DataFim}
+            value={DataFim}
             className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
             required
           />
@@ -99,7 +110,7 @@ function ViewAtendimento(props: FormValues) {
           readOnly
           id="Problema"
           name="Problema"
-          value={props.Problema}
+          value={receivedData.Problema}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
           rows={4}
         ></textarea>
@@ -116,22 +127,22 @@ function ViewAtendimento(props: FormValues) {
           readOnly
           id="Solucao"
           name="Solucao"
-          value={props.Solucao}
+          value={receivedData.Solucao}
           className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
           rows={4}
         ></textarea>
       </div>
 
       <div className="flex w-60">
-        {props.Imagens !== undefined
-          ? props.Imagens.map((img: string) => (
-            <a href={img} target="_blank" rel="noopener noreferrer">
-              <img src={img} alt="" className="w-10 h-10 px-1" />
-            </a>
-          ))
+        {receivedData.Imagens !== undefined
+          ? receivedData.Imagens.map((img: string) => (
+              <a href={img} target="_blank" rel="noopener noreferrer">
+                <img src={img} alt="" className="w-10 h-10 px-1" />
+              </a>
+            ))
           : ""}
       </div>
-      <div className="grid justify-items-start" >
+      <div className="grid justify-items-start">
         <div>
           <input
             readOnly
@@ -145,18 +156,18 @@ function ViewAtendimento(props: FormValues) {
           </label>
         </div>
         <div>
-          {props.ObservacaoTexto ? (
+          {receivedData.ObservacaoTexto ? (
             <button
               type="button"
-              className=" rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-900 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gay-500 sm:ml-3 sm:w-auto sm:text-sm">
+              className=" rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-900 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gay-500 sm:ml-3 sm:w-auto sm:text-sm"
+            >
               Resolver aviso
-            </button>)
-           : null}
+            </button>
+          ) : null}
         </div>
-
       </div>
     </div>
   );
-}
+};
 
 export default ViewAtendimento;

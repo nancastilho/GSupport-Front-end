@@ -6,9 +6,11 @@ import Pagination from "../../components/pagination";
 import { atendimentosService } from "../../services/atendimentos/atendimentosService";
 import { FormValues } from "../../interface";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { converterDataParaBrasil, formatarDataBrasil } from "../../components/functions";
+import {
+  converterDataParaBrasil,
+  formatarDataBrasil,
+} from "../../components/functions";
 const SearchView = () => {
-
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [dados, setDados] = useState([]);
   const [texto, setTexto] = useState<string>();
@@ -87,7 +89,6 @@ const SearchView = () => {
   };
 
   useEffect(() => {
-
     const fetchData = async () => {
       atendimentosService
         .getPart({
@@ -114,7 +115,7 @@ const SearchView = () => {
       fetchData();
     }
   }, [texto, usuario, currentPage, dateF, dateI, isModalOpen]);
-  
+
   return (
     <>
       <div className=" flex justify-around overflow-auto mt-14 md:hidden">
@@ -414,7 +415,9 @@ const SearchView = () => {
                     >
                       {item.Codigo}
                     </th>
-                    <td className="px-5 py-4">{formatarDataBrasil(item.DataCriacao)}</td>
+                    <td className="px-5 py-4">
+                      {formatarDataBrasil(item.DataCriacao)}
+                    </td>
                     <td className="px-5 py-4">{item.NomeFantasia}</td>
                     <td className="px-5 py-4">{item.Usuario}</td>
                     <td className="px-5 py-4">{item.NomeCliente}</td>
@@ -493,35 +496,13 @@ const SearchView = () => {
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
           {dados.map((item: FormValues, index) => {
-            if (item.DataCriacao !== undefined) {
-              var Data = item.DataCriacao.split("T");
-              var Hora = Data[1].split(".");
-              var HoraMin = Hora[0].split(":");
-              return item.Codigo === codAtend ? (
-                <EditAtendimento
-                  Assunto={item.Assunto}
-                  CodEmpresa={item.CodEmpresa}
-                  CodMeioComunicacao={item.CodMeioComunicacao}
-                  CodSistema={item.CodSistema}
-                  CodUsuario={item.CodUsuario}
-                  Codigo={item.Codigo}
-                  DataCriacao={Data[0] + "T" + HoraMin[0] + ":" + HoraMin[1]}
-                  DataInicio={converterDataParaBrasil(item.DataInicio)}
-                  DataFim={converterDataParaBrasil(item.DataFim)}
-                  NomeCliente={item.NomeCliente}
-                  NomeFantasia={item.NomeFantasia}
-                  Plantao={item.Plantao}
-                  Problema={item.Problema}
-                  Solucao={item.Solucao}
-                  Usuario={item.Usuario}
-                  Imagens={item.Imagens}
-                  key={index}
-                  onClose={handleModalClose}
-                />
-              ) : (
-                null
-              );
-            }
+            return item.Codigo === codAtend ? (
+              <EditAtendimento
+                receivedData={item}
+                
+                onClose={handleModalClose}
+              />
+            ) : null;
           })}
         </Modal>
       )}

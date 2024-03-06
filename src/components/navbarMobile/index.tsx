@@ -1,21 +1,16 @@
 import { Icon } from "@iconify/react";
 import { FiLogOut } from "react-icons/fi";
 import { LogoutProps } from "../../interface";
-import { useState } from "react";
-import Modal from "../modal";
-import CreateAtendimento from "../../view/atendimento/CreateAtendimento";
-
-const NavbarMobile = ({ handleLogout, children, alertLength }: LogoutProps) => {
+interface NavMobile extends LogoutProps {
+  OnModalOpen: () => void;
+}
+const NavbarMobile = ({
+  handleLogout,
+  children,
+  alertLength,
+  OnModalOpen,
+}: NavMobile) => {
   const user = localStorage.getItem("userAuth");
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
 
   return (
     <>
@@ -48,11 +43,7 @@ const NavbarMobile = ({ handleLogout, children, alertLength }: LogoutProps) => {
           </a>
           <div className="block text-gray-300 hover:text-white">
             <div className="flex items-center">
-              <Icon
-                fontSize={25}
-                icon={"ph:plus-fill"}
-                onClick={handleModalOpen}
-              />
+              <Icon fontSize={25} icon={"ph:plus-fill"} onClick={OnModalOpen} />
             </div>
           </div>
           <a href={"/graph"} className="block text-gray-300 hover:text-white">
@@ -64,18 +55,13 @@ const NavbarMobile = ({ handleLogout, children, alertLength }: LogoutProps) => {
           <a href={"/alerts"} className="block text-gray-300 hover:text-white">
             <div className="relative inline-flex items-center">
               <Icon fontSize={25} icon={"mdi:alert"} />
-              <div className="absolute inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 ">
+              <div className="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-3 ">
                 {alertLength}
               </div>
             </div>
           </a>
         </div>
       </div>
-      {isModalOpen && (
-        <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-          <CreateAtendimento onClose={handleModalClose} />
-        </Modal>
-      )}
     </>
   );
 };

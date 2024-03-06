@@ -19,15 +19,13 @@ export interface FormValues {
   Plantao?: number;
   ObservacaoTexto?: string;
   Alerta?: number;
-  onClose?: () => void
 }
 
-
-export interface Usuario{
-  Codigo: number,
-  Usuario: string,
-  Senha: string,
-  Ativo: boolean
+export interface Usuario {
+  Codigo: number;
+  Usuario: string;
+  Senha: string;
+  Ativo: boolean;
 }
 export interface PaginationProps {
   currentPage: number;
@@ -52,14 +50,26 @@ export interface Empresa {
 
 export interface LayoutProps {
   children: React.ReactNode;
-  onDataFromChild?: any
+  onDataFromChild?: any;
 }
 
 export interface LogoutProps {
   handleLogout: () => void;
-  children?: any,
-  alertLength:number
+  children?: any;
+  alertLength: number;
 }
 
-
-
+export interface AlertaUpdate {
+  Codigo: number;
+  DataResolucao: string;
+}
+export interface AlertaGet {
+  CodAlerta: number;
+  CodAtendimento: number;
+  DataCriacao: string;
+  DataResolucao?: string | null;
+  NomeFantasia: string;
+  RazaoSocial: string;
+  ObservacaoTexto: string;
+  Usuario: string
+}

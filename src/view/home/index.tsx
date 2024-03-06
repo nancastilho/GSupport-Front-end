@@ -8,12 +8,11 @@ import Modal from "../../components/modal";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { converterDataParaBrasil } from "../../components/functions";
 
-interface IHomeView{
-  createSucess:boolean
+interface IHomeView {
+  createSucess: boolean;
 }
 
-
-const HomeView = ({createSucess}:IHomeView) => {
+const HomeView = ({ createSucess }: IHomeView) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [dados, setDados] = useState([]);
@@ -29,7 +28,7 @@ const HomeView = ({createSucess}:IHomeView) => {
           setDados(response.data.Result);
         })
         .catch((error: any) => {
-          console.error('*** Erro fetch data', error);
+          console.error("*** Erro fetch data", error);
         });
     };
     if (localStorage.getItem("token") == null) {
@@ -39,7 +38,9 @@ const HomeView = ({createSucess}:IHomeView) => {
       fetchData();
     }
   }, [isModalOpen, createSucess]);
-  
+
+  console.log(createSucess)
+
   function handleModalOpen(codigo: number, edit: boolean) {
     setIsModalOpen(true);
     setIsModalEdit(edit);
@@ -96,35 +97,16 @@ const HomeView = ({createSucess}:IHomeView) => {
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
           {dados.map((item: FormValues, index) => {
             if (isModalEdit === true) {
-              if (item.DataCriacao !== undefined) {
-                var Data = item.DataCriacao.split("T");
-                var Hora = Data[1].split(".");
-                var HoraMin = Hora[0].split(":");
-                return index === codAtend ? (
-                  <EditAtendimento
-                    Assunto={item.Assunto}
-                    CodEmpresa={item.CodEmpresa}
-                    CodMeioComunicacao={item.CodMeioComunicacao}
-                    CodSistema={item.CodSistema}
-                    CodUsuario={item.CodUsuario}
-                    Codigo={item.Codigo}
-                    DataCriacao={Data[0] + "T" + HoraMin[0] + ":" + HoraMin[1]}
-                    NomeCliente={item.NomeCliente}
-                    NomeFantasia={item.NomeFantasia}
-                    Plantao={item.Plantao}
-                    Problema={item.Problema}
-                    Solucao={item.Solucao}
-                    Usuario={item.Usuario}
-                    DataInicio={converterDataParaBrasil(item.DataInicio)}
-                    DataFim={converterDataParaBrasil(item.DataFim)}
-                    Imagens={item.Imagens}
-                    key={index}
-                    onClose={handleModalClose}
-                  />
-                ) : (
-                  ""
-                );
-              }
+              return index === codAtend ? (
+                <EditAtendimento
+                  
+                  receivedData={item}
+                  onClose={handleModalClose}
+                  key={index}
+                />
+              ) : (
+                ""
+              );
             } else {
               if (item.DataCriacao !== undefined) {
                 const Data = item.DataCriacao.split("T");
@@ -132,27 +114,13 @@ const HomeView = ({createSucess}:IHomeView) => {
                 const HoraMin = Hora[0].split(":");
                 return index === codAtend ? (
                   <ViewAtendimento
-                    Assunto=""
-                    CodEmpresa={item.CodEmpresa}
-                    CodMeioComunicacao={item.CodMeioComunicacao}
-                    CodSistema={item.CodSistema}
-                    CodUsuario={item.CodUsuario}
+                    receivedData={item}
                     DataCriacao={Data[0] + "T" + HoraMin[0] + ":" + HoraMin[1]}
-                    NomeCliente={item.NomeCliente}
-                    Usuario={item.Usuario}
-                    Plantao={1}
-                    Problema={item.Problema}
-                    Solucao={item.Solucao}
-                    Imagens={item.Imagens}
-                    NomeFantasia={item.NomeFantasia}
                     DataInicio={converterDataParaBrasil(item.DataInicio)}
                     DataFim={converterDataParaBrasil(item.DataFim)}
                     key={codAtend}
-
                   />
-                ) : (
-                  ""
-                );
+                ) : null;
               }
             }
           })}

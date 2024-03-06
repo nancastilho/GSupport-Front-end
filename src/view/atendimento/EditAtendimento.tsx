@@ -1,60 +1,59 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ListEmpresa from "../../components/listEmpresa";
-import { FormValues } from "../../interface";
+import { AlertaGet, FormValues } from "../../interface";
 import { Icon } from "@iconify/react";
 import ListUsuario from "../../components/listUser";
 import { atendimentosService } from "../../services/atendimentos/atendimentosService";
 import toast from "react-hot-toast";
 import ListNomeClientes from "../../components/listNomeClientes";
 import ModalAlert from "../../components/modalAlert";
+import { converterDataParaBrasil } from "../../components/functions";
+import { formatToTimeZone } from "date-fns-timezone";
+import { alertService } from "../../services/alerta/alertaService";
 
-function EditAtendimento(props: FormValues) {
-  const [formValues, setFormValues] = useState<FormValues>({
+interface Edit {
+  receivedData: FormValues;
+  alertMode?: boolean;
+  receivedAlertData?: AlertaGet;
+  onClose: () => void;
+}
 
-    Codigo: props.Codigo,
-    CodUsuario: props.CodUsuario,
-    CodEmpresa: props.CodEmpresa,
-    Usuario: props.Usuario,
-    NomeCliente: props.NomeCliente,
-    NomeFantasia: props.NomeFantasia,
-    Problema: props.Problema,
-    Solucao: props.Solucao,
-    Assunto: props.Assunto,
-    CodSistema: props.CodSistema,
-    CodMeioComunicacao: props.CodMeioComunicacao,
-    DataCriacao: props.DataCriacao,
-    DataInicio: props.DataInicio,
-    DataFim: props.DataFim,
-    Plantao: 0,
-    Imagens: props.Imagens,
-    Alerta: 0,
-    ObservacaoTexto: ''
-  });
-
-  function handleModalOpen() {
-    console.debug("DELETANDO IMAGENS");
-  }
+function EditAtendimento({
+  receivedData,
+  alertMode = false,
+  onClose,
+  receivedAlertData = {} as AlertaGet,
+}: Edit) {
+  const [formValues, setFormValues] = useState<FormValues>(receivedData);
   const [newCliente, setNewCliente] = useState<boolean>(false);
   const [isAlertCreated, setisAlertCreated] = useState<boolean>(false);
+  const dataAtual = new Date();
+  const dataHoraBrasil = formatToTimeZone(dataAtual, "YYYY-MM-DDTHH:mm", {
+    timeZone: "America/Sao_Paulo",
+  });
+
+  // function handleModalOpen() {
+  //   console.debug("DELETANDO IMAGENS");
+  // }
 
   const handleChangeCliente = (novoValor: string) => {
     setFormValues((prevValues) => ({
       ...prevValues,
-      ["CodEmpresa"]: parseInt(novoValor),
+      CodEmpresa: parseInt(novoValor),
     }));
   };
 
   const handleChangeUsuario = (novoValor: string) => {
     setFormValues((prevValues) => ({
       ...prevValues,
-      ["CodUsuario"]: parseInt(novoValor),
+      CodUsuario: parseInt(novoValor),
     }));
   };
 
   const handleChangeNomeCliente = (novoValor: string) => {
     setFormValues((prevValues) => ({
       ...prevValues,
-      ["NomeCliente"]: novoValor,
+      NomeCliente: novoValor,
     }));
   };
 
@@ -62,9 +61,7 @@ function EditAtendimento(props: FormValues) {
     e.preventDefault();
     try {
       await atendimentosService.postEditForm(formValues);
-      if (props.onClose) {
-        props.onClose();
-      }
+      onClose();
       toast.success("Edição concluída com sucesso!", {
         duration: 2000,
       });
@@ -86,8 +83,24 @@ function EditAtendimento(props: FormValues) {
     }));
   };
 
-  const handleCreateAlert = (e: any) => {
-    setisAlertCreated(!isAlertCreated);
+  const handleCreateAlert = () => {
+    receivedData.Alerta
+      ? toast.error("Atendimento com alerta vinculado!")
+      : setisAlertCreated(!isAlertCreated);
+  };
+  
+  const handleResolveAlert = async () => {
+    try {
+      await alertService.postEditForm({Codigo:receivedAlertData.CodAlerta, DataResolucao:dataHoraBrasil});
+      onClose();
+      toast.success("Alerta resolvido!", {
+        duration: 2000,
+      });
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao resolver alerta!");
+    }
+    onClose()
   };
 
   const handleAlertInput = (prev: any) => {
@@ -107,6 +120,26 @@ function EditAtendimento(props: FormValues) {
       ObservacaoTexto: prev,
     }));
   };
+
+  useEffect(() => {
+    if (receivedData.DataCriacao !== undefined) {
+      const Data = receivedData.DataCriacao.split("T");
+      const Hora = Data[1].split(".");
+      const HoraMin = Hora[0].split(":");
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        DataCriacao: Data[0] + "T" + HoraMin[0] + ":" + HoraMin[1],
+      }));
+    }
+
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      DataInicio: converterDataParaBrasil(receivedData.DataInicio),
+      DataFim: converterDataParaBrasil(receivedData.DataFim),
+      Plantao: receivedData.Plantao ? 1 : 0,
+      Alerta: receivedData.Alerta ? 1 : 0,
+    }));
+  }, [receivedData]);
 
   return (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
@@ -252,7 +285,24 @@ function EditAtendimento(props: FormValues) {
           required
         ></textarea>
       </div>
-      <div className="flex w-60 hidden">
+      {alertMode?<div className="mb-4">
+        <label
+          htmlFor="Solucao"
+          className="block mb-1 font-medium text-gray-700"
+        >
+          Observação do Alerta
+        </label>
+        <textarea
+          id="Solucao"
+          name="Solucao"
+          value={receivedAlertData.ObservacaoTexto}
+          onChange={handleInputChange}
+          className="block w-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+          rows={4}
+          required
+        ></textarea>
+      </div>:null}
+      {/* <div className="flex w-60 hidden">
         {formValues.Imagens !== undefined
           ? formValues.Imagens.map((img: string, index) => (
               <div key={index}>
@@ -276,31 +326,50 @@ function EditAtendimento(props: FormValues) {
             className="w-10 h-10 px-1"
           />
         </a>
-      </div>
-      <div className="mt-6">
-        <div>
-          <input type="checkbox" name="plantao" id="plantao" className="mr-2" />
-          <label htmlFor="agreed" className="font-medium text-gray-700">
-            Plantão
-          </label>
-        </div>
-      </div>
-      <div className="mt-6 flex justify-between">
-        <button
-          type="button"
-          className="px-4 py-2 text-white bg-red-700 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600"
-          onClick={handleCreateAlert}
-        >
-          Criar Alerta!
-        </button>
+      </div> */}
+      {!alertMode ? (
+        <>
+          <div className="mt-6">
+            <div>
+              <input
+                type="checkbox"
+                name="plantao"
+                id="plantao"
+                className="mr-2"
+              />
+              <label htmlFor="agreed" className="font-medium text-gray-700">
+                Plantão
+              </label>
+            </div>
+          </div>
+          <div className="mt-6 flex justify-between">
+            <button
+              type="button"
+              className="px-4 py-2 text-white bg-red-700 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600"
+              onClick={handleCreateAlert}
+            >
+              Criar Alerta!
+            </button>
 
-        <button
-          type="submit"
-          className="px-4 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-600"
-        >
-          Salvar alterações
-        </button>
-      </div>
+            <button
+              type="submit"
+              className="px-4 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-600"
+            >
+              Salvar alterações
+            </button>
+          </div>
+        </>
+      ) : !receivedAlertData.DataResolucao?(
+        <div className="flex justify-end">
+          <button
+            type="button"
+            onClick={handleResolveAlert}
+            className="px-4 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-600"
+          >
+            Resolver Alerta
+          </button>
+        </div>
+      ): null}
       {isAlertCreated ? (
         <ModalAlert
           OnAlertInput={handleAlertInput}

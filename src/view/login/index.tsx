@@ -31,22 +31,22 @@ const Login = () => {
     }));
   }
   return (
-    <div className="h-screen bg-[#edf2f7] overflow-hidden flex items-center justify-center">
-      <div className="hidden h-screen w-full max-md:flex ">
-        <div className="flex w-full justify-center items-center text-center bg-white">
-          <form className="bg-white" onSubmit={handleSubmit}>
-            <h1 className="text-gray-800 font-bold text-2xl mb-1 capitalize">
+    <div className="h-screen overflow-hidden flex items-center justify-center">
+      <div className="hidden h-screen w-full max-md:flex bg-gradient-to-tr from-blue-950 to-sky-800 ">
+        <div className="flex w-full justify-center items-center text-center ">
+          <form className="" onSubmit={handleSubmit}>
+            <h1 className="text-gray-200 font-bold text-2xl mb-1 capitalize">
               Olá,{" "}
               {localStorage.getItem("userName")
                 ? localStorage.getItem("userName")
                 : "HelpDesk"}
               !
             </h1>
-            <p className="text-sm font-normal text-gray-600 mb-7">Bem vindo</p>
+            <p className="text-sm font-normal text-gray-400 mb-7">Bem vindo</p>
             <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-400"
+                className="h-5 w-5 text-gray-200"
                 fill="currentColor"
                 viewBox="0 0 28 28"
                 stroke="currentColor"
@@ -59,7 +59,7 @@ const Login = () => {
                 />
               </svg>
               <input
-                className="pl-2 outline-none border-none"
+                className="pl-2 outline-none border-none bg-transparent text-white"
                 type="text"
                 id="Usuario"
                 name="Usuario"
@@ -72,7 +72,7 @@ const Login = () => {
             <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-400"
+                className="h-5 w-5 text-gray-200"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -83,7 +83,7 @@ const Login = () => {
                 />
               </svg>
               <input
-                className="pl-2 outline-none border-none"
+                className="pl-2  outline-none border-none bg-transparent text-white"
                 id="Senha"
                 name="Senha"
                 type="password"
@@ -95,7 +95,7 @@ const Login = () => {
             </div>
             <button
               type="submit"
-              className="block w-full bg-sky-900 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
+              className="block border w-full bg-sky-900 mt-4 py-2 rounded-2xl text-gray-200 font-semibold mb-2"
             >
               Entrar
             </button>

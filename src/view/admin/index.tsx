@@ -20,7 +20,7 @@ const AdminView = () => {
   }, []);
   return (
     <div className=" max-md:flex max-md:justify-around overflow-auto max-md:mt-14">
-      <div className="h-screen grow  bg-gradient-to-tr from-blue-50 to-blue-200 overflow-auto max-md:pb-14 max-md:h-5/6 ">
+      <div className="h-screen grow overflow-auto max-md:pb-14 max-md:h-5/6 ">
         <section className=" py-10 leading-6 border-b border-blue-900 sm:py-16 lg:py-10">
           <div className="mx-auto text-blue-900 max-w-5xl px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-xl text-center">
@@ -167,7 +167,7 @@ const AdminView = () => {
                 alt="Simon Lewis"
               />
               <p className="ml-4 w-56">
-                <strong className="block font-medium">Patrick</strong>
+                <strong className="block font-medium">Erique</strong>
                 <span className="text-xs text-gray-400">Gerente Suporte</span>
               </p>
             </div>

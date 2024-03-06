@@ -53,7 +53,7 @@ const HomeView = ({ createSucess }: IHomeView) => {
 
   return (
     <div className=" max-md:flex max-md:justify-around overflow-auto max-md:mt-14">
-      <div className="h-screen grow bg-gradient-to-tr from-blue-50 to-blue-200  max-md:pb-14 max-md:h-5/6 ">
+      <div className="h-screen grow max-md:pb-14 max-md:h-5/6 ">
         <div className="p-3 grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
           {dados.map((item: FormValues, index) => (
             <div

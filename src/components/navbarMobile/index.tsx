@@ -16,10 +16,12 @@ const NavbarMobile = ({
     <>
       <div className="fixed top-0 left-0 right-0 hidden p-3 bg-gray-800 z-50 max-md:block">
         <div className="flex justify-between text-gray-300 hover:text-white">
-          <div className=" text-white text-lg font-bold flex content-center">
-            <img src="/favicon.png" alt="" className="w-6" />
-            GSupport
-          </div>
+          <a href={"/home"}>
+            <div className=" text-white text-lg font-bold flex content-center">
+              <img src="/favicon.png" alt="" className="w-6" />
+              GSupport
+            </div>
+          </a>
           <div className="flex items-center">
             <p className="capitalize mr-2 ">Olá, {user}!</p>
             <button onClick={handleLogout}>
@@ -31,9 +33,9 @@ const NavbarMobile = ({
       {children}
       <div className="fixed bottom-0 left-0 right-0 hidden bg-gray-800 max-md:block">
         <div className=" flex justify-around m-3">
-          <a href={"/home"} className="block text-gray-300 hover:text-white">
+          <a href={"/admin"} className="block text-gray-300 hover:text-white">
             <div className="flex items-center">
-              <Icon icon={"mdi:home"} fontSize={25} />
+              <Icon icon={"mdi:gear"} fontSize={25} />
             </div>
           </a>
           <a href={"/search"} className="block text-gray-300 hover:text-white">

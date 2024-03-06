@@ -49,7 +49,7 @@ const LayoutPadrao = ({ children, onDataFromChild }: LayoutProps) => {
     <div className="flex h-screen w-auto max-md:flex-col">
       <Navbar handleLogout={handleLogout} alertLength={totalAlert} />
       <NavbarMobile handleLogout={handleLogout} alertLength={totalAlert} OnModalOpen={handleModalOpen}>
-        <div className="grow">{children}</div>
+        <div className="bg-gradient-to-tr from-blue-50 to-blue-200  grow">{children}</div>
       </NavbarMobile>
       <BsFillPlusSquareFill
         className="fixed bottom-10 right-10 cursor-pointer max-md:hidden"

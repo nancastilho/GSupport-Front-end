@@ -6,10 +6,7 @@ import Pagination from "../../components/pagination";
 import { atendimentosService } from "../../services/atendimentos/atendimentosService";
 import { FormValues } from "../../interface";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import {
-  converterDataParaBrasil,
-  formatarDataBrasil,
-} from "../../components/functions";
+import { formatarDataBrasil } from "../../components/functions";
 const SearchView = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [dados, setDados] = useState([]);
@@ -114,6 +111,8 @@ const SearchView = () => {
     if (localStorage.getItem("token")) {
       fetchData();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [texto, usuario, currentPage, dateF, dateI, isModalOpen]);
 
   return (
@@ -296,12 +295,12 @@ const SearchView = () => {
         </div>
       </div>
       <div className="flex max-md:hidden">
-        <div className="w-4/6 h-screen flex flex-col justify-around">
-          <div className="flex px-1 justify-between">
-            <div className="mx-1 relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden ">
+        <div className="w-4/6 mx-3 h-screen flex flex-col justify-around">
+          <div className="flex justify-between">
+            <div className="mr-1 relative flex items-center w-full h-8 rounded-lg border shadow-md border-blue-900 overflow-hidden ">
               <span className="pl-2 text-sm">Inicio: </span>
               <input
-                className="peer h-full w-full outline-none bg-white text-sm text-gray-700 px-2"
+                className="peer h-full w-full outline-none  bg-transparent text-sm text-blue-900 px-2"
                 type="date"
                 id="texto"
                 name="texto"
@@ -310,10 +309,10 @@ const SearchView = () => {
               />
             </div>
 
-            <div className="mx-1 relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
+            <div className="mx-1 relative flex items-center w-full h-8 rounded-lg border shadow-md border-blue-900 bg-transparent overflow-hidden">
               <span className="pl-2 text-sm">Fim: </span>
               <input
-                className="peer h-full w-full outline-none bg-white text-sm text-gray-700 px-2"
+                className="peer h-full w-full outline-none bg-transparent text-sm text-blue-900 px-2"
                 type="date"
                 id="texto"
                 name="texto"
@@ -322,8 +321,8 @@ const SearchView = () => {
               />
             </div>
 
-            <div className="mx-1 relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
-              <div className="grid place-items-center h-full w-12 text-gray-300">
+            <div className="mx-1 relative flex items-center w-full h-8 rounded-lg border shadow-md border-blue-900 bg-transparent overflow-hidden">
+              <div className="grid place-items-center h-full w-12 text-blue-900">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
@@ -341,7 +340,7 @@ const SearchView = () => {
               </div>
 
               <input
-                className="peer h-full w-full outline-none bg-white text-sm text-gray-700 pr-2"
+                className="peer h-full w-full outline-none bg-transparent text-sm placeholder-blue-900 pr-2"
                 type="text"
                 id="texto"
                 name="texto"
@@ -350,8 +349,8 @@ const SearchView = () => {
               />
             </div>
 
-            <div className="mx-1 relative flex items-center w-full h-8 rounded-lg border border-solid bg-white overflow-hidden">
-              <div className="grid place-items-center h-full w-12 text-gray-300 ">
+            <div className="mx-1 relative flex items-center w-full h-8 rounded-lg border shadow-md border-blue-900  bg-transparent overflow-hidden">
+              <div className="grid place-items-center h-full w-12 text-blue-900 ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
@@ -369,19 +368,19 @@ const SearchView = () => {
               </div>
 
               <input
-                className="peer h-full w-full outline-none bg-white text-sm text-gray-700 pr-2"
+                className="peer h-full w-full outline-none bg-transparent text-sm placeholder-blue-900 pr-2"
                 type="text"
                 id="usuario"
                 name="usuario"
                 onChange={handleSearchUsuario}
-                placeholder="USUARIOS"
+                placeholder="Usuários"
               />
             </div>
           </div>
-          <div className=" h-5/6 overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full  text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead className="sticky top-0 text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
+          <div className=" h-5/6 border-l border-y overflow-x-auto border-blue-900  shadow-md sm:rounded-lg">
+            <table className="w-full h-1 text-sm text-left text-blue-950 ">
+              <thead className="sticky top-0 text-xs border-b border-blue-900 text-blue-950 uppercase bg-blue-200  ">
+                <tr className="">
                   <th scope="col" className="px-5 py-3">
                     Codigo
                   </th>
@@ -405,13 +404,13 @@ const SearchView = () => {
               <tbody>
                 {dados.map((item: FormValues, index) => (
                   <tr
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    className="bg-blue-50 border-b   hover:bg-blue-100 "
                     onClick={() => handleListView(item)}
                     key={index}
                   >
                     <th
                       scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                     >
                       {item.Codigo}
                     </th>
@@ -422,7 +421,7 @@ const SearchView = () => {
                     <td className="px-5 py-4">{item.Usuario}</td>
                     <td className="px-5 py-4">{item.NomeCliente}</td>
                     <td className="px-5 py-4 text-right">
-                      <label className="font-medium text-blue-950 dark:text-blue-500 cursor-pointer hover:underline ">
+                      <label className="font-medium text-blue-950 cursor-pointer hover:underline ">
                         <Icon
                           onClick={() => handleModalOpen(item.Codigo)}
                           icon={"mdi:lead-pencil"}
@@ -445,11 +444,11 @@ const SearchView = () => {
           </div>
           <script src="https://unpkg.com/flowbite@1.3.4/dist/flowbite.js"></script>
         </div>
-        <div className="w-2/6  h-screen p-3 flex flex-col justify-around">
+        <div className="w-2/6  h-screen p-3 flex flex-col justify-around text-blue-900">
           <div className="grow flex flex-col ">
             <label
               htmlFor="Problema"
-              className="block mb-1 font-medium text-gray-700"
+              className="block mb-1 font-medium "
             >
               Problema
             </label>
@@ -457,16 +456,16 @@ const SearchView = () => {
               id="Problema"
               name="Problema"
               value={list?.Problema}
-              className="block w-full h-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+              className="block w-full h-full px-4 py-2 leading-tight border border-blue-900 shadow-md bg-blue-50 rounded-lg appearance-none focus:outline-none focus:shadow-outline-gray"
               rows={4}
               required
             ></textarea>
           </div>
 
-          <div className="grow flex flex-col ">
+          <div className="grow flex flex-col mt-2">
             <label
               htmlFor="Solucao"
-              className="block mb-1 font-medium text-gray-700"
+              className="block mb-1 font-medium "
             >
               Solução
             </label>
@@ -474,7 +473,7 @@ const SearchView = () => {
               id="Solucao"
               name="Solucao"
               value={list?.Solucao}
-              className="block w-full h-full px-4 py-2 leading-tight border rounded-md appearance-none focus:outline-none focus:shadow-outline-gray"
+              className="block w-full shadow-md h-full px-4 py-2 leading-tight border border-blue-900 bg-blue-50 rounded-lg appearance-none focus:outline-none focus:shadow-outline-gray"
               rows={4}
               required
             ></textarea>
@@ -497,11 +496,7 @@ const SearchView = () => {
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
           {dados.map((item: FormValues, index) => {
             return item.Codigo === codAtend ? (
-              <EditAtendimento
-                receivedData={item}
-                
-                onClose={handleModalClose}
-              />
+              <EditAtendimento receivedData={item} onClose={handleModalClose} />
             ) : null;
           })}
         </Modal>

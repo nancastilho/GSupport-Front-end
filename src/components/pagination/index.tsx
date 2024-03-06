@@ -24,7 +24,7 @@ const Pagination: React.FC<PaginationProps> = ({
         <li>
           <button
             className={classnames(
-              "relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50",
+              "relative inline-flex items-center px-2 py-2 rounded-l-lg border border-blue-900 bg-transparent text-sm font-medium text-blue-900 hover:bg-gray-50",
               {
                 "cursor-not-allowed": currentPage === 1,
               }
@@ -43,10 +43,10 @@ const Pagination: React.FC<PaginationProps> = ({
           <li key={page}>
             <button
               className={classnames(
-                "relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium",
+                "relative inline-flex items-center px-4 py-2 border rounded-lg border-blue-900 text-blue-900 text-sm font-medium",
                 {
-                  "bg-gray-400": currentPage === page,
-                  "hover:bg-gray-100": currentPage !== page,
+                  "bg-blue-300": currentPage === page,
+                  "hover:bg-blue-100": currentPage !== page,
                 }
               )}
               onClick={() => onPageChange(page)}
@@ -58,7 +58,7 @@ const Pagination: React.FC<PaginationProps> = ({
         <li>
           <button
             className={classnames(
-              "relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50",
+              "relative inline-flex items-center px-2 py-2 rounded-r-lg border border-blue-900 bg-transparent text-sm font-medium text-blue-900 hover:bg-gray-50",
               {
                 "cursor-not-allowed": currentPage === totalPages,
               }

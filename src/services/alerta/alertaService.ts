@@ -8,8 +8,8 @@ const getAll = async (): Promise<any> => {
     return response;
   };
 
-  const postEditForm = async (formValues: AlertaUpdate): Promise<any> => {
-    const result = await api.post("/alertas/update", formValues, {
+  const putEditForm = async (formValues: AlertaUpdate): Promise<any> => {
+    const result = await api.put("/alertas/update", formValues, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
     return result;
@@ -19,5 +19,5 @@ const getAll = async (): Promise<any> => {
   
 export const alertService = {
     getAll,
-    postEditForm
+    putEditForm
   };

@@ -190,7 +190,7 @@ const AdminView = () => {
               />
             </div>
             <div className="h-56 overflow-x-auto mt-2">
-              {users.map((user: Usuario, index) => (
+              {users.map((user: Usuario, index) => user.Ativo?(
                 <div
                   key={index}
                   className="flex items-center justify-between py-2"
@@ -214,7 +214,7 @@ const AdminView = () => {
                     onClick={() => HandleDeleteUser(user.Codigo)}
                   />
                 </div>
-              ))}
+              ): null)}
             </div>
           </div>
           <div className="max-w-md border shadow-md bg-blue-50  rounded-lg border-md  p-6 pb-10 ">

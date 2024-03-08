@@ -60,7 +60,7 @@ function EditAtendimento({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await atendimentosService.postEditForm(formValues);
+      await atendimentosService.putEditForm(formValues);
       onClose();
       toast.success("Edição concluída com sucesso!", {
         duration: 2000,
@@ -91,7 +91,7 @@ function EditAtendimento({
   
   const handleResolveAlert = async () => {
     try {
-      await alertService.postEditForm({Codigo:receivedAlertData.CodAlerta, DataResolucao:dataHoraBrasil});
+      await alertService.putEditForm({Codigo:receivedAlertData.CodAlerta, DataResolucao:dataHoraBrasil});
       onClose();
       toast.success("Alerta resolvido!", {
         duration: 2000,

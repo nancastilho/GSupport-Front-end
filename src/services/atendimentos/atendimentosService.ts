@@ -22,8 +22,8 @@ const postForm = async (formData: FormData): Promise<any> => {
   });
   return result;
 };
-const postEditForm = async (formValues: FormValues): Promise<any> => {
-  const result = await api.post("/atendimentos/update", formValues, {
+const putEditForm = async (formValues: FormValues): Promise<any> => {
+  const result = await api.put("/atendimentos/update", formValues, {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
   });
   return result;
@@ -33,5 +33,5 @@ export const atendimentosService = {
   getAll,
   getPart,
   postForm,
-  postEditForm,
+  putEditForm,
 };

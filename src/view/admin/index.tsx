@@ -18,7 +18,6 @@ const AdminView = () => {
   const [users, setUsers] = useState<Usuario[]>([]);
   const [userSelect, setUserSelect] = useState<Usuario>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isModalOpenAlert, setIsModalOpenAlert] = useState<boolean>(false);
   const [alertData, setAlertData] = useState<AlertaGet>();
   const [atendimento, setAtendimento] = useState<FormValues>({} as FormValues);
   const [count, setCount] = useState<boolean>(false);
@@ -33,16 +32,16 @@ const AdminView = () => {
 
   const handleModalClose = () => {
     setIsModalOpen(false);
-    setIsModalOpenAlert(false);
     setAtendimento({} as FormValues);
     setAlertData(undefined);
     setUserSelect(undefined);
     setCount(!count);
   };
 
-  const handleModalAlertOpen = async (codigo: number) => {
-    await getByCod(codigo);
-    setIsModalOpenAlert(true);
+  const handleModalAlertOpen = async (pen: AlertaGet) => {
+    await getByCod(pen.CodAtendimento);
+    setAlertData(pen);
+    handleModalOpen();
   };
 
   const getByCod = async (Codigo: number) => {
@@ -132,7 +131,9 @@ const AdminView = () => {
                 <div className="px-4 py-10">
                   <div className="flex items-center">
                     <h3 className="relative ml-2 inline-block text-4xl font-bold leading-none">
-                      04
+                      {getAllAlert.Resolvidos.length < 10
+                        ? `0${getAllAlert.Resolvidos.length}`
+                        : getAllAlert.Resolvidos.length}
                     </h3>
                     <span className="ml-3 text-base font-medium capitalize">
                       Alertas Resolvidos
@@ -178,9 +179,7 @@ const AdminView = () => {
             <div className="h-56 overflow-x-auto mt-2 ">
               {getAllAlert.Pendentes.map((pen: AlertaGet, index) => (
                 <div
-                  onClick={() => (
-                    handleModalAlertOpen(pen.CodAtendimento), setAlertData(pen)
-                  )}
+                  onClick={() => handleModalAlertOpen(pen)}
                   key={index}
                   className="mt-4 mr-2 flex cursor-pointer border border-blue-900 bg-blue-200 items-center rounded-lg  py-1 px-2"
                 >
@@ -276,21 +275,18 @@ const AdminView = () => {
       </div>
       {isModalOpen ? (
         <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-          {!userSelect ? (
+          {atendimento.Codigo ? (
+            <EditAtendimento
+              receivedAlertData={alertData}
+              alertMode={!!alertData}
+              receivedData={atendimento}
+              onClose={handleModalClose}
+            />
+          ) : !userSelect ? (
             <FormUser onClose={handleModalClose} receivedData={userSelect} />
           ) : (
             <FormUser onClose={handleModalClose} receivedData={userSelect} />
           )}
-        </Modal>
-      ) : null}
-      {isModalOpenAlert && atendimento.Codigo ? (
-        <Modal isOpen={isModalOpenAlert} onClose={handleModalClose}>
-          <EditAtendimento
-            receivedAlertData={alertData}
-            alertMode={!!alertData}
-            receivedData={atendimento}
-            onClose={handleModalClose}
-          />
         </Modal>
       ) : null}
     </div>

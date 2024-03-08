@@ -20,6 +20,11 @@ export interface FormValues {
   ObservacaoTexto?: string;
   Alerta?: number;
 }
+export interface FormValuesUser {
+  Usuario: string,
+	Senha: string,
+	Ativo: number
+}
 
 export interface Usuario {
   Codigo: number;

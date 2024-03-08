@@ -15,7 +15,7 @@ function ListUsuario({
   Usuario,
   OnChangeUsuario = () => "",
 }: ListUserProps) {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState<Usuario[]>([]);
 
   const [valorSelecionado, setValorSelecionado] = useState<string>("");
 
@@ -31,7 +31,7 @@ function ListUsuario({
       usuariosService
         .getAll()
         .then((response) => {
-          setUser(response.data);
+          setUser(response.data.result);
         })
         .catch((error) => {
           console.error(error);

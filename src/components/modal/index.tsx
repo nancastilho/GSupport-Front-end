@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { ModalProps } from "../../interface";
 
-
-
-const Modal = ({ isOpen, onClose, children }:ModalProps) => {
+const Modal = ({ isOpen, onClose, children }: ModalProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(isOpen);
-
-  console.log(isOpen)
 
   const handleClose = (): void => {
     setIsModalOpen(false);

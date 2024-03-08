@@ -20,17 +20,11 @@ export interface FormValues {
   ObservacaoTexto?: string;
   Alerta?: number;
 }
-export interface FormValuesUser {
-  Usuario: string,
-	Senha: string,
-	Ativo: number
-}
-
 export interface Usuario {
-  Codigo: number;
+  Codigo?: number;
   Usuario: string;
   Senha: string;
-  Ativo: boolean;
+  Ativo: boolean | number;
 }
 export interface PaginationProps {
   currentPage: number;

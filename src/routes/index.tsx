@@ -6,7 +6,7 @@ import Search from "../pages/Search";
 import Graphics from "../pages/Graphics";
 import Test from "../pages/Test";
 import Alerts from "../pages/Alerts";
-import AdminView from "../pages/Admin";
+import Admin from "../pages/Admin";
 
 const RoutesApp = () => {
   return (
@@ -18,7 +18,7 @@ const RoutesApp = () => {
           <Route path="/graph" element={<Graphics />} />
           <Route path="/test" element={<Test />} />
           <Route path="/alerts" element={<Alerts />} />
-          <Route path="/admin" element={<AdminView />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="/" element={<Login />} />
           <Route path="*" element={<Home />} />
         </Routes>

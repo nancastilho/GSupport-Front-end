@@ -1,14 +1,15 @@
-import { useState } from "react";
-import { FormValuesUser } from "../../interface";
+import { useEffect, useState } from "react";
+import { Usuario } from "../../interface";
 import { usuariosService } from "../../services/usuarios";
 import toast from "react-hot-toast";
 
 interface PropsCreate {
   onClose: () => void;
+  receivedData?: Usuario;
 }
 
-const CreateUser = ({ onClose }: PropsCreate) => {
-  const [formValues, setFormValues] = useState<FormValuesUser>({
+const FormUser = ({ onClose, receivedData }: PropsCreate) => {
+  const [formValues, setFormValues] = useState<Usuario>({
     Usuario: "",
     Senha: "",
     Ativo: 1,
@@ -24,14 +25,30 @@ const CreateUser = ({ onClose }: PropsCreate) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      await usuariosService.postForm(formValues);
-      onClose();
-      toast.success("Usuário cadastrado com sucesso!");
-      resetForm();
-    } catch (error) {
-      console.error(error);
-      toast.error("Erro ao inserir atendimento!");
+    if (formValues.Ativo) {
+      formValues.Ativo = 1;
+    }
+
+    if (receivedData) {
+      try {
+        await usuariosService.editForm(formValues);
+        onClose();
+        toast.success("Usuário cadastrado com sucesso!");
+        resetForm();
+      } catch (error) {
+        console.error(error);
+        toast.error("Erro ao inserir atendimento!");
+      }
+    } else {
+      try {
+        await usuariosService.postForm(formValues);
+        onClose();
+        toast.success("Usuário cadastrado com sucesso!");
+        resetForm();
+      } catch (error) {
+        console.error(error);
+        toast.error("Erro ao inserir atendimento!");
+      }
     }
   };
 
@@ -47,6 +64,12 @@ const CreateUser = ({ onClose }: PropsCreate) => {
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    if (receivedData) {
+      setFormValues(receivedData);
+    }
+  }, [receivedData]);
 
   return (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
@@ -86,11 +109,11 @@ const CreateUser = ({ onClose }: PropsCreate) => {
           type="submit"
           className="px-4 py-2 text-white bg-blue-900 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-600"
         >
-          Cadastrar Usuário
+          {!receivedData ? "Cadastrar Usuário" : "Salvar"}
         </button>
       </div>
     </form>
   );
 };
 
-export default CreateUser;
+export default FormUser;

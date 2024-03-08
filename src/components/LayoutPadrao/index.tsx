@@ -12,14 +12,15 @@ const LayoutPadrao = ({ children, onDataFromChild }: LayoutProps) => {
   const navigate: NavigateFunction = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [totalAlert, setTotalAlert] = useState(0);
+
   useEffect(() => {
     const fetchData = async () => {
       localStorage.getItem("token");
       alertService
         .getAll()
         .then((response: any) => {
-          let dados = response.data.Pendentes
-          setTotalAlert(dados.length);
+          let dados = response.data;
+          setTotalAlert(dados.Pendentes.length);
         })
         .catch((error: any) => {
           console.error(error);
@@ -48,8 +49,14 @@ const LayoutPadrao = ({ children, onDataFromChild }: LayoutProps) => {
   return (
     <div className="flex h-screen w-auto max-md:flex-col">
       <Navbar handleLogout={handleLogout} alertLength={totalAlert} />
-      <NavbarMobile handleLogout={handleLogout} alertLength={totalAlert} OnModalOpen={handleModalOpen}>
-        <div className="bg-gradient-to-tr from-blue-50 to-blue-200  grow">{children}</div>
+      <NavbarMobile
+        handleLogout={handleLogout}
+        alertLength={totalAlert}
+        OnModalOpen={handleModalOpen}
+      >
+        <div className="bg-gradient-to-tr from-blue-50 to-blue-200  grow">
+          {children}
+        </div>
       </NavbarMobile>
       <BsFillPlusSquareFill
         className="fixed bottom-10 right-10 cursor-pointer max-md:hidden"

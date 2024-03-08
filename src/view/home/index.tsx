@@ -39,8 +39,6 @@ const HomeView = ({ createSucess }: IHomeView) => {
     }
   }, [isModalOpen, createSucess]);
 
-  console.log(createSucess)
-
   function handleModalOpen(codigo: number, edit: boolean) {
     setIsModalOpen(true);
     setIsModalEdit(edit);
